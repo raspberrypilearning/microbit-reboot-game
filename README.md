@@ -1,18 +1,17 @@
-# default-project-template
+# Reboot Sequence
 
-![default-project-template](banner.png)
+Build finger switches from everyday materials, memorise the BBC micro:bit's signals, and repeat each growing sequence to complete the reboot.
 
-Find the project online at [projects.raspberrypi.org/en/projects/default-project-template](https://projects.raspberrypi.org/en/projects/default-project-template)
+This repository contains the learner-facing project draft and its authoring specification.
 
-## Resources
-For project materials and solutions, see [en/resources](https://github.com/raspberrypilearning/default-project-template/tree/master/en/resources) and [en/solutions](https://github.com/raspberrypilearning/default-project-template/tree/master/en/solutions).
+## Project files
+
+- [Project specification](PROJECT_SPEC.md)
+- [English project content](en/)
+- [Project metadata](en/meta.yml)
 
 ## Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
-See [LICENCE.md](LICENCE.md)
-
-## Setting up a Crowdin project
-
-See [CROWDIN.md](CROWDIN.md).
+See [LICENCE.md](LICENCE.md).
