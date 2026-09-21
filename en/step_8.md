@@ -6,7 +6,7 @@ Replace the fixed test list with five random signals.
 >
 > Change `reboot sequence` to an empty list and make `sequence length` equal `5`. Make a `start game` function that empties the old list, adds five random values from `1` to `3`, and displays them.
 >
-> ```microbit
+> ```blocks
 > let sequenceLength = 5
 > let rebootSequence: number[] = []
 > function startGame () {
@@ -29,7 +29,7 @@ Replace the fixed test list with five random signals.
 >
 > Replace the code inside the button A event with a call to `start game`.
 >
-> ```microbit
+> ```blocks
 > input.onButtonPressed(Button.A, function () {
 >     startGame()
 > })

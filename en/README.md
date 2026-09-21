@@ -18,6 +18,6 @@ en/
 └── step_13.md
 ```
 
-The project uses Microsoft MakeCode for micro:bit. Fenced `microbit` snippets contain MakeCode TypeScript, which Raspberry-flavoured Markdown renders as MakeCode blocks.
+The project uses Microsoft MakeCode for micro:bit. Fenced `blocks` snippets contain MakeCode TypeScript, which Raspberry-flavoured Markdown renders as MakeCode blocks.
 
 The project is currently an authoring draft. `solutions/reboot-sequence.ts` records the tested completed MakeCode logic, but a downloadable MakeCode project, the required photographs, and full multi-board validation are still needed before publication. See [the project specification](../PROJECT_SPEC.md) for the acceptance criteria and asset list.

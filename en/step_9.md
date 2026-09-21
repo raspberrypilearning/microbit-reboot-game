@@ -6,7 +6,7 @@ Give immediate feedback so the player knows which switch the micro:bit detected.
 >
 > Make a function called `show recognised answer` with a number parameter called `answer`. Show the answer for `150` milliseconds, then clear the display.
 >
-> ```microbit
+> ```blocks
 > function showRecognisedAnswer (answer: number) {
 >     basic.showNumber(answer)
 >     basic.pause(150)
@@ -18,7 +18,7 @@ Give immediate feedback so the player knows which switch the micro:bit detected.
 >
 > Call `show recognised answer` immediately after `check answer` locks input. After a correct partial answer, show the target and accept the next input without another animation.
 >
-> ```microbit
+> ```blocks
 > function checkAnswer (answer: number) {
 >     if (acceptingInput) {
 >         acceptingInput = false

@@ -6,7 +6,7 @@ Prevent overlapping games and add different feedback for failure and success.
 >
 > Make `game active` and the two sound functions. Change button A so it starts a game only when another game is not already active.
 >
-> ```microbit
+> ```blocks
 > let gameActive = false
 > function playCorrectSound () {
 >     music.playTone(Note.C5, 100)
@@ -28,7 +28,7 @@ Prevent overlapping games and add different feedback for failure and success.
 >
 > Make a `complete reboot` function. Finish both result branches in `check answer`: a mistake honks, shows a cross and offers a restart; five correct answers beep twice and complete the reboot.
 >
-> ```microbit
+> ```blocks
 > function completeReboot () {
 >     acceptingInput = false
 >     playCorrectSound()
@@ -40,7 +40,7 @@ Prevent overlapping games and add different feedback for failure and success.
 > }
 > ```
 >
-> ```microbit
+> ```blocks
 > function checkAnswer (answer: number) {
 >     if (acceptingInput) {
 >         acceptingInput = false

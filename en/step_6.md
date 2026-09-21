@@ -6,7 +6,7 @@ Compare each switch closure with the next expected item in the list.
 >
 > Make a variable called `player position`. Make a function called `check answer` with a number parameter called `answer`. Compare the answer with the item at `player position`, then move to the next position after a correct answer.
 >
-> ```microbit
+> ```blocks
 > let playerPosition = 0
 > function checkAnswer (answer: number) {
 >     if (answer == rebootSequence[playerPosition]) {
@@ -26,7 +26,7 @@ Compare each switch closure with the next expected item in the list.
 >
 > After button A displays the code, reset `player position` and show a target. In `forever`, replace the three `show number` blocks with calls to `check answer`, passing the matching value.
 >
-> ```microbit
+> ```blocks
 > input.onButtonPressed(Button.A, function () {
 >     for (let signal of rebootSequence) {
 >         showSignal(signal)

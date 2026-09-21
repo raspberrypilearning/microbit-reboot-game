@@ -6,7 +6,7 @@ Detect the moment when the `P0` lead touches the `GND` lead.
 >
 > Make a Boolean variable called `p0 was closed` and set it to `false`. Set the pull of `P0` to `up`.
 >
-> ```microbit
+> ```blocks
 > let p0WasClosed = false
 > pins.setPull(DigitalPin.P0, PinPullMode.PullUp)
 > ```
@@ -15,7 +15,7 @@ Detect the moment when the `P0` lead touches the `GND` lead.
 >
 > In a `forever` loop, read `P0`. Show `1` only when the circuit has just changed from open to closed, then remember its latest state.
 >
-> ```microbit
+> ```blocks
 > basic.forever(function () {
 >     let p0IsClosed = pins.digitalReadPin(DigitalPin.P0) == 0
 >     if (p0IsClosed && !(p0WasClosed)) {

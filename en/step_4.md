@@ -10,7 +10,7 @@ Connect and test the inputs for `2` and `3`.
 >
 > Add remembered-state variables and pull-ups for `P1` and `P2`. Expand `forever` to read all three pins and show the matching number.
 >
-> ```microbit
+> ```blocks
 > let p0WasClosed = false
 > let p1WasClosed = false
 > let p2WasClosed = false
