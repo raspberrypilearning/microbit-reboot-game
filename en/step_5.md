@@ -6,7 +6,7 @@ Use a function and a list to display a short test sequence.
 >
 > Make a function called `show signal` with a number parameter called `signal`. Show the value, wait, clear the display, and leave a short blank gap.
 >
-> ```blocks
+> ```microbit
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)
 >     basic.pause(500)
@@ -19,7 +19,7 @@ Use a function and a list to display a short test sequence.
 >
 > Make a list called `reboot sequence` containing `1`, `3`, and `2`. When button A is pressed, use a `for element` loop to pass every item to `show signal`.
 >
-> ```blocks
+> ```microbit
 > let rebootSequence = [1, 3, 2]
 > input.onButtonPressed(Button.A, function () {
 >     for (let signal of rebootSequence) {

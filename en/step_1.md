@@ -25,6 +25,6 @@ Every accepted touch briefly shows the number detected. A mistake produces a war
 
 You will connect, code and test the loose leads before making anything for your fingers. This keeps your hands free while you work at the computer.
 
-> [!IMPORTANT]
+> [!INFO]
 >
-> Never connect the `3V` and `GND` rings together. Later, make every paper band loose enough to remove immediately. Attach conductive tape and crocodile clips to paper tabs, not to your skin.
+> **Safety:** Never connect the `3V` and `GND` rings together. Later, make every paper band loose enough to remove immediately. Attach conductive tape and crocodile clips to paper tabs, not to your skin.

@@ -8,7 +8,7 @@ Make the reboot harder by inventing a visual code.
 >
 > Here is one possible symbol set:
 >
-> ```blocks
+> ```microbit
 > function showSignal (signal: number) {
 >     if (signal == 1) {
 >         basic.showLeds(`

@@ -8,7 +8,7 @@ Create the MakeCode project, then connect the first pair of test leads.
 >
 > In `on start`, show the string `A`. Download the program to your micro:bit.
 >
-> ```blocks
+> ```microbit
 > basic.showString("A")
 > ```
 

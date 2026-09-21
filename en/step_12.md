@@ -12,6 +12,6 @@ Now that the complete game works with bare leads, make the finger contacts and s
 
 **Test:** Put on and remove every finger band. Each must come off immediately without pulling. Hold your arm in a comfortable playing position for 30 seconds; the micro:bit should stay in place without the fastening feeling tight.
 
-> [!IMPORTANT]
+> [!INFO]
 >
-> Keep conductive adhesive and crocodile clip jaws off your skin. If any band or wrist fastening feels tight, remove it and adjust or replace it.
+> **Safety:** Keep conductive adhesive and crocodile clip jaws off your skin. If any band or wrist fastening feels tight, remove it and adjust or replace it.

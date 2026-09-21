@@ -6,7 +6,7 @@ Ignore contacts during playback and prevent one held switch from being counted t
 >
 > Make a Boolean variable called `accepting input`. Make a `remember switch states` function. Lock input before playback, then remember the switches and unlock input when the target appears.
 >
-> ```blocks
+> ```microbit
 > let acceptingInput = false
 > function rememberSwitchStates () {
 >     p0WasClosed = pins.digitalReadPin(DigitalPin.P0) == 0
@@ -29,7 +29,7 @@ Ignore contacts during playback and prevent one held switch from being counted t
 >
 > Lock `check answer` while it checks one value. In `forever`, store at most one new answer, update every remembered switch state, and only then call `check answer`.
 >
-> ```blocks
+> ```microbit
 > function checkAnswer (answer: number) {
 >     if (acceptingInput) {
 >         acceptingInput = false
@@ -48,7 +48,7 @@ Ignore contacts during playback and prevent one held switch from being counted t
 > }
 > ```
 >
-> ```blocks
+> ```microbit
 > basic.forever(function () {
 >     let p0IsClosed = pins.digitalReadPin(DigitalPin.P0) == 0
 >     let p1IsClosed = pins.digitalReadPin(DigitalPin.P1) == 0
