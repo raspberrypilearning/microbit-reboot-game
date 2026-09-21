@@ -1,6 +1,6 @@
 # Reboot Sequence
 
-Build finger switches from everyday materials, memorise the BBC micro:bit's signals, and repeat each growing sequence to complete the reboot.
+Build finger switches from everyday materials, memorise the BBC micro:bit's five-signal code, and repeat it to complete the reboot.
 
 This repository contains the learner-facing project draft and its authoring specification.
 

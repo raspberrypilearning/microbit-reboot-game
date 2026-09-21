@@ -2,13 +2,13 @@
 
 ## Status
 
-Working specification for a Code Club physical-computing project. The learner copy is drafted in `en/step_1.md` to `en/step_21.md`, and `en/solutions/reboot-sequence.ts` records the intended completed logic. Photography, a downloadable MakeCode project, physical-hardware testing, and publication assets remain outstanding.
+Working specification for a Code Club physical-computing project. The learner copy is drafted in `en/step_1.md` to `en/step_13.md`, and `en/solutions/reboot-sequence.ts` records the tested completed logic. One-board physical testing is in progress; photography, a downloadable MakeCode project, multi-board validation, and publication assets remain outstanding.
 
 ## Product statement
 
 Learners build four loose contact bands from scrap paper, ordinary tape, and conductive tape. A thumb band connects to `GND`; bands on the index, middle, and ring fingers connect to `P0`, `P1`, and `P2`. Touching a finger band to the thumb band closes one circuit and enters the number `1`, `2`, or `3`.
 
-The BBC micro:bit displays a sequence of numbers. The player repeats the sequence using the finger contacts. Each successful round adds one random number. A mistake ends the attempt; completing a five-term sequence completes the reboot.
+The BBC micro:bit generates and displays one five-number reboot code. The player repeats that code using the finger contacts. A mistake ends the attempt; entering all five terms correctly completes the reboot.
 
 ## Audience and level
 
@@ -22,14 +22,14 @@ The BBC micro:bit displays a sequence of numbers. The player repeats the sequenc
 Learners will:
 
 - complete and test low-voltage input circuits using `GND` and pins `P0`, `P1`, and `P2`;
-- respond to physical inputs with event handlers;
+- detect new physical switch closures without counting a held contact twice;
 - use a function with a parameter to avoid repeated code;
 - store an ordered sequence in a list;
 - traverse a list and retrieve an item by its position;
 - use a Boolean variable to control when input is accepted;
 - compare player input with an expected value;
-- extend a persistent sequence with random values; and
-- implement success, failure, progression, and win conditions.
+- generate a fixed-length list of random values; and
+- implement acknowledgement, failure, and win feedback.
 
 ## Required materials
 
@@ -76,14 +76,13 @@ The thumb band is the common ground contact. The index, middle, and ring finger 
 
 ## Game rules
 
-1. Press button A to begin or restart.
-2. The display shows one number, then clears.
-3. Tap the matching finger contact against the thumb contact.
-4. After a correct round, the same sequence is shown again with one new random term at the end.
-5. A wrong answer displays a cross and the number of completed rounds.
-6. Successfully repeat a five-term sequence to display the completed reboot.
-
-The order is persistent within a game: a new random value is appended; the previous values are not regenerated.
+1. Press button A to begin.
+2. The micro:bit generates five random values from 1 to 3 and displays them once, with a gap between values.
+3. Tap the matching finger contacts against the thumb contact in the same order.
+4. Every registered touch briefly displays the number detected.
+5. A wrong answer produces a low warning honk, displays a cross, and ends the attempt.
+6. Five correct answers produce two short beeps and display the completed reboot.
+7. Press button A to generate a new five-value code.
 
 ## Program state
 
@@ -92,7 +91,7 @@ The order is persistent within a game: a new random value is appended; the previ
 | `rebootSequence` | list of numbers | Stores the ordered values to display and repeat |
 | `playerPosition` | number | Identifies the next list item the player must match |
 | `acceptingInput` | Boolean | Prevents touches during playback or feedback from being counted |
-| `targetLength` | number | Sets the number of terms required to complete the reboot |
+| `sequenceLength` | number | Sets how many random terms are generated for each game |
 | `gameActive` | Boolean | Allows button A to start a game only when the previous game has ended |
 | `signal` | function parameter | Carries one displayed value into `showSignal` |
 | `answer` | function parameter | Carries one touched value into `checkAnswer` |
@@ -103,48 +102,51 @@ The order is persistent within a game: a new random value is appended; the previ
 
 Displays one cue, pauses, clears the display, and inserts a short gap. Keeping this behaviour in one function allows the number display to be replaced with symbols without changing the game logic.
 
-### `startRound()`
+### `rememberSwitchStates()`
 
-Stops accepting input, appends one random value from 1 to 3, displays the complete stored sequence, resets `playerPosition`, and then enables input.
+Records whether each input is currently closed. This prevents a contact held during playback or feedback from being treated as a new answer.
+
+### `showRecognisedAnswer(answer)`
+
+Briefly displays the number detected for every accepted switch closure so the player knows that the input was registered.
+
+### `startGame()`
+
+Stops accepting input, replaces the old list with five random values from 1 to 3, displays the complete code once, resets `playerPosition`, records the current switch states, and then enables input.
 
 ### `checkAnswer(answer)`
 
-Ignores input unless `acceptingInput` is true. It locks input while checking, compares `answer` with the list item at `playerPosition`, and then follows one of four paths:
+Ignores input unless `acceptingInput` is true. It locks input while checking, displays the number recognised, compares `answer` with the list item at `playerPosition`, and then follows one of three paths:
 
-- wrong answer: end the attempt;
+- wrong answer: play the warning honk and end the attempt;
 - correct partial answer: advance and accept the next input;
-- completed round below `targetLength`: show success and start another round;
-- completed round at `targetLength`: show the reboot-complete sequence.
+- fifth correct answer: play two beeps and show the reboot-complete sequence.
+
+### `playErrorSound()` and `playCorrectSound()`
+
+Provide clearly different audio feedback: one low warning honk for an error and two short higher beeps for a completed reboot.
 
 ## Step architecture
 
 | Step | Outcome | Acceptance test |
 |---:|---|---|
 | 1 | Understand the finished project and collect materials | Learner can identify the four contacts and explain the game loop |
-| 2 | Create and transfer a MakeCode program | The start prompt `A` appears on the physical micro:bit |
-| 3 | Connect bare leads to `GND` and `P0` | Both clips grip the correct rings and their free jaws remain separate |
-| 4 | Code and test the first bare-lead circuit | Touching the free `P0` and `GND` jaws displays `1` once |
-| 5 | Connect bare leads to `P1` and `P2` | Four leads reach the correct rings without touching neighbours |
-| 6 | Code and test `P0`, `P1`, and `P2` | Touching each signal jaw to the `GND` jaw shows `1`, `2`, or `3` |
-| 7 | Centralise signal display in a parameterised function | All three bare inputs still show the correct number, then clear |
-| 8 | Create and inspect a fixed list | Button A displays the list length `3` |
-| 9 | Traverse the fixed list | Button A displays `1`, `3`, `2` with visible gaps |
-| 10 | Compare a bare-lead answer with the first list item | The `P0` lead is accepted first; `P1` or `P2` is rejected |
-| 11 | Advance through expected list positions | Entering `1`, `3`, `2` produces three correct-answer indicators |
-| 12 | Detect completion of the fixed round | The final correct input produces a distinct round-complete tick |
-| 13 | Lock input during playback, checking, and failure | Contacts made during playback or feedback are ignored |
-| 14 | Generate a one-term random sequence | Each restart contains exactly one value from 1 to 3 |
-| 15 | Append a term after each completed round | Successive rounds have lengths 1, 2, 3, and so on, preserving earlier values |
-| 16 | Provide a complete failure and restart state | A wrong input shows a cross, score, and restart prompt; button A is ignored during an active game |
-| 17 | Provide a five-term win state | Repeating five terms displays `ON` and a happy face |
-| 18 | Replace numbers with a three-symbol code | The game rules still work with three distinct learner-designed symbols |
-| 19 | Construct four loose paper contact bands | Bands fit safely; conductive patches and clip tabs are secure |
-| 20 | Secure the micro:bit on the wrist | The display and controls remain visible; the board does not slide |
-| 21 | Attach and test the finger controller | Finger-to-thumb taps control the already completed game |
+| 2 | Create and transfer the start prompt, then connect `GND` and `P0` | `A` appears and both bare leads remain securely connected |
+| 3 | Code and test the first digital switch | Each separate `P0`-to-`GND` tap displays `1` once; a hold does not repeat |
+| 4 | Connect, code, and test `P1` and `P2` | The three bare signal leads reliably enter `1`, `2`, and `3` |
+| 5 | Create a display function and play a fixed list | Button A displays `1`, `3`, `2` with visible gaps |
+| 6 | Compare bare-lead answers with successive list items | `1`, `3`, `2` completes the test code; a different value fails |
+| 7 | Lock input and preserve switch-edge state | Playback contacts are ignored and held contacts count once |
+| 8 | Generate and display a five-value random code | Every new game contains exactly five values from 1 to 3 |
+| 9 | Acknowledge every accepted contact | Each touch briefly displays the number read, then immediately restores the target |
+| 10 | Add game locking, sounds, failure, and success | A cannot overlap games; failure honks and five correct inputs beep twice |
+| 11 | Replace numbers with an optional three-symbol code | The complete game still works with learner-designed symbols |
+| 12 | Construct four loose contacts and secure the micro:bit | All fastenings are removable, comfortable, and leave controls accessible |
+| 13 | Connect and test the completed wearable controller | Finger-to-thumb taps control several complete game attempts reliably |
 
 ## Step-size rule
 
-Every learner-facing step contains no more than two `[!TASK]` callouts. A callout may contain a small cluster of inseparable edits, such as connecting both ends of one lead or updating the three equivalent pin events. Each step ends with an explicit test of the state just created.
+Every learner-facing step contains no more than two `[!TASK]` callouts. Each step is a meaningful milestone rather than a single tiny edit. A callout may contain a small cluster of inseparable changes, such as wiring and configuring equivalent pins. Each step ends with an explicit test of the state just created.
 
 ## Required assets before publication
 
@@ -155,7 +157,7 @@ Every learner-facing step contains no more than two `[!TASK]` callouts. A callou
 - Photograph showing how the chosen band or strap holds the micro:bit
 - Wiring photograph or diagram labelled `P0`, `P1`, `P2`, and `GND`
 - Short animation showing one finger tap completing a circuit
-- Short animation showing a three-term round
+- Short animation showing a complete five-term code
 - MakeCode screenshots only where the rendered blocks are insufficient
 - Downloadable MakeCode project or HEX file in `en/solutions/`; the TypeScript reference is already present
 
@@ -168,18 +170,18 @@ The current `en/images/banner.png` is a placeholder copied from the repository t
 - Run the full build on at least two BBC micro:bit V2 boards.
 - Test all three contacts for at least 30 taps each, recording missed or duplicate inputs.
 - Confirm that touches made during sequence playback do not enter answers.
-- Confirm that earlier terms remain unchanged when a new term is appended.
-- Confirm that the failure score is `sequence length - 1`.
+- Confirm that every new game generates exactly five values from 1 to 3.
+- Confirm that every accepted touch displays the number detected exactly once.
 - Confirm that button A restarts cleanly after both failure and success.
 - Confirm that button A is ignored while a game is active, including during sequence playback.
-- Confirm that no sound or microphone blocks are present.
+- Confirm that failure produces one warning honk, success produces two short beeps, and no microphone blocks are present.
 - Confirm that the wrist fastening remains secure and comfortable throughout a complete five-term game.
 - Confirm that the game can be completed while powered by the specified battery pack.
 - Check every Markdown task count, code fence, local image link, step title, and metadata entry.
 
 ## Out of scope
 
-- Speaker or microphone use
+- Microphone use
 - An edge-connector breakout
 - Five independent input pins
 - A fabricated glove or sewn wearable

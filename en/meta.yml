@@ -1,33 +1,26 @@
 title: Reboot Sequence
 hero_image: images/banner.png
-description: Build finger switches from everyday materials and repeat the micro:bit's growing signal sequence.
+description: Build finger switches from everyday materials and repeat the micro:bit's five-signal reboot code.
 listed: false
 pdf: false
 steps:
   - title: What you will make
-  - title: Start the reboot controller
+  - title: Start the controller
     completion:
       - engaged
-  - title: Connect the first test circuit
-  - title: Test the first circuit
-  - title: Connect two more inputs
-  - title: Test all three inputs
-  - title: Make a signal function
-  - title: Store a reboot sequence
-  - title: Play the stored sequence
-  - title: Check the first answer
-  - title: Follow the whole sequence
-  - title: Finish a round
-  - title: Accept one answer at a time
-  - title: Start with a random signal
-  - title: Grow the sequence
-  - title: End the reboot after a mistake
-  - title: Complete the reboot
-  - title: "Challenge: Replace numbers with symbols"
-    challenge: true
-  - title: Make the contact bands
-  - title: Attach the micro:bit to your wrist
-  - title: Connect the finger controller
+  - title: Make the first switch work
+  - title: Add the other switches
+  - title: Play a test code
+  - title: Check the test code
+  - title: Make the input reliable
+  - title: Generate a reboot code
+  - title: Show every recognised touch
+  - title: Finish the game
     completion:
       - internal
+  - title: "Challenge: Replace numbers with symbols"
+    challenge: true
+  - title: Build the wearable controls
+  - title: Connect and test the controller
+    completion:
       - external

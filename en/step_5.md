@@ -1,13 +1,35 @@
-## Connect two more inputs
+## Play a test code
 
-Add bare crocodile leads for the numbers `2` and `3`.
-
-> [!TASK]
->
-> Disconnect the battery pack. Keep the existing leads on `GND` and `P0`, then connect another lead to `P1` and another to `P2`.
+Use a function and a list to display a short test sequence.
 
 > [!TASK]
 >
-> Place the four free jaws apart. Check each micro:bit connection against this order: `P0`, `P1`, `P2`, skip `3V`, then `GND`.
+> Make a function called `show signal` with a number parameter called `signal`. Show the value, wait, clear the display, and leave a short blank gap.
+>
+> ```blocks
+> function showSignal (signal: number) {
+>     basic.showNumber(signal)
+>     basic.pause(500)
+>     basic.clearScreen()
+>     basic.pause(200)
+> }
+> ```
 
-**Test:** Gently move each lead. All four should remain connected to the intended ring, and no two clips on the micro:bit should touch.
+> [!TASK]
+>
+> Make a list called `reboot sequence` containing `1`, `3`, and `2`. When button A is pressed, use a `for element` loop to pass every item to `show signal`.
+>
+> ```blocks
+> let rebootSequence = [1, 3, 2]
+> input.onButtonPressed(Button.A, function () {
+>     for (let signal of rebootSequence) {
+>         showSignal(signal)
+>     }
+> })
+> ```
+
+**Test:** Press A. The display should show `1`, then `3`, then `2`, with a clear gap between values. Repeated numbers will also be separated by this gap later.
+
+> [!TIP]
+>
+> A **list** keeps several related values in order. A function parameter lets the same display code work with every value in the list.

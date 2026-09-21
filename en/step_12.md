@@ -1,24 +1,17 @@
-## Finish a round
+## Build the wearable controls
 
-Show different feedback after the final correct answer.
+Now that the complete game works with bare leads, make the finger contacts and secure the micro:bit.
 
 > [!TASK]
 >
-> After increasing `player position`, check whether it equals the length of `reboot sequence`. Show a tick when the positions are equal; otherwise, show the small diamond.
->
-> ```blocks
-> function checkAnswer (answer: number) {
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == rebootSequence.length) {
->             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.SmallDiamond)
->         }
->     } else {
->         basic.showIcon(IconNames.No)
->     }
-> }
-> ```
+> Cut four strips of scrap paper or thin card. Make one loose band for your thumb and one for each of your index, middle and ring fingers. Add conductive tape to the outside of each band, extending it onto a flat tab where a crocodile clip can grip. Label the finger tabs `1`, `2` and `3`.
 
-**Test:** Press A and enter `1`, `3`, `2`. The first two answers should show a small diamond. The third should show a tick to mark the end of the round.
+> [!TASK]
+>
+> Use the provided band or strap to hold the micro:bit comfortably on your wrist. Keep the LED display, buttons and edge connector visible and reachable.
+
+**Test:** Put on and remove every finger band. Each must come off immediately without pulling. Hold your arm in a comfortable playing position for 30 seconds; the micro:bit should stay in place without the fastening feeling tight.
+
+> [!IMPORTANT]
+>
+> Keep conductive adhesive and crocodile clip jaws off your skin. If any band or wrist fastening feels tight, remove it and adjust or replace it.

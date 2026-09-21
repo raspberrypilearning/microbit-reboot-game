@@ -1,21 +1,41 @@
-## Play the stored sequence
+## Show every recognised touch
 
-Display every signal in the list, one after another.
+Give immediate feedback so the player knows which switch the micro:bit detected.
 
 > [!TASK]
 >
-> Replace `show number` in the button A event with a `for element` loop. Rename the loop's element variable `signal`, then call `show signal` with that value.
+> Make a function called `show recognised answer` with a number parameter called `answer`. Show the answer for `150` milliseconds, then clear the display.
 >
 > ```blocks
-> input.onButtonPressed(Button.A, function () {
->     for (let signal of rebootSequence) {
->         showSignal(signal)
->     }
-> })
+> function showRecognisedAnswer (answer: number) {
+>     basic.showNumber(answer)
+>     basic.pause(150)
+>     basic.clearScreen()
+> }
 > ```
 
-> [!TIP]
+> [!TASK]
 >
-> The loop takes each item from the list in turn. The function displays the item and inserts a blank gap before the loop moves to the next one.
+> Call `show recognised answer` immediately after `check answer` locks input. After a correct partial answer, show the target and accept the next input without another animation.
+>
+> ```blocks
+> function checkAnswer (answer: number) {
+>     if (acceptingInput) {
+>         acceptingInput = false
+>         showRecognisedAnswer(answer)
+>         if (answer == rebootSequence[playerPosition]) {
+>             playerPosition += 1
+>             if (playerPosition == rebootSequence.length) {
+>                 basic.showIcon(IconNames.Yes)
+>             } else {
+>                 basic.showIcon(IconNames.Target)
+>                 acceptingInput = true
+>             }
+>         } else {
+>             basic.showIcon(IconNames.No)
+>         }
+>     }
+> }
+> ```
 
-**Test:** Press button A. The display should show `1`, then `3`, then `2`, with a short blank gap between the numbers.
+**Test:** Start a game and enter one correct contact and one deliberately wrong contact. Each touch should briefly display the number detected. The target should return immediately after a correct partial answer.

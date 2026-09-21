@@ -1,49 +1,68 @@
-## Check the first answer
+## Finish the game
 
-Compare a bare-lead input with the first item in the list.
+Prevent overlapping games and add different feedback for failure and success.
 
 > [!TASK]
 >
-> Make a variable called `player position` and set it to `0` after button A displays the sequence.
->
-> Make a function called `check answer` with a number parameter called `answer`. If `answer` matches the item at `player position` in `reboot sequence`, show a tick. Otherwise, show a cross.
+> Make `game active` and the two sound functions. Change button A so it starts a game only when another game is not already active.
 >
 > ```blocks
-> let playerPosition = 0
+> let gameActive = false
+> function playCorrectSound () {
+>     music.playTone(Note.C5, 100)
+>     basic.pause(80)
+>     music.playTone(Note.E5, 100)
+> }
+> function playErrorSound () {
+>     music.playTone(Note.C3, 500)
+> }
+> input.onButtonPressed(Button.A, function () {
+>     if (!(gameActive)) {
+>         gameActive = true
+>         startGame()
+>     }
+> })
+> ```
+
+> [!TASK]
+>
+> Make a `complete reboot` function. Finish both result branches in `check answer`: a mistake honks, shows a cross and offers a restart; five correct answers beep twice and complete the reboot.
+>
+> ```blocks
+> function completeReboot () {
+>     acceptingInput = false
+>     playCorrectSound()
+>     basic.showIcon(IconNames.Yes)
+>     basic.pause(500)
+>     basic.showString("ON")
+>     basic.showIcon(IconNames.Happy)
+>     gameActive = false
+> }
+> ```
+>
+> ```blocks
 > function checkAnswer (answer: number) {
->     if (answer == rebootSequence[playerPosition]) {
->         basic.showIcon(IconNames.Yes)
->     } else {
->         basic.showIcon(IconNames.No)
+>     if (acceptingInput) {
+>         acceptingInput = false
+>         showRecognisedAnswer(answer)
+>         if (answer == rebootSequence[playerPosition]) {
+>             playerPosition += 1
+>             if (playerPosition == rebootSequence.length) {
+>                 completeReboot()
+>             } else {
+>                 basic.showIcon(IconNames.Target)
+>                 acceptingInput = true
+>             }
+>         } else {
+>             acceptingInput = false
+>             playErrorSound()
+>             basic.showIcon(IconNames.No)
+>             basic.pause(700)
+>             basic.showString("A")
+>             gameActive = false
+>         }
 >     }
 > }
 > ```
 
-> [!TASK]
->
-> Update button A so it resets `player position` and displays a target after the sequence. Replace the `show signal` call in each pin event with `check answer`, passing that pin's number.
->
-> ```blocks
-> input.onButtonPressed(Button.A, function () {
->     for (let signal of rebootSequence) {
->         showSignal(signal)
->     }
->     playerPosition = 0
->     basic.showIcon(IconNames.Target)
-> })
-> input.onPinPressed(TouchPin.P0, function () {
->     checkAnswer(1)
-> })
-> input.onPinPressed(TouchPin.P1, function () {
->     checkAnswer(2)
-> })
-> input.onPinPressed(TouchPin.P2, function () {
->     checkAnswer(3)
-> })
-> ```
-
-> [!TIP]
->
-> List positions start at `0`, so `player position` `0` selects the first item.
-
-**Test:** Press A and watch `1`, `3`, `2`. Touch the `P0` jaw to `GND`: a tick should appear. Press A again, then touch `P1` or `P2` to `GND` first: a cross should appear.
+**Test:** Press A again during playback; the code should continue without restarting. Enter a wrong value and listen for one warning honk. Start again and repeat all five values correctly; the micro:bit should beep twice, display `ON`, and show a happy face.

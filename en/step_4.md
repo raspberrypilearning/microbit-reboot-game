@@ -1,23 +1,38 @@
-## Test the first circuit
+## Add the other switches
 
-Make pin `P0` respond when its bare test lead touches the `GND` lead.
+Connect and test the inputs for `2` and `3`.
 
 > [!TASK]
 >
-> From **Input**, add `on pin P0 pressed`. Put `show number 1` inside it.
+> Disconnect all power. Leave the leads on `GND` and `P0`, then connect another lead to `P1` and another to `P2`. Keep all four free jaws apart.
+
+> [!TASK]
+>
+> Add remembered-state variables and pull-ups for `P1` and `P2`. Expand `forever` to read all three pins and show the matching number.
 >
 > ```blocks
-> input.onPinPressed(TouchPin.P0, function () {
->     basic.showNumber(1)
+> let p0WasClosed = false
+> let p1WasClosed = false
+> let p2WasClosed = false
+> pins.setPull(DigitalPin.P0, PinPullMode.PullUp)
+> pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+> pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
+> basic.forever(function () {
+>     let p0IsClosed = pins.digitalReadPin(DigitalPin.P0) == 0
+>     let p1IsClosed = pins.digitalReadPin(DigitalPin.P1) == 0
+>     let p2IsClosed = pins.digitalReadPin(DigitalPin.P2) == 0
+>     if (p0IsClosed && !(p0WasClosed)) {
+>         basic.showNumber(1)
+>     } else if (p1IsClosed && !(p1WasClosed)) {
+>         basic.showNumber(2)
+>     } else if (p2IsClosed && !(p2WasClosed)) {
+>         basic.showNumber(3)
+>     }
+>     p0WasClosed = p0IsClosed
+>     p1WasClosed = p1IsClosed
+>     p2WasClosed = p2IsClosed
+>     basic.pause(20)
 > })
 > ```
 
-> [!TASK]
->
-> Download the updated program. Disconnect the USB cable and connect the battery pack.
-
-**Test:** Hold the insulated covers and tap the free metal jaw from `P0` against the free metal jaw from `GND`, then separate them. The display should show `1` once. Repeat the test at least five times.
-
-> [!TIP]
->
-> Touching the two metal jaws closes the circuit between `P0` and `GND`. The pin event is the program's **input**; the number on the LEDs is its **output**.
+**Test:** Download the program. Touch `P0`, `P1` and `P2` to `GND`, one at a time, to enter `1`, `2`, `3`, then `3`, `2`, `1`. Every separate tap should display the intended number exactly once.

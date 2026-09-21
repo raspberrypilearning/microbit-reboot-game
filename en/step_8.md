@@ -1,27 +1,38 @@
-## Store a reboot sequence
+## Generate a reboot code
 
-Use a list to keep several signals in their order.
+Replace the fixed test list with five random signals.
 
 > [!TASK]
 >
-> Open **Advanced**, then **Arrays**. Make a list called `reboot sequence` containing `1`, `3`, and `2`, in that order.
+> Change `reboot sequence` to an empty list and make `sequence length` equal `5`. Make a `start game` function that empties the old list, adds five random values from `1` to `3`, and displays them.
 >
 > ```blocks
-> let rebootSequence = [1, 3, 2]
+> let sequenceLength = 5
+> let rebootSequence: number[] = []
+> function startGame () {
+>     acceptingInput = false
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let signal of rebootSequence) {
+>         showSignal(signal)
+>     }
+>     playerPosition = 0
+>     rememberSwitchStates()
+>     basic.showIcon(IconNames.Target)
+>     acceptingInput = true
+> }
 > ```
 
 > [!TASK]
 >
-> Add an `on button A pressed` event. Make it show the length of `reboot sequence`.
+> Replace the code inside the button A event with a call to `start game`.
 >
 > ```blocks
 > input.onButtonPressed(Button.A, function () {
->     basic.showNumber(rebootSequence.length)
+>     startGame()
 > })
 > ```
 
-> [!TIP]
->
-> A **list** stores several related values in one variable. The order of its items is preserved.
-
-**Test:** Press button A. The micro:bit should display `3` because the list contains three items.
+**Test:** Press A several times. Every game should display exactly five values, and every value should be `1`, `2`, or `3`. Repeated values are allowed.

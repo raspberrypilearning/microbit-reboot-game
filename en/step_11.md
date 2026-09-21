@@ -1,24 +1,48 @@
-## Follow the whole sequence
+## Challenge: Replace numbers with symbols
 
-Move to the next list position after every correct answer.
+Make the reboot harder by inventing a visual code.
 
 > [!TASK]
 >
-> In the correct branch of `check answer`, change `player position` by `1`. Show a small diamond to acknowledge the answer.
+> Design three clearly different 5×5 symbols. Decide which one represents each input, then replace `show number signal` inside `show signal` with an `if`, `else if`, `else` choice.
+>
+> Here is one possible symbol set:
 >
 > ```blocks
-> function checkAnswer (answer: number) {
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         basic.showIcon(IconNames.SmallDiamond)
+> function showSignal (signal: number) {
+>     if (signal == 1) {
+>         basic.showLeds(`
+>             . . # . .
+>             . . # . .
+>             # # # # #
+>             . . # . .
+>             . . # . .
+>         `)
+>     } else if (signal == 2) {
+>         basic.showLeds(`
+>             # . . . #
+>             . # . # .
+>             . . # . .
+>             . # . # .
+>             # . . . #
+>         `)
 >     } else {
->         basic.showIcon(IconNames.No)
+>         basic.showLeds(`
+>             . # # # .
+>             . # . # .
+>             . # . # .
+>             . # # # .
+>             . . . . .
+>         `)
 >     }
+>     basic.pause(500)
+>     basic.clearScreen()
+>     basic.pause(200)
 > }
 > ```
 
-> [!TIP]
+> [!TASK]
 >
-> `player position` points to the item the player must enter next. Increasing it moves the comparison through the list without changing the stored sequence.
+> Write down your three-symbol key and download the game. Complete one reboot using the key, then hide it and challenge someone else to learn the symbols.
 
-**Test:** Press A, then enter `1`, `3`, `2`. Each correct input should show a small diamond. Restart and deliberately enter a wrong number; that input should show a cross.
+**Test:** Every symbol should always correspond to the same input. Touch acknowledgement, failure, restarting and the five-signal win must still work as they did with numbers.
