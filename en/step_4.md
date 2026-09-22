@@ -1,19 +1,27 @@
-## Make the first switch work
+## Detect the other switches
 
-Show `1` the moment the `P0` lead touches the `GND` lead.
+Add the inputs for `2` and `3`.
 
 > [!TASK]
 >
-> From the `Input` menu, add an `on pin P0 pressed` block. Inside it, show the number `1`.
+> Add an `on pin pressed` block for `P1` and another for `P2`. Change the pin in each one, and show `2` and `3`.
 >
 > ```blocks
 > input.onPinPressed(TouchPin.P0, function () {
 >     basic.showNumber(1)
 > })
+> input.onPinPressed(TouchPin.P1, function () { // @highlight
+>     basic.showNumber(2)
+> })
+> input.onPinPressed(TouchPin.P2, function () { // @highlight
+>     basic.showNumber(3)
+> })
 > ```
 
-**Test:** Download the program. Tap the free `P0` jaw against the free `GND` jaw five times, separating them after every tap. Each tap should show `1` once. Hold the jaws together for a moment and check that one hold is not counted repeatedly.
+**Test:** Download the program. Touch `P0`, `P1` and `P2` to `GND`, one at a time, to enter `1`, `2`, `3`, then `3`, `2`, `1`. Every separate tap should display the intended number exactly once. All three contacts must work now, because everything after this step relies on them.
 
-> [!TIP]
+> [!DEBUG]
 >
-> The wire tester read the pins over and over, because it had to show their state at every moment. Your game only needs to know the moment a contact closes, and `on pin pressed` reports exactly that, once per tap.
+> A contact that gives the wrong number has two leads swapped on the edge connector.
+>
+> If two contacts give the same number, check the pin in each block. If you built the second and third by duplicating the first, it is easy to leave both watching `P0`, and that looks exactly like a broken wire.

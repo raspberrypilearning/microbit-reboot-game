@@ -2,7 +2,7 @@
 
 ## Status
 
-Working specification for a Code Club physical-computing project. The learner copy is drafted in `en/step_1.md` to `en/step_14.md`, and `en/solutions/reboot-sequence.ts` records the tested completed logic. One-board physical testing is in progress; photography, a downloadable MakeCode project, multi-board validation, and publication assets remain outstanding.
+Working specification for a Code Club physical-computing project. The learner copy is drafted in `en/step_1.md` to `en/step_13.md`, and `en/solutions/reboot-sequence.ts` records the tested completed logic. One-board physical testing is in progress; photography, a downloadable MakeCode project, multi-board validation, and publication assets remain outstanding.
 
 ## Product statement
 
@@ -131,18 +131,17 @@ Provide clearly different audio feedback: one low warning honk for an error and 
 |---:|---|---|
 | 1 | Understand the finished project and collect materials | Learner can identify the four contacts and explain the game loop |
 | 2 | Create and transfer the start prompt, then connect all four leads | `A` appears and all four bare leads remain securely connected |
-| 3 | Prove the hardware with a ready-made wire tester | Each jaw touched to `GND` shows its own number; an open circuit shows a dash |
-| 4 | Respond to the first switch with `on pin P0 pressed` | Each separate `P0`-to-`GND` tap displays `1` once; a hold does not repeat |
-| 5 | Add `on pin pressed` for `P1` and `P2` | The three bare signal leads reliably enter `1`, `2`, and `3` |
-| 6 | Create a display function and play a fixed list | Button A displays `1`, `3`, `2` with visible gaps |
-| 7 | Compare bare-lead answers with successive list items | `1`, `3`, `2` completes the test code; a different value fails |
-| 8 | Gate input with a Boolean while the code plays | Contacts touched during playback are ignored |
-| 9 | Generate and display a five-value random code with `repeat` | Every new game contains exactly five values from 1 to 3 |
-| 10 | Acknowledge every accepted contact | Each touch briefly displays the number read, then immediately restores the target |
-| 11 | Add game locking, tones, failure, and success | A cannot overlap games; failure plays one low tone and five correct inputs play two |
-| 12 | Replace numbers with an optional three-symbol code | The complete game still works with learner-designed symbols |
-| 13 | Construct four loose contacts and secure the micro:bit | All fastenings are removable, comfortable, and leave controls accessible |
-| 14 | Connect and test the completed wearable controller | Finger-to-thumb taps control several complete game attempts reliably |
+| 3 | Respond to the first switch with `on pin P0 pressed`, and prove the wiring | Each separate `P0`-to-`GND` tap displays `1` once; a hold does not repeat |
+| 4 | Add `on pin pressed` for `P1` and `P2` | The three bare signal leads reliably enter `1`, `2`, and `3` |
+| 5 | Create a display function and play a fixed list | Button A displays `1`, `3`, `2` with visible gaps |
+| 6 | Compare bare-lead answers with successive list items | `1`, `3`, `2` completes the test code; a different value fails |
+| 7 | Gate input with a Boolean while the code plays | Contacts touched during playback are ignored |
+| 8 | Generate and display a five-value random code with `repeat` | Every new game contains exactly five values from 1 to 3 |
+| 9 | Acknowledge every accepted contact | Each touch briefly displays the number read, then immediately restores the target |
+| 10 | Add game locking, tones, failure, and success | A cannot overlap games; failure plays one low tone and five correct inputs play two |
+| 11 | Replace numbers with an optional three-symbol code | The complete game still works with learner-designed symbols |
+| 12 | Construct four loose contacts and secure the micro:bit | All fastenings are removable, comfortable, and leave controls accessible |
+| 13 | Connect and test the completed wearable controller | Finger-to-thumb taps control several complete game attempts reliably |
 
 ## Input design
 
@@ -153,9 +152,15 @@ the earlier draft did by hand, which removed three remembered-state Boolean vari
 variables. Step 4 is now a single block. The only remaining input machinery is the
 `acceptingInput` Boolean, which exists solely to ignore taps made while the code is playing back.
 
-Step 3's wire tester still polls `digitalReadPin` with pull-ups, because a diagnostic has to show
-the live state of each pin, including "open", which an event cannot report. Step 4 has a tip
-explaining that difference.
+There is no separate wire tester. A learner-built one is the same nine blocks as steps 3 and 4,
+so one of the two steps would have had nothing left to teach, and the 36-block version that adds
+a dash for an open circuit needs `setPull` and `digitalReadPin` — the polling concept this project
+deliberately removed. Step 3 doubles as the wiring check instead: it is the first code step, it is
+three blocks, and a contact that does not register its number is the diagnosis. Steps 3 and 4
+carry `[!DEBUG]` callouts naming the three ways the wiring goes wrong.
+
+The cost is that an event cannot report an open circuit, so a learner cannot tell "not touching"
+from "broken lead" at a glance. They find out by tapping.
 
 **Not yet verified on hardware:** that pin-press detection fires reliably through the foil
 contacts. The wiring is a direct short to `GND`, so it should, but this must be tested on a
@@ -165,8 +170,7 @@ board before publication.
 
 Every block in the project comes from the standard micro:bit toolbox. There are no extensions and
 no custom blocks. Three of the categories used sit behind **Advanced** in the editor: Functions,
-Arrays, and Pins. Pins appears only in step 3's ready-made wire tester, which learners download
-rather than build.
+Arrays, and Pins. Pins is no longer used anywhere in the project.
 
 MakeCode's renderer falls back to a grey box of literal JavaScript whenever a `blocks` fence
 references something it does not declare. A call to a project function renders as
@@ -181,9 +185,8 @@ image.
 
 Highlights mark the lines a task adds or changes, computed against the last fence that showed the
 same function or handler. Fences whose every line is new carry no highlights, because an outline
-around everything says nothing. Step 3's wire tester carries none either, since learners download
-it rather than build it. Highlights are never placed inside a `showLeds` template literal, where a
-comment would become part of the LED pattern.
+around everything says nothing. Highlights are never placed inside a `showLeds` template literal,
+where a comment would become part of the LED pattern.
 
 Two rules keep this from coming back:
 
@@ -212,7 +215,6 @@ Every learner-facing step contains no more than two `[!TASK]` callouts. Each ste
 - `en/images/microbit-game.gif` (step 14), a complete game. Same footage as the Short above, so the two are redundant if a single asset is preferred.
 - `en/images/wires-test.gif` (step 14), each contact tapped in turn. Replaces the "Micro:bit Simon Says - Wire test" Short (`jbZNebFAngA`), which is the same footage; that Short's title also still carries the old working name.
 - Both GIFs were re-encoded from the 15-16 MB originals to 200px wide, 32 colours, 5fps: 1.2 MB and 2.2 MB.
-- Step 3's wire tester has no animation. Both GIFs show the finished worn controller, which does not exist at that point in the project.
 - MakeCode screenshots only where the rendered blocks are insufficient
 - Downloadable MakeCode project or HEX file in `en/solutions/`; the TypeScript reference is already present
 

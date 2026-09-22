@@ -1,46 +1,25 @@
-## Check your wiring
+## Make the first switch work
 
-Before you write any of the game, prove that all three switches work. Then if a tap goes wrong later, you will know the fault is in your code and not in your wiring.
+Show `1` the moment the `P0` lead touches the `GND` lead. This is also how you check your wiring, so do it before you write any of the game.
 
 > [!TASK]
 >
-> Open the [wire tester](https://makecode.microbit.org/){:target="_blank"} in a second MakeCode tab and download it to your micro:bit. It shows a dash while every switch is open, and the number of whichever switch is closed.
+> From the `Input` menu, add an `on pin P0 pressed` block. Inside it, show the number `1`.
 >
 > ```blocks
-> let switchNumber = 0
-> pins.setPull(DigitalPin.P0, PinPullMode.PullUp)
-> pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
-> pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
-> basic.forever(function () {
->     if (pins.digitalReadPin(DigitalPin.P0) == 0) {
->         switchNumber = 1
->     } else if (pins.digitalReadPin(DigitalPin.P1) == 0) {
->         switchNumber = 2
->     } else if (pins.digitalReadPin(DigitalPin.P2) == 0) {
->         switchNumber = 3
->     } else {
->         switchNumber = 0
->     }
->     if (switchNumber == 0) {
->         basic.showLeds(`
->             . . . . .
->             . . . . .
->             . # # # .
->             . . . . .
->             . . . . .
->             `)
->     } else {
->         basic.showNumber(switchNumber)
->     }
+> input.onPinPressed(TouchPin.P0, function () {
+>     basic.showNumber(1)
 > })
 > ```
 
-> [!TASK]
->
-> Hold the `GND` jaw against the `P0` jaw and check that `1` appears. Repeat with `P1` for `2` and `P2` for `3`. Separate the jaws each time and check the dash comes back.
+**Test:** Download the program. Tap the free `P0` jaw against the free `GND` jaw five times, separating them after every tap. Each tap should show `1` once. Hold the jaws together for a moment and check that one hold is not counted repeatedly.
 
-**Test:** Every switch must give its own number, and only that number. A switch that never responds has a lead on the wrong ring or a jaw that is not gripping. A switch that reads the wrong number has two leads swapped.
+> [!DEBUG]
+>
+> Nothing at all means the circuit never closes. Check that one lead is on `P0` and the other on `GND`, and that both jaws are gripping the metal ring rather than the plastic beside it.
+>
+> A number appearing when you have not touched anything means two jaws are resting against each other.
 
 > [!TIP]
 >
-> Keep this tab open. If a tap stops working later in the project, download the wire tester again to find out whether the problem is the hardware or the program.
+> `on pin pressed` runs the moment the circuit closes, once per tap. It ignores the tiny bounces a metal contact makes as it closes, so a single tap never counts twice.

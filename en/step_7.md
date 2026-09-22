@@ -1,31 +1,10 @@
-## Check the test code
+## Make the input reliable
 
-Compare each switch closure with the next expected item in the list.
-
-> [!TASK]
->
-> Make a variable called `playerPosition`. Make a function called `checkAnswer` with a number parameter called `answer`. Compare the answer with the item at `playerPosition`, then move to the next position after a correct answer.
->
-> ```blocks
-> let rebootSequence = [1, 3, 2]
-> let playerPosition = 0 // @highlight
-> function checkAnswer (answer: number) { // @highlight
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == rebootSequence.length) {
->             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.Target)
->         }
->     } else {
->         basic.showIcon(IconNames.No)
->     }
-> }
-> ```
+Ignore contacts touched while the code is still playing.
 
 > [!TASK]
 >
-> After button A displays the code, reset `playerPosition` and show a target. In each `on pin pressed` block, replace `show number` with a call to `checkAnswer`, passing the matching value.
+> Make a Boolean variable called `acceptingInput`. Lock input before playback and unlock it when the target appears.
 >
 > ```blocks
 > function showSignal (signal: number) {
@@ -34,42 +13,44 @@ Compare each switch closure with the next expected item in the list.
 >     basic.clearScreen()
 >     basic.pause(200)
 > }
+> let acceptingInput = false // @highlight
 > input.onButtonPressed(Button.A, function () {
+>     acceptingInput = false // @highlight
 >     for (let signal of rebootSequence) {
 >         showSignal(signal)
 >     }
->     playerPosition = 0 // @highlight
->     basic.showIcon(IconNames.Target) // @highlight
+>     playerPosition = 0
+>     basic.showIcon(IconNames.Target)
+>     acceptingInput = true // @highlight
 > })
 > ```
+
+> [!TASK]
+>
+> Make `checkAnswer` do nothing unless input is unlocked, and lock it again while it checks one value.
 >
 > ```blocks
 > let rebootSequence = [1, 3, 2]
 > function checkAnswer (answer: number) {
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == rebootSequence.length) {
->             basic.showIcon(IconNames.Yes)
+>     if (acceptingInput) { // @highlight
+>         acceptingInput = false
+>         if (answer == rebootSequence[playerPosition]) {
+>             playerPosition += 1
+>             if (playerPosition == rebootSequence.length) {
+>                 basic.showIcon(IconNames.Yes)
+>             } else {
+>                 basic.showIcon(IconNames.Target)
+>                 acceptingInput = true
+>             }
 >         } else {
->             basic.showIcon(IconNames.Target)
+>             basic.showIcon(IconNames.No)
 >         }
->     } else {
->         basic.showIcon(IconNames.No)
 >     }
 > }
-> input.onPinPressed(TouchPin.P0, function () {
->     checkAnswer(1) // @highlight
-> })
-> input.onPinPressed(TouchPin.P1, function () {
->     checkAnswer(2) // @highlight
-> })
-> input.onPinPressed(TouchPin.P2, function () {
->     checkAnswer(3) // @highlight
-> })
 > ```
 
-**Test:** Press A, then enter `1`, `3`, `2` with the bare leads. The target should return after the first two answers and a tick should appear after the third. Restart and deliberately enter a wrong first answer; a cross should appear.
+**Test:** Touch contacts while the code is playing; they should be ignored. Enter a wrong answer and touch again; the cross should remain.
 
 > [!TIP]
 >
-> List positions start at `0`, so position `0` selects the first item.
+> `acceptingInput` is a gate. Every `on pin pressed` block still runs on every tap, but `checkAnswer` now decides whether that tap counts.
