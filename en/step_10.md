@@ -1,68 +1,32 @@
-## Finish the game
+## Show every recognised touch
 
-Prevent overlapping games and add different feedback for failure and success.
-
-> [!TASK]
->
-> Make `game active` and the two sound functions. Change button A so it starts a game only when another game is not already active.
->
-> ```blocks
-> let gameActive = false
-> function playCorrectSound () {
->     music.playTone(Note.C5, 100)
->     basic.pause(80)
->     music.playTone(Note.E5, 100)
-> }
-> function playErrorSound () {
->     music.playTone(Note.C3, 500)
-> }
-> input.onButtonPressed(Button.A, function () {
->     if (!(gameActive)) {
->         gameActive = true
->         startGame()
->     }
-> })
-> ```
+Give immediate feedback so the player knows which switch the micro:bit detected.
 
 > [!TASK]
 >
-> Make a `complete reboot` function. Finish both result branches in `check answer`: a mistake honks, shows a cross and offers a restart; five correct answers beep twice and complete the reboot.
+> In `checkAnswer`, straight after input is locked, show the answer for `150` milliseconds and clear the display. After a correct partial answer, show the target and accept the next input without another animation.
 >
 > ```blocks
-> function completeReboot () {
->     acceptingInput = false
->     playCorrectSound()
->     basic.showIcon(IconNames.Yes)
->     basic.pause(500)
->     basic.showString("ON")
->     basic.showIcon(IconNames.Happy)
->     gameActive = false
-> }
-> ```
->
-> ```blocks
+> let rebootSequence: number[] = []
 > function checkAnswer (answer: number) {
 >     if (acceptingInput) {
 >         acceptingInput = false
->         showRecognisedAnswer(answer)
+>         basic.showNumber(answer) // @highlight
+>         basic.pause(150) // @highlight
+>         basic.clearScreen() // @highlight
 >         if (answer == rebootSequence[playerPosition]) {
 >             playerPosition += 1
 >             if (playerPosition == rebootSequence.length) {
->                 completeReboot()
+>                 basic.showIcon(IconNames.Yes)
 >             } else {
 >                 basic.showIcon(IconNames.Target)
 >                 acceptingInput = true
 >             }
 >         } else {
->             acceptingInput = false
->             playErrorSound()
 >             basic.showIcon(IconNames.No)
->             basic.pause(700)
->             basic.showString("A")
->             gameActive = false
 >         }
 >     }
 > }
 > ```
 
-**Test:** Press A again during playback; the code should continue without restarting. Enter a wrong value and listen for one warning honk. Start again and repeat all five values correctly; the micro:bit should beep twice, display `ON`, and show a happy face.
+**Test:** Start a game and enter one correct contact and one deliberately wrong contact. Each touch should briefly display the number detected. The target should return immediately after a correct partial answer.

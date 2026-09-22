@@ -8,8 +8,9 @@ steps:
   - title: Start the controller
     completion:
       - engaged
+  - title: Check your wiring
   - title: Make the first switch work
-  - title: Add the other switches
+  - title: Detect the other switches
   - title: Play a test code
   - title: Check the test code
   - title: Make the input reliable

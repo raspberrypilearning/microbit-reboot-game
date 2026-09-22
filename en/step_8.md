@@ -1,38 +1,56 @@
-## Generate a reboot code
+## Make the input reliable
 
-Replace the fixed test list with five random signals.
+Ignore contacts touched while the code is still playing.
 
 > [!TASK]
 >
-> Change `reboot sequence` to an empty list and make `sequence length` equal `5`. Make a `start game` function that empties the old list, adds five random values from `1` to `3`, and displays them.
+> Make a Boolean variable called `acceptingInput`. Lock input before playback and unlock it when the target appears.
 >
 > ```blocks
-> let sequenceLength = 5
-> let rebootSequence: number[] = []
-> function startGame () {
->     acceptingInput = false
->     rebootSequence = []
->     for (let count = 0; count < sequenceLength; count++) {
->         rebootSequence.push(randint(1, 3))
->     }
+> function showSignal (signal: number) {
+>     basic.showNumber(signal)
+>     basic.pause(500)
+>     basic.clearScreen()
+>     basic.pause(200)
+> }
+> let acceptingInput = false // @highlight
+> input.onButtonPressed(Button.A, function () {
+>     acceptingInput = false // @highlight
 >     for (let signal of rebootSequence) {
 >         showSignal(signal)
 >     }
 >     playerPosition = 0
->     rememberSwitchStates()
 >     basic.showIcon(IconNames.Target)
->     acceptingInput = true
-> }
+>     acceptingInput = true // @highlight
+> })
 > ```
 
 > [!TASK]
 >
-> Replace the code inside the button A event with a call to `start game`.
+> Make `checkAnswer` do nothing unless input is unlocked, and lock it again while it checks one value.
 >
 > ```blocks
-> input.onButtonPressed(Button.A, function () {
->     startGame()
-> })
+> let rebootSequence = [1, 3, 2]
+> function checkAnswer (answer: number) {
+>     if (acceptingInput) { // @highlight
+>         acceptingInput = false
+>         if (answer == rebootSequence[playerPosition]) {
+>             playerPosition += 1
+>             if (playerPosition == rebootSequence.length) {
+>                 basic.showIcon(IconNames.Yes)
+>             } else {
+>                 basic.showIcon(IconNames.Target)
+>                 acceptingInput = true
+>             }
+>         } else {
+>             basic.showIcon(IconNames.No)
+>         }
+>     }
+> }
 > ```
 
-**Test:** Press A several times. Every game should display exactly five values, and every value should be `1`, `2`, or `3`. Repeated values are allowed.
+**Test:** Touch contacts while the code is playing; they should be ignored. Enter a wrong answer and touch again; the cross should remain.
+
+> [!TIP]
+>
+> `acceptingInput` is a gate. Every `on pin pressed` block still runs on every tap, but `checkAnswer` now decides whether that tap counts.

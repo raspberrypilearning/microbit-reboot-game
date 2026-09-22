@@ -1,43 +1,41 @@
-## Check the test code
+## Play a test code
 
-Compare each switch closure with the next expected item in the list.
+Use a function and a list to display a short test sequence.
 
 > [!TASK]
 >
-> Make a variable called `player position`. Make a function called `check answer` with a number parameter called `answer`. Compare the answer with the item at `player position`, then move to the next position after a correct answer.
+> Make a function called `showSignal` with a number parameter called `signal`. Show the value, wait, clear the display, and leave a short blank gap.
 >
 > ```blocks
-> let playerPosition = 0
-> function checkAnswer (answer: number) {
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == rebootSequence.length) {
->             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.Target)
->         }
->     } else {
->         basic.showIcon(IconNames.No)
->     }
+> function showSignal (signal: number) {
+>     basic.showNumber(signal)
+>     basic.pause(500)
+>     basic.clearScreen()
+>     basic.pause(200)
 > }
 > ```
 
 > [!TASK]
 >
-> After button A displays the code, reset `player position` and show a target. In `forever`, replace the three `show number` blocks with calls to `check answer`, passing the matching value.
+> Make a list called `rebootSequence` containing `1`, `3`, and `2`. When button A is pressed, use a `for element` loop to pass every item to `showSignal`.
 >
 > ```blocks
-> input.onButtonPressed(Button.A, function () {
+> function showSignal (signal: number) {
+>     basic.showNumber(signal)
+>     basic.pause(500)
+>     basic.clearScreen()
+>     basic.pause(200)
+> }
+> let rebootSequence = [1, 3, 2] // @highlight
+> input.onButtonPressed(Button.A, function () { // @highlight
 >     for (let signal of rebootSequence) {
 >         showSignal(signal)
 >     }
->     playerPosition = 0
->     basic.showIcon(IconNames.Target)
 > })
 > ```
 
-**Test:** Press A, then enter `1`, `3`, `2` with the bare leads. The target should return after the first two answers and a tick should appear after the third. Restart and deliberately enter a wrong first answer; a cross should appear.
+**Test:** Press A. The display should show `1`, then `3`, then `2`, with a clear gap between values. Repeated numbers will also be separated by this gap later.
 
 > [!TIP]
 >
-> List positions start at `0`, so position `0` selects the first item.
+> A **list** keeps several related values in order. A function parameter lets the same display code work with every value in the list.

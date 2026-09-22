@@ -1,76 +1,75 @@
-## Make the input reliable
+## Check the test code
 
-Ignore contacts during playback and prevent one held switch from being counted twice.
+Compare each switch closure with the next expected item in the list.
 
 > [!TASK]
 >
-> Make a Boolean variable called `accepting input`. Make a `remember switch states` function. Lock input before playback, then remember the switches and unlock input when the target appears.
+> Make a variable called `playerPosition`. Make a function called `checkAnswer` with a number parameter called `answer`. Compare the answer with the item at `playerPosition`, then move to the next position after a correct answer.
 >
 > ```blocks
-> let acceptingInput = false
-> function rememberSwitchStates () {
->     p0WasClosed = pins.digitalReadPin(DigitalPin.P0) == 0
->     p1WasClosed = pins.digitalReadPin(DigitalPin.P1) == 0
->     p2WasClosed = pins.digitalReadPin(DigitalPin.P2) == 0
+> let rebootSequence = [1, 3, 2]
+> let playerPosition = 0 // @highlight
+> function checkAnswer (answer: number) { // @highlight
+>     if (answer == rebootSequence[playerPosition]) {
+>         playerPosition += 1
+>         if (playerPosition == rebootSequence.length) {
+>             basic.showIcon(IconNames.Yes)
+>         } else {
+>             basic.showIcon(IconNames.Target)
+>         }
+>     } else {
+>         basic.showIcon(IconNames.No)
+>     }
+> }
+> ```
+
+> [!TASK]
+>
+> After button A displays the code, reset `playerPosition` and show a target. In each `on pin pressed` block, replace `show number` with a call to `checkAnswer`, passing the matching value.
+>
+> ```blocks
+> function showSignal (signal: number) {
+>     basic.showNumber(signal)
+>     basic.pause(500)
+>     basic.clearScreen()
+>     basic.pause(200)
 > }
 > input.onButtonPressed(Button.A, function () {
->     acceptingInput = false
 >     for (let signal of rebootSequence) {
 >         showSignal(signal)
 >     }
->     playerPosition = 0
->     rememberSwitchStates()
->     basic.showIcon(IconNames.Target)
->     acceptingInput = true
+>     playerPosition = 0 // @highlight
+>     basic.showIcon(IconNames.Target) // @highlight
 > })
 > ```
-
-> [!TASK]
->
-> Lock `check answer` while it checks one value. In `forever`, store at most one new answer, update every remembered switch state, and only then call `check answer`.
 >
 > ```blocks
+> let rebootSequence = [1, 3, 2]
 > function checkAnswer (answer: number) {
->     if (acceptingInput) {
->         acceptingInput = false
->         if (answer == rebootSequence[playerPosition]) {
->             playerPosition += 1
->             if (playerPosition == rebootSequence.length) {
->                 basic.showIcon(IconNames.Yes)
->             } else {
->                 basic.showIcon(IconNames.Target)
->                 acceptingInput = true
->             }
+>     if (answer == rebootSequence[playerPosition]) {
+>         playerPosition += 1
+>         if (playerPosition == rebootSequence.length) {
+>             basic.showIcon(IconNames.Yes)
 >         } else {
->             basic.showIcon(IconNames.No)
+>             basic.showIcon(IconNames.Target)
 >         }
+>     } else {
+>         basic.showIcon(IconNames.No)
 >     }
 > }
-> ```
->
-> ```blocks
-> basic.forever(function () {
->     let p0IsClosed = pins.digitalReadPin(DigitalPin.P0) == 0
->     let p1IsClosed = pins.digitalReadPin(DigitalPin.P1) == 0
->     let p2IsClosed = pins.digitalReadPin(DigitalPin.P2) == 0
->     let recognisedAnswer = 0
->     if (acceptingInput) {
->         if (p0IsClosed && !(p0WasClosed)) {
->             recognisedAnswer = 1
->         } else if (p1IsClosed && !(p1WasClosed)) {
->             recognisedAnswer = 2
->         } else if (p2IsClosed && !(p2WasClosed)) {
->             recognisedAnswer = 3
->         }
->     }
->     p0WasClosed = p0IsClosed
->     p1WasClosed = p1IsClosed
->     p2WasClosed = p2IsClosed
->     if (recognisedAnswer > 0) {
->         checkAnswer(recognisedAnswer)
->     }
->     basic.pause(20)
+> input.onPinPressed(TouchPin.P0, function () {
+>     checkAnswer(1) // @highlight
+> })
+> input.onPinPressed(TouchPin.P1, function () {
+>     checkAnswer(2) // @highlight
+> })
+> input.onPinPressed(TouchPin.P2, function () {
+>     checkAnswer(3) // @highlight
 > })
 > ```
 
-**Test:** Hold one contact closed for a moment; it should count once. Touch contacts during playback; they should be ignored. Enter a wrong answer and touch again; the cross should remain.
+**Test:** Press A, then enter `1`, `3`, `2` with the bare leads. The target should return after the first two answers and a tick should appear after the third. Restart and deliberately enter a wrong first answer; a cross should appear.
+
+> [!TIP]
+>
+> List positions start at `0`, so position `0` selects the first item.

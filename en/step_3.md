@@ -1,33 +1,46 @@
-## Make the first switch work
+## Check your wiring
 
-Detect the moment when the `P0` lead touches the `GND` lead.
+Before you write any of the game, prove that all three switches work. Then if a tap goes wrong later, you will know the fault is in your code and not in your wiring.
 
 > [!TASK]
 >
-> Make a Boolean variable called `p0 was closed` and set it to `false`. Set the pull of `P0` to `up`.
+> Open the [wire tester](https://makecode.microbit.org/){:target="_blank"} in a second MakeCode tab and download it to your micro:bit. It shows a dash while every switch is open, and the number of whichever switch is closed.
 >
 > ```blocks
-> let p0WasClosed = false
+> let switchNumber = 0
 > pins.setPull(DigitalPin.P0, PinPullMode.PullUp)
-> ```
-
-> [!TASK]
->
-> In a `forever` loop, read `P0`. Show `1` only when the circuit has just changed from open to closed, then remember its latest state.
->
-> ```blocks
+> pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
+> pins.setPull(DigitalPin.P2, PinPullMode.PullUp)
 > basic.forever(function () {
->     let p0IsClosed = pins.digitalReadPin(DigitalPin.P0) == 0
->     if (p0IsClosed && !(p0WasClosed)) {
->         basic.showNumber(1)
+>     if (pins.digitalReadPin(DigitalPin.P0) == 0) {
+>         switchNumber = 1
+>     } else if (pins.digitalReadPin(DigitalPin.P1) == 0) {
+>         switchNumber = 2
+>     } else if (pins.digitalReadPin(DigitalPin.P2) == 0) {
+>         switchNumber = 3
+>     } else {
+>         switchNumber = 0
 >     }
->     p0WasClosed = p0IsClosed
->     basic.pause(20)
+>     if (switchNumber == 0) {
+>         basic.showLeds(`
+>             . . . . .
+>             . . . . .
+>             . # # # .
+>             . . . . .
+>             . . . . .
+>             `)
+>     } else {
+>         basic.showNumber(switchNumber)
+>     }
 > })
 > ```
 
-**Test:** Download the program. Tap the free `P0` jaw against the free `GND` jaw five times, separating them after every tap. Each tap should show `1` once. Hold the jaws together briefly and check that one hold is not counted repeatedly.
+> [!TASK]
+>
+> Hold the `GND` jaw against the `P0` jaw and check that `1` appears. Repeat with `P1` for `2` and `P2` for `3`. Separate the jaws each time and check the dash comes back.
+
+**Test:** Every switch must give its own number, and only that number. A switch that never responds has a lead on the wrong ring or a jaw that is not gripping. A switch that reads the wrong number has two leads swapped.
 
 > [!TIP]
 >
-> The pull-up keeps an open input at `1`. Closing the circuit to `GND` changes the reading to `0`. Remembering the previous reading lets the program detect one new closure.
+> Keep this tab open. If a tap stops working later in the project, download the wire tester again to find out whether the problem is the hardware or the program.

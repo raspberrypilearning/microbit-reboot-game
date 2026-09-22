@@ -1,35 +1,25 @@
-## Play a test code
+## Detect the other switches
 
-Use a function and a list to display a short test sequence.
-
-> [!TASK]
->
-> Make a function called `show signal` with a number parameter called `signal`. Show the value, wait, clear the display, and leave a short blank gap.
->
-> ```blocks
-> function showSignal (signal: number) {
->     basic.showNumber(signal)
->     basic.pause(500)
->     basic.clearScreen()
->     basic.pause(200)
-> }
-> ```
+Add the inputs for `2` and `3`.
 
 > [!TASK]
 >
-> Make a list called `reboot sequence` containing `1`, `3`, and `2`. When button A is pressed, use a `for element` loop to pass every item to `show signal`.
+> Add an `on pin pressed` block for `P1` and another for `P2`. Change the pin in each one, and show `2` and `3`.
 >
 > ```blocks
-> let rebootSequence = [1, 3, 2]
-> input.onButtonPressed(Button.A, function () {
->     for (let signal of rebootSequence) {
->         showSignal(signal)
->     }
+> input.onPinPressed(TouchPin.P0, function () {
+>     basic.showNumber(1)
+> })
+> input.onPinPressed(TouchPin.P1, function () { // @highlight
+>     basic.showNumber(2)
+> })
+> input.onPinPressed(TouchPin.P2, function () { // @highlight
+>     basic.showNumber(3)
 > })
 > ```
 
-**Test:** Press A. The display should show `1`, then `3`, then `2`, with a clear gap between values. Repeated numbers will also be separated by this gap later.
+**Test:** Download the program. Touch `P0`, `P1` and `P2` to `GND`, one at a time, to enter `1`, `2`, `3`, then `3`, `2`, `1`. Every separate tap should display the intended number exactly once.
 
 > [!TIP]
 >
-> A **list** keeps several related values in order. A function parameter lets the same display code work with every value in the list.
+> If you built the second and third blocks by duplicating the first, check the pin in each one. Two blocks watching the same pin is the easiest mistake to make here, and it looks exactly like a broken wire.
