@@ -26,4 +26,6 @@ Add the inputs for `2` and `3`.
 >
 > A contact that gives the wrong number has two leads swapped on the edge connector.
 >
-> If two contacts give the same number, check the pin in each block. If you built the second and third by duplicating the first, it is easy to leave both watching `P0`, and that looks exactly like a broken wire.
+> A contact that does nothing may have no block watching its pin. If you made the second and third blocks by duplicating the first, check that you changed `P0` in each one.
+>
+> If two contacts show the same number, check the number inside each block.

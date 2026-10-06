@@ -1,4 +1,4 @@
-## Make the input reliable
+## Ignore taps while the code plays
 
 Ignore contacts touched while the code is still playing.
 

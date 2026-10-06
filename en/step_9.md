@@ -32,4 +32,4 @@ Give immediate feedback so the player knows which switch the micro:bit detected.
 > }
 > ```
 
-**Test:** Start a game and enter one correct contact and one deliberately wrong contact. Each touch should briefly display the number detected. The target should return immediately after a correct partial answer.
+**Test:** Start a game and enter one correct contact and one deliberately wrong contact. Each touch should briefly display the number detected. After a correct tap, the target should come back straight away.

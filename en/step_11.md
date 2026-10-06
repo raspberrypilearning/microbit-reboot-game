@@ -46,4 +46,4 @@ Make the reboot harder by inventing a visual code.
 >
 > Write down your three-symbol key and download the game. Complete one reboot using the key, then hide it and challenge someone else to learn the symbols.
 
-**Test:** Every symbol should always correspond to the same input. Touch acknowledgement, failure, restarting and the five-signal win must still work as they did with numbers.
+**Test:** Every symbol should always correspond to the same input. Each tap should still show its number, and a mistake, a restart and a five-signal win should work as before.

@@ -1,6 +1,6 @@
 ## Check the test code
 
-Compare each switch closure with the next expected item in the list.
+Check each tap against the next number in the code.
 
 > [!TASK]
 >

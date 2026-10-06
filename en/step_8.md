@@ -42,8 +42,8 @@ Replace the fixed test list with five random signals.
 > })
 > ```
 
-**Test:** Press A several times. Every game should display exactly five values, and every value should be `1`, `2`, or `3`. Repeated values are allowed.
+**Test:** Press A several times. Every game should display exactly five values, and every value should be `1`, `2`, or `3`. Repeated values are allowed; the blank gap shows where one ends and the next begins.
 
 > [!TIP]
 >
-> `repeat` runs the blocks inside it a set number of times. Here it runs five times, adding one random signal to the list each time.
+> `repeat` runs the blocks inside it a set number of times. Here it runs five times, adding one random signal to the list each time. To make the code longer or shorter, change `sequenceLength` in `on start`.

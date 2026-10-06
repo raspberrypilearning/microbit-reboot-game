@@ -29,7 +29,6 @@ Every accepted touch briefly shows the number detected. A mistake produces a war
 - Kitchen foil
 - Thin card, such as a cereal box or a piece of cardboard
 - Three or four elastic bands or hair bands
-- Ordinary tape
 - Scissors
 
 ![Everything you need, laid out separately: a micro:bit, a USB cable, a battery pack with two AAA batteries, red, yellow, green and black clip leads, a roll of kitchen foil, a piece of card, four hair bands, tape and scissors.](images/materials.jpg)

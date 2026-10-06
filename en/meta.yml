@@ -12,7 +12,7 @@ steps:
   - title: Detect the other switches
   - title: Play a test code
   - title: Check the test code
-  - title: Make the input reliable
+  - title: Ignore taps while the code plays
   - title: Generate a reboot code
   - title: Show every recognised touch
   - title: Finish the game

@@ -1,6 +1,6 @@
 ## Make the first switch work
 
-Show `1` when the `P0` lead taps the `GND` lead. This is also how you check your wiring, so do it before you write any of the game.
+Show `1` when the `P0` lead taps the `GND` lead. This also checks your wiring.
 
 > [!TASK]
 >
@@ -24,4 +24,4 @@ Press the reset button on the back of the micro:bit so that `A` shows again. Thi
 
 > [!TIP]
 >
-> `on pin pressed` runs when the two contacts come apart, and only if they were touching for less than a second. That is why every answer in the game is a quick tap. The block also ignores the tiny bounces a metal contact makes as it closes, so a single tap never counts twice.
+> `on pin pressed` runs when the two contacts come apart, and only if they were touching for less than a second. That is why every answer in the game is a quick tap.

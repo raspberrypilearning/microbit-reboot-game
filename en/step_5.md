@@ -46,7 +46,7 @@ Use a function and a list to display a short test sequence.
 > })
 > ```
 
-**Test:** Press A. The display should show `1`, then `3`, then `2`, with a clear gap between values. Repeated numbers will also be separated by this gap later.
+**Test:** Press A. The display should show `1`, then `3`, then `2`, with a clear gap between values.
 
 > [!TIP]
 >

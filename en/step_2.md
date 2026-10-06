@@ -1,6 +1,6 @@
 ## Start the controller
 
-Create the MakeCode project, then connect the first pair of test leads.
+Create the MakeCode project, then connect the four clip leads.
 
 > [!TASK]
 >
