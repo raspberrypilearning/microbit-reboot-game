@@ -50,9 +50,9 @@ The project never uses the `3V` ring. Learners connect only `P0`, `P1`, `P2`, an
 
 The complete game is coded and tested first by touching the free `P0`, `P1`, or `P2` crocodile jaw to the free `GND` jaw. The foil contacts and wrist fastening are made only after the program works, so the learner's hands remain free while using the computer.
 
-Each contact is made by wrapping kitchen foil loosely around a finger, leaving enough foil near the base of the finger for a crocodile clip to grip. Lead colour, not a written label, identifies which finger carries which signal.
+Each contact is made by wrapping kitchen foil loosely around a finger, leaving enough foil near the base of the finger for a crocodile clip to grip. Every finger has its own separate piece, and each wrap stops before the knuckle where the finger joins the hand, because the fingers press together there and neighbouring contacts would touch. Lead colour, not a written label, identifies which finger carries which signal.
 
-The thumb contact is the common ground. The index, middle, and ring finger contacts carry the three input signals. A card backing and elastic bands hold the micro:bit and its battery pack on the wrist, with the display visible and the edge connector accessible. The learner taps and releases one numbered finger against the thumb for each term in the sequence.
+The thumb contact is the common ground. The index, middle, and ring finger contacts carry the three input signals. A card backing and elastic bands hold the micro:bit and its battery pack on the wrist, with small notches cut into the card's edges so the bands cannot slide off, with the display visible and the edge connector accessible. The learner taps and releases one numbered finger against the thumb for each term in the sequence.
 
 ### Wiring map
 
@@ -131,7 +131,7 @@ Provide clearly different audio feedback: one low warning honk for an error and 
 |---:|---|---|
 | 1 | Understand the finished project and collect materials | Learner can identify the four contacts and explain the game loop |
 | 2 | Create and transfer the start prompt, then connect all four leads | `A` appears and all four bare leads remain securely connected |
-| 3 | Respond to the first switch with `on pin P0 pressed`, and prove the wiring | Each separate `P0`-to-`GND` tap displays `1` once; a hold does not repeat |
+| 3 | Respond to the first switch with `on pin P0 pressed`, and prove the wiring | A quick `P0`-to-`GND` tap displays `1` as the jaws separate; a touch held for longer than a second displays nothing |
 | 4 | Add `on pin pressed` for `P1` and `P2` | The three bare signal leads reliably enter `1`, `2`, and `3` |
 | 5 | Create a display function and play a fixed list | Button A displays `1`, `3`, `2` with visible gaps |
 | 6 | Compare bare-lead answers with successive list items | `1`, `3`, `2` completes the test code; a different value fails |
@@ -178,10 +178,21 @@ references something it does not declare. A call to a project function renders a
 `rebootSequence.length` renders as `length of array rebootSequence` only if the array is declared
 in the same fence. An earlier draft had ten of nineteen fences rendering at least one grey block.
 
-New and edited blocks are marked with a trailing `// @highlight` comment, which MakeCode renders
-as a yellow outline around that block. A `+` at the start of a line does **not** work: the
-renderer parses it as part of the previous expression and the block silently disappears from the
-image.
+New and edited blocks are marked with a `// @highlight` comment on its own line, directly above
+the block, which MakeCode renders as a yellow outline around that block. Three other placements
+go wrong:
+
+- A `+` at the start of a line: the renderer parses it as part of the previous expression and the
+  block silently disappears from the image.
+- A trailing `// @highlight` at the end of a line. On a line ending in `{`, the outline lands on
+  the first block inside instead of the `if`, loop or event the line opens. On any other line, the
+  block below also gets a stray comment icon.
+- A highlight on a `let` that sets a variable to `false` or `0`. MakeCode leaves that block out of
+  the picture, so the outline moves onto the next block.
+
+Outlining an `if`, loop, event or function outlines everything inside it. When a task wraps
+existing blocks in a new `if` (steps 7 and 10), the wrapper is not outlined: the task text names
+it, and only the new blocks inside it are outlined.
 
 Highlights mark the lines a task adds or changes, computed against the last fence that showed the
 same function or handler. Fences whose every line is new carry no highlights, because an outline
@@ -195,8 +206,8 @@ Two rules keep this from coming back:
    exactly one place were folded into their call site, because each one added a fence that either
    rendered a grey block or had to repeat the definition.
 
-Verified by rendering all seventeen fences through MakeCode's own renderer; none produces a grey
-block.
+Verified by rendering all sixteen fences through MakeCode's own renderer: none produces a grey
+block, and every outline sits on a block the task adds or changes.
 
 ## Step-size rule
 
@@ -209,7 +220,7 @@ Every learner-facing step contains no more than two `[!TASK]` callouts. Each ste
 - Materials photograph (`en/images/materials.jpg`, step 1)
 - Close photograph of a single foil finger contact (`en/images/finger-band-single.jpg`, step 12) and of all four (`en/images/finger-bands-all.jpg`, step 12)
 - Photographs showing how the card backing and elastic bands hold the micro:bit (`en/images/microbit-on-wrist.jpg`) and the battery pack (`en/images/battery-pack-mounted.jpg`), step 12
-- Wiring photograph (`en/images/leads-connected.jpg`, step 4); pin labels `P0`, `P1`, `P2`, and `GND` are not yet annotated on the photograph
+- Wiring photograph of the bare micro:bit, with the ring labels readable (`en/images/leads-connected.jpg`, step 2)
 - Short animation showing a complete five-term code (`en/images/five-signal-code.gif`, step 13), cut from 3.2s to 9.0s of `PXL_20260921_122235907`
 - "Micro:bit Reboot Game" YouTube Short (`g3qdMucsHjQ`), step 1. Vertical 9:16, embedded in a portrait box (`max-width: 340px`, `padding-top: 177.78%`) rather than the house 16:9 box, which would letterbox it.
 - `en/images/microbit-game.gif` (step 14), a complete game. Same footage as the Short above, so the two are redundant if a single asset is preferred.
@@ -218,9 +229,7 @@ Every learner-facing step contains no more than two `[!TASK]` callouts. Each ste
 - MakeCode screenshots only where the rendered blocks are insufficient
 - Downloadable MakeCode project or HEX file in `en/solutions/`; the TypeScript reference is already present
 
-The final hero image should preserve the hacked-together character of the build rather than presenting a fabricated glove or polished enclosure.
-
-The current `en/images/banner.png` is a placeholder copied from the repository template and must be replaced before publication.
+The final hero image should preserve the hacked-together character of the build rather than presenting a fabricated glove or polished enclosure. The current banner is an illustration of a hand mid-tap, with the index finger on the thumb and the micro:bit showing `1`.
 
 ## Validation required before publication
 

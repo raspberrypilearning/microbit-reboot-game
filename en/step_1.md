@@ -32,7 +32,7 @@ Every accepted touch briefly shows the number detected. A mistake produces a war
 - Ordinary tape
 - Scissors
 
-![The micro:bit held on a card backing with elastic bands, four clip leads, and a length of kitchen foil ready for making the finger contacts.](images/materials.jpg)
+![Everything you need, laid out separately: a micro:bit, a USB cable, a battery pack with two AAA batteries, red, yellow, green and black clip leads, a roll of kitchen foil, a piece of card, four hair bands, tape and scissors.](images/materials.jpg)
 
 You will connect, code and test the loose leads before making anything for your fingers. This keeps your hands free while you work at the computer.
 

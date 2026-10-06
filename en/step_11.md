@@ -10,7 +10,8 @@ Make the reboot harder by inventing a visual code.
 >
 > ```blocks
 > function showSignal (signal: number) {
->     if (signal == 1) { // @highlight
+>     // @highlight
+>     if (signal == 1) {
 >         basic.showLeds(`
 >             . . # . .
 >             . . # . .
@@ -18,7 +19,7 @@ Make the reboot harder by inventing a visual code.
 >             . . # . .
 >             . . # . .
 >         `)
->     } else if (signal == 2) { // @highlight
+>     } else if (signal == 2) {
 >         basic.showLeds(`
 >             # . . . #
 >             . # . # .

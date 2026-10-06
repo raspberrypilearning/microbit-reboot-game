@@ -4,7 +4,7 @@ Replace the fixed test list with five random signals.
 
 > [!TASK]
 >
-> Change `rebootSequence` to an empty list and make `sequenceLength` equal `5`.
+> In `on start`, click the **–** on `array of 1 3 2` until it says `empty array`. Make a variable called `sequenceLength` and set it to `5` in `on start`.
 >
 > ```blocks
 > let sequenceLength = 5
@@ -14,6 +14,8 @@ Replace the fixed test list with five random signals.
 > [!TASK]
 >
 > In the button A event, empty the old list, then use a `repeat` loop to add five random values from `1` to `3` before the code is displayed.
+>
+> To empty the list, right-click `set rebootSequence to empty array` in `on start`, choose **Duplicate**, and put the copy under `set acceptingInput to false`. `repeat` is in **Loops**: drop `sequenceLength` into it in place of the number. `add value to end` is in **Advanced** > **Arrays**, and `pick random` is in **Math**.
 >
 > ```blocks
 > let rebootSequence: number[] = []
@@ -25,12 +27,14 @@ Replace the fixed test list with five random signals.
 > }
 > input.onButtonPressed(Button.A, function () {
 >     acceptingInput = false
->     rebootSequence = [] // @highlight
->     for (let count = 0; count < sequenceLength; count++) { // @highlight
+>     // @highlight
+>     rebootSequence = []
+>     // @highlight
+>     for (let count = 0; count < sequenceLength; count++) {
 >         rebootSequence.push(randint(1, 3))
 >     }
->     for (let signal of rebootSequence) {
->         showSignal(signal)
+>     for (let value of rebootSequence) {
+>         showSignal(value)
 >     }
 >     playerPosition = 0
 >     basic.showIcon(IconNames.Target)

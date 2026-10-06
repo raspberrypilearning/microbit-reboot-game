@@ -10,10 +10,12 @@ Add the inputs for `2` and `3`.
 > input.onPinPressed(TouchPin.P0, function () {
 >     basic.showNumber(1)
 > })
-> input.onPinPressed(TouchPin.P1, function () { // @highlight
+> // @highlight
+> input.onPinPressed(TouchPin.P1, function () {
 >     basic.showNumber(2)
 > })
-> input.onPinPressed(TouchPin.P2, function () { // @highlight
+> // @highlight
+> input.onPinPressed(TouchPin.P2, function () {
 >     basic.showNumber(3)
 > })
 > ```

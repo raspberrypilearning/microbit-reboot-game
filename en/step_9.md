@@ -4,16 +4,19 @@ Give immediate feedback so the player knows which switch the micro:bit detected.
 
 > [!TASK]
 >
-> In `checkAnswer`, straight after input is locked, show the answer for `150` milliseconds and clear the display. After a correct partial answer, show the target and accept the next input without another animation.
+> In `checkAnswer`, straight after input is locked, show the answer for `150` milliseconds and clear the display.
 >
 > ```blocks
 > let rebootSequence: number[] = []
 > function checkAnswer (answer: number) {
 >     if (acceptingInput) {
 >         acceptingInput = false
->         basic.showNumber(answer) // @highlight
->         basic.pause(150) // @highlight
->         basic.clearScreen() // @highlight
+>         // @highlight
+>         basic.showNumber(answer)
+>         // @highlight
+>         basic.pause(150)
+>         // @highlight
+>         basic.clearScreen()
 >         if (answer == rebootSequence[playerPosition]) {
 >             playerPosition += 1
 >             if (playerPosition == rebootSequence.length) {

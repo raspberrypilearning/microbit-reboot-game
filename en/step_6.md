@@ -4,12 +4,17 @@ Compare each switch closure with the next expected item in the list.
 
 > [!TASK]
 >
-> Make a variable called `playerPosition`. Make a function called `checkAnswer` with a number parameter called `answer`. Compare the answer with the item at `playerPosition`, then move to the next position after a correct answer.
+> Make a variable called `playerPosition`. It remembers which item in the list the player must match next.
+>
+> Make a function called `checkAnswer` the same way you made `showSignal`, with a number parameter called `answer`. It compares the answer with the item at `playerPosition`, and moves on to the next item after a correct answer.
+>
+> `get value at` and `length of array` are in **Advanced** > **Arrays**. To give an `if` block an `else`, click the **+** at its bottom edge.
 >
 > ```blocks
 > let rebootSequence = [1, 3, 2]
-> let playerPosition = 0 // @highlight
-> function checkAnswer (answer: number) { // @highlight
+> let playerPosition = 0
+> // @highlight
+> function checkAnswer (answer: number) {
 >     if (answer == rebootSequence[playerPosition]) {
 >         playerPosition += 1
 >         if (playerPosition == rebootSequence.length) {
@@ -25,7 +30,7 @@ Compare each switch closure with the next expected item in the list.
 
 > [!TASK]
 >
-> After button A displays the code, reset `playerPosition` and show a target. In each `on pin pressed` block, replace `show number` with a call to `checkAnswer`, passing the matching value.
+> After button A displays the code, reset `playerPosition` and show a target. In each `on pin pressed` block, replace `show number` with a `call checkAnswer` block from **Functions**, and type in the matching number.
 >
 > ```blocks
 > function showSignal (signal: number) {
@@ -35,11 +40,13 @@ Compare each switch closure with the next expected item in the list.
 >     basic.pause(200)
 > }
 > input.onButtonPressed(Button.A, function () {
->     for (let signal of rebootSequence) {
->         showSignal(signal)
+>     for (let value of rebootSequence) {
+>         showSignal(value)
 >     }
->     playerPosition = 0 // @highlight
->     basic.showIcon(IconNames.Target) // @highlight
+>     // @highlight
+>     playerPosition = 0
+>     // @highlight
+>     basic.showIcon(IconNames.Target)
 > })
 > ```
 >
@@ -58,17 +65,20 @@ Compare each switch closure with the next expected item in the list.
 >     }
 > }
 > input.onPinPressed(TouchPin.P0, function () {
->     checkAnswer(1) // @highlight
+>     // @highlight
+>     checkAnswer(1)
 > })
 > input.onPinPressed(TouchPin.P1, function () {
->     checkAnswer(2) // @highlight
+>     // @highlight
+>     checkAnswer(2)
 > })
 > input.onPinPressed(TouchPin.P2, function () {
->     checkAnswer(3) // @highlight
+>     // @highlight
+>     checkAnswer(3)
 > })
 > ```
 
-**Test:** Press A, then enter `1`, `3`, `2` with the bare leads. The target should return after the first two answers and a tick should appear after the third. Restart and deliberately enter a wrong first answer; a cross should appear.
+**Test:** Press A, then enter `1`, `3`, `2` with the bare leads. The target should stay on the display after the first two answers, and a tick should appear after the third. Nothing changes on the display after a correct answer yet; you will add that in step 9. Restart and deliberately enter a wrong first answer; a cross should appear.
 
 > [!TIP]
 >

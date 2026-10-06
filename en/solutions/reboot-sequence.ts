@@ -49,8 +49,8 @@ input.onButtonPressed(Button.A, function () {
         for (let count = 0; count < sequenceLength; count++) {
             rebootSequence.push(randint(1, 3))
         }
-        for (let signal of rebootSequence) {
-            showSignal(signal)
+        for (let value of rebootSequence) {
+            showSignal(value)
         }
         playerPosition = 0
         basic.showIcon(IconNames.Target)

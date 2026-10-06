@@ -4,7 +4,11 @@ Prevent overlapping games and add different feedback for failure and success.
 
 > [!TASK]
 >
-> Make a Boolean variable called `gameActive`. Change button A so it starts a game only when another game is not already active.
+> Make another `true` or `false` variable called `gameActive`. Then change button A so it starts a game only when no game is already running:
+>
+> 1. Drag the first block out of `on button A pressed`. All the blocks under it come too.
+> 2. Put an `if` block from **Logic** into `on button A pressed`. Replace its `true` with `not` from **Logic**, and drop `gameActive` into the `not`.
+> 3. Put your blocks back inside the `if`, and add the highlighted block at the top.
 >
 > ```blocks
 > let rebootSequence: number[] = []
@@ -14,17 +18,18 @@ Prevent overlapping games and add different feedback for failure and success.
 >     basic.clearScreen()
 >     basic.pause(200)
 > }
-> let gameActive = false // @highlight
+> let gameActive = false
 > input.onButtonPressed(Button.A, function () {
->     if (!(gameActive)) { // @highlight
+>     if (!(gameActive)) {
+>         // @highlight
 >         gameActive = true
 >         acceptingInput = false
 >         rebootSequence = []
 >         for (let count = 0; count < sequenceLength; count++) {
 >             rebootSequence.push(randint(1, 3))
 >         }
->         for (let signal of rebootSequence) {
->             showSignal(signal)
+>         for (let value of rebootSequence) {
+>             showSignal(value)
 >         }
 >         playerPosition = 0
 >         basic.showIcon(IconNames.Target)
@@ -48,23 +53,33 @@ Prevent overlapping games and add different feedback for failure and success.
 >         if (answer == rebootSequence[playerPosition]) {
 >             playerPosition += 1
 >             if (playerPosition == rebootSequence.length) {
->                 music.playTone(Note.C5, 100) // @highlight
->                 basic.pause(80) // @highlight
->                 music.playTone(Note.E5, 100) // @highlight
+>                 // @highlight
+>                 music.playTone(Note.C5, 100)
+>                 // @highlight
+>                 basic.pause(80)
+>                 // @highlight
+>                 music.playTone(Note.E5, 100)
 >                 basic.showIcon(IconNames.Yes)
->                 basic.showString("ON") // @highlight
->                 basic.showIcon(IconNames.Happy) // @highlight
->                 gameActive = false // @highlight
+>                 // @highlight
+>                 basic.showString("ON")
+>                 // @highlight
+>                 basic.showIcon(IconNames.Happy)
+>                 // @highlight
+>                 gameActive = false
 >             } else {
 >                 basic.showIcon(IconNames.Target)
 >                 acceptingInput = true
 >             }
 >         } else {
->             music.playTone(Note.C3, 500) // @highlight
+>             // @highlight
+>             music.playTone(Note.C3, 500)
 >             basic.showIcon(IconNames.No)
->             basic.pause(700) // @highlight
->             basic.showString("A") // @highlight
->             gameActive = false // @highlight
+>             // @highlight
+>             basic.pause(700)
+>             // @highlight
+>             basic.showString("A")
+>             // @highlight
+>             gameActive = false
 >         }
 >     }
 > }
