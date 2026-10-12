@@ -6,7 +6,7 @@ Replace the fixed test list with five random signals.
 >
 > In `on start`, click the **–** on `array of 1 3 2` until it says `empty array`. Make a variable called `sequenceLength` and set it to `5` in `on start`.
 >
-> ```blocks
+> ```microbit
 > let sequenceLength = 5
 > let rebootSequence: number[] = []
 > ```
@@ -17,7 +17,7 @@ Replace the fixed test list with five random signals.
 >
 > To empty the list, right-click `set rebootSequence to empty array` in `on start`, choose **Duplicate**, and put the copy under `set acceptingInput to false`. `repeat` is in **Loops**: drop `sequenceLength` into it in place of the number. `add value to end` is in **Advanced** > **Arrays**, and `pick random` is in **Math**.
 >
-> ```blocks
+> ```microbit
 > let rebootSequence: number[] = []
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)

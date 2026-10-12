@@ -12,7 +12,7 @@ Use a function and a list to display a short test sequence.
 >
 > Add these blocks to the function. To show the value, drag the `signal` bubble from the top of the function into `show number`.
 >
-> ```blocks
+> ```microbit
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)
 >     basic.pause(500)
@@ -29,7 +29,7 @@ Use a function and a list to display a short test sequence.
 >
 > Add an `on button A pressed` block. From **Loops**, put a `for element value of list` block inside it and choose `rebootSequence` instead of `list`. Put a `call showSignal` block from **Functions** inside the loop, then drag the loop's `value` bubble into it.
 >
-> ```blocks
+> ```microbit
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)
 >     basic.pause(500)

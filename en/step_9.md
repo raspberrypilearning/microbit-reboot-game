@@ -6,7 +6,7 @@ Give immediate feedback so the player knows which switch the micro:bit detected.
 >
 > In `checkAnswer`, straight after input is locked, show the answer for `150` milliseconds and clear the display.
 >
-> ```blocks
+> ```microbit
 > let rebootSequence: number[] = []
 > function checkAnswer (answer: number) {
 >     if (acceptingInput) {

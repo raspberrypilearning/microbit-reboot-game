@@ -10,7 +10,7 @@ Check each tap against the next number in the code.
 >
 > `get value at` and `length of array` are in **Advanced** > **Arrays**. To give an `if` block an `else`, click the **+** at its bottom edge.
 >
-> ```blocks
+> ```microbit
 > let rebootSequence = [1, 3, 2]
 > let playerPosition = 0
 > // @highlight
@@ -32,7 +32,7 @@ Check each tap against the next number in the code.
 >
 > After button A displays the code, reset `playerPosition` and show a target. In each `on pin pressed` block, replace `show number` with a `call checkAnswer` block from **Functions**, and type in the matching number.
 >
-> ```blocks
+> ```microbit
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)
 >     basic.pause(500)
@@ -50,7 +50,7 @@ Check each tap against the next number in the code.
 > })
 > ```
 >
-> ```blocks
+> ```microbit
 > let rebootSequence = [1, 3, 2]
 > function checkAnswer (answer: number) {
 >     if (answer == rebootSequence[playerPosition]) {

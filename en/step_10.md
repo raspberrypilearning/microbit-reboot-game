@@ -10,7 +10,7 @@ Prevent overlapping games and add different feedback for failure and success.
 > 2. Put an `if` block from **Logic** into `on button A pressed`. Replace its `true` with `not` from **Logic**, and drop `gameActive` into the `not`.
 > 3. Put your blocks back inside the `if`, and add the highlighted block at the top.
 >
-> ```blocks
+> ```microbit
 > let rebootSequence: number[] = []
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)
@@ -42,7 +42,7 @@ Prevent overlapping games and add different feedback for failure and success.
 >
 > Finish both result branches in `checkAnswer`. A mistake plays one low tone, shows a cross and offers a restart. Five correct answers play two high tones and complete the reboot.
 >
-> ```blocks
+> ```microbit
 > let rebootSequence: number[] = []
 > function checkAnswer (answer: number) {
 >     if (acceptingInput) {

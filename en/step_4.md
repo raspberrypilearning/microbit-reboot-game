@@ -6,7 +6,7 @@ Add the inputs for `2` and `3`.
 >
 > Add an `on pin pressed` block for `P1` and another for `P2`. Change the pin in each one, and show `2` and `3`.
 >
-> ```blocks
+> ```microbit
 > input.onPinPressed(TouchPin.P0, function () {
 >     basic.showNumber(1)
 > })

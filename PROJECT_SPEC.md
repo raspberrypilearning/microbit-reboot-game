@@ -172,7 +172,7 @@ Every block in the project comes from the standard micro:bit toolbox. There are 
 no custom blocks. Three of the categories used sit behind **Advanced** in the editor: Functions,
 Arrays, and Pins. Pins is no longer used anywhere in the project.
 
-MakeCode's renderer falls back to a grey box of literal JavaScript whenever a `blocks` fence
+MakeCode's renderer falls back to a grey box of literal JavaScript whenever a `microbit` fence
 references something it does not declare. A call to a project function renders as
 `call showSignal (signal)` only if that function is defined in the same fence, and
 `rebootSequence.length` renders as `length of array rebootSequence` only if the array is declared

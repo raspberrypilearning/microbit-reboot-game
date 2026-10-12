@@ -8,7 +8,7 @@ Ignore contacts touched while the code is still playing.
 >
 > Lock input before the code plays, and unlock it when the target appears.
 >
-> ```blocks
+> ```microbit
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)
 >     basic.pause(500)
@@ -38,7 +38,7 @@ Ignore contacts touched while the code is still playing.
 > 3. Put the big `if` block back inside the new one.
 > 4. Add the two highlighted blocks. The first locks input while one tap is checked. The second unlocks it after a correct answer, so the next tap counts.
 >
-> ```blocks
+> ```microbit
 > let rebootSequence = [1, 3, 2]
 > function checkAnswer (answer: number) {
 >     if (acceptingInput) {
