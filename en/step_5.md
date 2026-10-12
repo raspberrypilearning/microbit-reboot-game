@@ -27,18 +27,21 @@ Use a function and a list to display a short test sequence.
 >
 > Open **Advanced** > **Arrays** and drag `set list to array of` into `on start`. Click `list`, choose **Rename variable...** and call it `rebootSequence`. Click the **+** to add a third slot, then make the numbers `1`, `3` and `2`.
 >
+> ```microbit
+> let rebootSequence = [1, 3, 2]
+> ```
+>
 > Add an `on button A pressed` block. From **Loops**, put a `for element value of list` block inside it and choose `rebootSequence` instead of `list`. Put a `call showSignal` block from **Functions** inside the loop, then drag the loop's `value` bubble into it.
 >
 > ```microbit
+> // @hide
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)
 >     basic.pause(500)
 >     basic.clearScreen()
 >     basic.pause(200)
 > }
-> // @highlight
-> let rebootSequence = [1, 3, 2]
-> // @highlight
+> let rebootSequence: number[] = null
 > input.onButtonPressed(Button.A, function () {
 >     for (let value of rebootSequence) {
 >         showSignal(value)

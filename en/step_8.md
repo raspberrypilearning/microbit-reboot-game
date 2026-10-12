@@ -18,7 +18,8 @@ Replace the fixed test list with five random signals.
 > To empty the list, right-click `set rebootSequence to empty array` in `on start`, choose **Duplicate**, and put the copy under `set acceptingInput to false`. `repeat` is in **Loops**: drop `sequenceLength` into it in place of the number. `add value to end` is in **Advanced** > **Arrays**, and `pick random` is in **Math**.
 >
 > ```microbit
-> let rebootSequence: number[] = []
+> let rebootSequence: number[] = null
+> // @hide
 > function showSignal (signal: number) {
 >     basic.showNumber(signal)
 >     basic.pause(500)

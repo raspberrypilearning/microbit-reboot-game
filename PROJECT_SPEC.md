@@ -182,6 +182,23 @@ references something it does not declare. A call to a project function renders a
 `rebootSequence.length` renders as `length of array rebootSequence` only if the array is declared
 in the same fence. An earlier draft had ten of nineteen fences rendering at least one grey block.
 
+The projects site scales every picture down to the width of the step column, so a wide picture
+becomes unreadable. MakeCode lays the top-level blocks of a fence out side by side, which means
+every helper declaration widens the picture. Two techniques keep the helpers in the code but out of
+the picture:
+
+- A function that a fence defines only so that its `call` block renders gets a `// @hide` line
+  directly above it. MakeCode builds the call block from the definition, then drops the
+  definition from the picture.
+- An array that a fence reads but the task does not change is declared as
+  `let rebootSequence: number[] = null`. MakeCode leaves that declaration out of the picture and
+  still knows the variable is an array, so `length of array` renders as a block. Hiding a
+  `set` block with `// @hide` does not work for this: it leaves an empty `on start` behind.
+
+When a task adds two separate top-level blocks, give each its own fence so they stack rather than
+sit side by side (step 5, task 2). The widest picture left is `checkAnswer` on its own, at about
+830 pixels.
+
 New and edited blocks are marked with a `// @highlight` comment on its own line, directly above
 the block, which MakeCode renders as a yellow outline around that block. Three other placements
 go wrong:
@@ -205,13 +222,15 @@ where a comment would become part of the LED pattern.
 
 Two rules keep this from coming back:
 
-1. Every fence declares each project function it calls and each array it reads.
+1. Every fence declares each project function it calls and each array it reads, using
+   `// @hide` and `= null` for the ones the task does not change.
 2. The project keeps only two functions, `showSignal` and `checkAnswer`. Functions called from
    exactly one place were folded into their call site, because each one added a fence that either
    rendered a grey block or had to repeat the definition.
 
-Verified by rendering all sixteen fences through MakeCode's own renderer: none produces a grey
-block, and every outline sits on a block the task adds or changes.
+Verified by rendering all seventeen fences through `makecode.microbit.org/--docs?render=1`, the
+renderer the projects site uses: none produces a grey block, every outline sits on a block the
+task adds or changes, and no picture is wider than `checkAnswer`.
 
 ## Step-size rule
 
