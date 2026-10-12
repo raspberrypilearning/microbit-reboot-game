@@ -168,6 +168,10 @@ board before publication.
 
 ## Block rendering
 
+Code fences must be marked `microbit`. The projects site turns a fence into a picture of blocks
+only when its `<pre>` has the class `language-microbit`, then sends the code to MakeCode's
+renderer. A fence marked `blocks` is shown to learners as plain TypeScript.
+
 Every block in the project comes from the standard micro:bit toolbox. There are no extensions and
 no custom blocks. Three of the categories used sit behind **Advanced** in the editor: Functions,
 Arrays, and Pins. Pins is no longer used anywhere in the project.
