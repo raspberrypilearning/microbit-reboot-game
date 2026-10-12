@@ -211,6 +211,11 @@ go wrong:
 - A highlight on a `let` that sets a variable to `false` or `0`. MakeCode leaves that block out of
   the picture, so the outline moves onto the next block.
 
+On the projects site the outline is not a reliable signal on its own. The site removes MakeCode's
+stylesheet from each picture, and its replacement colours every connection point yellow, so value
+slots and notches look outlined too. Task text therefore names each block the learner adds rather
+than pointing at "the highlighted block".
+
 Outlining an `if`, loop, event or function outlines everything inside it. When a task wraps
 existing blocks in a new `if` (steps 7 and 10), the wrapper is not outlined: the task text names
 it, and only the new blocks inside it are outlined.

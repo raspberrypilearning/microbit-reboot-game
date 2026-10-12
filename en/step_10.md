@@ -8,7 +8,7 @@ Prevent overlapping games and add different feedback for failure and success.
 >
 > 1. Drag the first block out of `on button A pressed`. All the blocks under it come too.
 > 2. Put an `if` block from **Logic** into `on button A pressed`. Replace its `true` with `not` from **Logic**, and drop `gameActive` into the `not`.
-> 3. Put your blocks back inside the `if`, and add the highlighted block at the top.
+> 3. Put your blocks back inside the `if`, and add `set gameActive to true` at the top.
 >
 > ```microbit
 > let rebootSequence: number[] = null

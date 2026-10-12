@@ -38,7 +38,7 @@ Ignore contacts touched while the code is still playing.
 > 1. Drag the big `if` block out of `checkAnswer`.
 > 2. Put a new `if` block from **Logic** into `checkAnswer`. Replace its `true` with `acceptingInput` from **Variables**.
 > 3. Put the big `if` block back inside the new one.
-> 4. Add the two highlighted blocks. The first locks input while one tap is checked. The second unlocks it after a correct answer, so the next tap counts.
+> 4. Add `set acceptingInput to false` as the first block inside the new `if`, to lock input while one tap is checked. Then add `set acceptingInput to true` under the `show icon` block that shows the target, so the next tap counts after a correct answer.
 >
 > ```microbit
 > let rebootSequence: number[] = null
