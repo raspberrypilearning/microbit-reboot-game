@@ -1,6 +1,6 @@
 # Reboot Sequence project content
 
-The learner project is split into 13 testable milestones. Each step has no more than two task callouts and ends with an observable test.
+The learner project is split into 13 testable milestones. Each task callout holds one task, and each step ends with an observable test.
 
 ```plaintext
 en/

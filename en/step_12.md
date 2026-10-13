@@ -14,11 +14,23 @@ Now that the complete game works with bare leads, make the finger contacts and s
 
 > [!TASK]
 >
-> Cut a piece of thin card a little larger than the micro:bit. Snip a small notch into the edge of the card wherever an elastic band will cross it, so the band sits in the notch and cannot slide off. Hold the micro:bit against the card with elastic bands, then hold the battery pack against the other side of the card in the same way. Use one more elastic band to keep the whole thing comfortably on your wrist with the LED display, buttons and edge connector visible and reachable.
+> Cut a piece of thin card a little larger than the micro:bit. Snip a small notch into the edge of the card wherever an elastic band will cross it, so the band sits in the notch and cannot slide off.
+
+> [!TASK]
 >
-> ![The micro:bit held against the wrist by a card backing and elastic bands, with the display, buttons and edge connector still reachable.](images/microbit-on-wrist.jpg)
+> Hold the micro:bit against the card with elastic bands.
+
+> [!TASK]
+>
+> Hold the battery pack against the other side of the card in the same way.
 >
 > ![The battery pack strapped to the back of the same card backing with elastic bands.](images/battery-pack-mounted.jpg)
+
+> [!TASK]
+>
+> Use one more elastic band to keep the whole thing comfortably on your wrist, with the LED display, buttons and edge connector visible and reachable.
+>
+> ![The micro:bit held against the wrist by a card backing and elastic bands, with the display, buttons and edge connector still reachable.](images/microbit-on-wrist.jpg)
 
 **Test:** Put on and remove every foil contact. Each must come off immediately without pulling. With your hand relaxed, check that no two pieces of foil touch. Hold your arm in a comfortable playing position for 30 seconds; the micro:bit should stay in place without the fastening feeling tight.
 

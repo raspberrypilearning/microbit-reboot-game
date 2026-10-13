@@ -5,8 +5,14 @@ Check each tap against the next number in the code.
 > [!TASK]
 >
 > Make a variable called `playerPosition`. It remembers which item in the list the player must match next.
+
+> [!TASK]
 >
-> Make a function called `checkAnswer` the same way you made `showSignal`, with a number parameter called `answer`. It compares the answer with the item at `playerPosition`, and moves on to the next item after a correct answer.
+> Make a function called `checkAnswer` the same way you made `showSignal`, with a number parameter called `answer`.
+
+> [!TASK]
+>
+> Add these blocks to `checkAnswer`. They compare the answer with the item at `playerPosition`, and move on to the next item after a correct answer.
 >
 > `get value at` and `length of array` are in **Advanced** > **Arrays**. To give an `if` block an `else`, click the **+** at its bottom edge.
 >
@@ -29,7 +35,7 @@ Check each tap against the next number in the code.
 
 > [!TASK]
 >
-> After button A displays the code, reset `playerPosition` and show a target. In each `on pin pressed` block, replace `show number` with a `call checkAnswer` block from **Functions**, and type in the matching number.
+> After button A displays the code, reset `playerPosition` and show a target.
 >
 > ```microbit
 > // @hide
@@ -50,6 +56,10 @@ Check each tap against the next number in the code.
 >     basic.showIcon(IconNames.Target)
 > })
 > ```
+
+> [!TASK]
+>
+> In each `on pin pressed` block, replace `show number` with a `call checkAnswer` block from **Functions**, and type in the matching number.
 >
 > ```microbit
 > let rebootSequence: number[] = null

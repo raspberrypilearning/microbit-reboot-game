@@ -239,7 +239,7 @@ task adds or changes, and no picture is wider than `checkAnswer`.
 
 ## Step-size rule
 
-Every learner-facing step contains no more than two `[!TASK]` callouts. Each step is a meaningful milestone rather than a single tiny edit. A callout may contain a small cluster of inseparable changes, such as wiring and configuring equivalent pins. Each step ends with an explicit test of the state just created.
+Each `[!TASK]` callout holds one task: one change the learner can tick off. A sequence of actions becomes a sequence of task callouts, never a numbered list or a run of separate jobs inside one callout. A callout may still cover a small cluster of inseparable changes, such as adding the same block for two pins, or building one block together with the blocks inside it. Where several tasks build towards one goal, a plain sentence above them states the goal. A task shows a picture when it changes the program, and the picture shows the program as it stands after that task. Each step is a meaningful milestone rather than a single tiny edit, and ends with an explicit test of the state just created.
 
 ## Required assets before publication
 
