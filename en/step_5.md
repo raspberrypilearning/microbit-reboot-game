@@ -1,62 +1,35 @@
-## Play a test code
+## Show a random signal
 
-Use a function and a list to display a short test sequence.
-
-Make a function called `showSignal` that shows one number from the code, then leaves a short blank gap.
+Make button A flash a random signal, then leave a short blank gap.
 
 > [!TASK]
 >
-> Click **Advanced** at the bottom of the list of block menus to see more menus. Click **Functions**, then **Make a Function...**, and name the function `showSignal`.
-
-> [!TASK]
->
-> Click **Number** to give the function a **parameter**: a value you hand to the function each time you use it. Click the new parameter's name, change it to `signal`, then click **Done**.
-
-> [!TASK]
->
-> Add these blocks to the function. To show the value, drag the `signal` bubble from the top of the function into `show number`.
+> Add an `on button A pressed` block. Put a `show number` block inside it. From **Math**, drop `pick random 0 to 10` into `show number`, and change the numbers to `1` and `3`.
 >
 > ```microbit
-> function showSignal (signal: number) {
->     basic.showNumber(signal)
->     basic.pause(500)
->     basic.clearScreen()
->     basic.pause(200)
-> }
-> ```
-
-> [!TASK]
->
-> Make a **list** called `rebootSequence` that holds `1`, `3` and `2`. MakeCode calls lists **arrays**.
->
-> Open **Advanced** > **Arrays** and drag `set list to array of` into `on start`. Click `list`, choose **Rename variable...** and call it `rebootSequence`. Click the **+** to add a third slot, then make the numbers `1`, `3` and `2`.
->
-> ```microbit
-> let rebootSequence = [1, 3, 2]
-> ```
-
-> [!TASK]
->
-> Add an `on button A pressed` block. From **Loops**, put a `for element value of list` block inside it and choose `rebootSequence` instead of `list`. Put a `call showSignal` block from **Functions** inside the loop, then drag the loop's `value` bubble into it.
->
-> ```microbit
-> // @hide
-> function showSignal (signal: number) {
->     basic.showNumber(signal)
->     basic.pause(500)
->     basic.clearScreen()
->     basic.pause(200)
-> }
-> let rebootSequence: number[] = null
 > input.onButtonPressed(Button.A, function () {
->     for (let value of rebootSequence) {
->         showSignal(value)
->     }
+>     basic.showNumber(randint(1, 3))
 > })
 > ```
 
-**Test:** Press A. The display should show `1`, then `3`, then `2`, with a clear gap between values.
+> [!TASK]
+>
+> Under `show number`, add a `pause (ms)` of `500`, a `clear screen` block, and a `pause (ms)` of `200`. `clear screen` is in **Basic**.
+>
+> ```microbit
+> input.onButtonPressed(Button.A, function () {
+>     basic.showNumber(randint(1, 3))
+>     // @highlight
+>     basic.pause(500)
+>     // @highlight
+>     basic.clearScreen()
+>     // @highlight
+>     basic.pause(200)
+> })
+> ```
+
+**Test:** Download the program and press A several times. Each press should flash `1`, `2` or `3`, then clear the display.
 
 > [!TIP]
 >
-> A **list** keeps several related values in order. A function parameter lets the same display code work with every value in the list.
+> The blank gap matters once the micro:bit shows a whole code: it is how the player tells `2`, `2` apart from a single `2`.

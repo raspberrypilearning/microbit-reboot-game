@@ -2,13 +2,13 @@
 
 ## Status
 
-Working specification for a Code Club physical-computing project. The learner copy is drafted in `en/step_1.md` to `en/step_13.md`, and `en/solutions/reboot-sequence.ts` records the tested completed logic. One-board physical testing is in progress; photography, a downloadable MakeCode project, multi-board validation, and publication assets remain outstanding.
+Working specification for a Code Club physical-computing project. The learner copy is drafted in `en/step_1.md` to `en/step_12.md`, and `en/solutions/reboot-sequence.ts` records the completed logic, not yet run on a board since the input locks were removed. One-board physical testing is in progress; photography, a downloadable MakeCode project, multi-board validation, and publication assets remain outstanding.
 
 ## Product statement
 
 Learners build four loose finger contacts by wrapping kitchen foil around the thumb, index, middle, and ring fingers. The thumb contact connects to `GND`; the index, middle, and ring finger contacts connect to `P0`, `P1`, and `P2`. Touching a finger contact to the thumb contact closes one circuit and enters the number `1`, `2`, or `3`.
 
-The BBC micro:bit generates and displays one five-number reboot code. The player repeats that code using the finger contacts. A mistake ends the attempt; entering all five terms correctly completes the reboot.
+The BBC micro:bit generates and displays one five-number reboot code. The player repeats that code using the finger contacts. A mistake sends the player back to the first term of the same code; entering all five terms correctly completes the reboot.
 
 ## Audience and level
 
@@ -23,10 +23,9 @@ Learners will:
 
 - complete and test low-voltage input circuits using `GND` and pins `P0`, `P1`, and `P2`;
 - respond to a physical switch closure with an event block, so a held contact counts once;
-- use a function with a parameter to avoid repeated code, and call it from a loop;
+- use a function with a parameter to avoid repeating the same blocks in three event handlers;
 - store an ordered sequence in a list;
 - traverse a list and retrieve an item by its position;
-- use a Boolean variable to control when input is accepted;
 - compare player input with an expected value;
 - generate a fixed-length list of random values; and
 - implement acknowledgement, failure, and win feedback.
@@ -79,9 +78,9 @@ The thumb contact is the common ground. The index, middle, and ring finger conta
 2. The micro:bit generates five random values from 1 to 3 and displays them once, with a gap between values.
 3. Tap the matching finger contacts against the thumb contact in the same order.
 4. Every registered touch briefly displays the number detected.
-5. A wrong answer produces a low warning honk, displays a cross, and ends the attempt.
+5. A wrong answer produces a low warning honk, displays a cross, and sends the player back to the first term of the same code.
 6. Five correct answers produce two short beeps and display the completed reboot.
-7. Press button A to generate a new five-value code.
+7. Press button A at any time to generate a new five-value code.
 
 ## Program state
 
@@ -89,41 +88,23 @@ The thumb contact is the common ground. The index, middle, and ring finger conta
 |---|---|---|
 | `rebootSequence` | list of numbers | Stores the ordered values to display and repeat |
 | `playerPosition` | number | Identifies the next list item the player must match |
-| `acceptingInput` | Boolean | Prevents touches during playback or feedback from being counted |
 | `sequenceLength` | number | Sets how many random terms are generated for each game |
-| `gameActive` | Boolean | Allows button A to start a game only when the previous game has ended |
-| `signal` | function parameter | Carries one displayed value into `showSignal` |
+| `value` | loop variable | Carries each list item into the display blocks while the code plays |
 | `answer` | function parameter | Carries one touched value into `checkAnswer` |
 
 ## Functions
 
-### `showSignal(signal)`
-
-Displays one cue, pauses, clears the display, and inserts a short gap. Keeping this behaviour in one function allows the number display to be replaced with symbols without changing the game logic.
-
-### `rememberSwitchStates()`
-
-Records whether each input is currently closed. This prevents a contact held during playback or feedback from being treated as a new answer.
-
-### `showRecognisedAnswer(answer)`
-
-Briefly displays the number detected for every accepted switch closure so the player knows that the input was registered.
-
-### `startGame()`
-
-Stops accepting input, replaces the old list with five random values from 1 to 3, displays the complete code once, resets `playerPosition`, records the current switch states, and then enables input.
+The program has one function. The four blocks that display each signal sit directly inside the
+playback loop in `on button A pressed`; an earlier `showSignal(signal)` function wrapped them, but
+it was called from one place only, so it cost four blocks and saved none.
 
 ### `checkAnswer(answer)`
 
-Ignores input unless `acceptingInput` is true. It locks input while checking, displays the number recognised, compares `answer` with the list item at `playerPosition`, and then follows one of three paths:
+Briefly displays the number recognised, compares `answer` with the list item at `playerPosition`, and then follows one of three paths:
 
-- wrong answer: play the warning honk and end the attempt;
-- correct partial answer: advance and accept the next input;
-- fifth correct answer: play two beeps and show the reboot-complete sequence.
-
-### `playErrorSound()` and `playCorrectSound()`
-
-Provide clearly different audio feedback: one low warning honk for an error and two short higher beeps for a completed reboot.
+- wrong answer: play one low warning honk, show a cross, show `A`, and reset `playerPosition` to `0`;
+- correct partial answer: advance `playerPosition` and show the target;
+- final correct answer: play two short higher beeps and show the reboot-complete sequence.
 
 ## Step architecture
 
@@ -133,15 +114,14 @@ Provide clearly different audio feedback: one low warning honk for an error and 
 | 2 | Create and transfer the start prompt, then connect all four leads | `A` appears and all four bare leads remain securely connected |
 | 3 | Respond to the first switch with `on pin P0 pressed`, and prove the wiring | A quick `P0`-to-`GND` tap displays `1` as the jaws separate; a touch held for longer than a second displays nothing |
 | 4 | Add `on pin pressed` for `P1` and `P2` | The three bare signal leads reliably enter `1`, `2`, and `3` |
-| 5 | Create a display function and play a fixed list | Button A displays `1`, `3`, `2` with visible gaps |
-| 6 | Compare bare-lead answers with successive list items | `1`, `3`, `2` completes the test code; a different value fails |
-| 7 | Gate input with a Boolean while the code plays | Contacts touched during playback are ignored |
-| 8 | Generate and display a five-value random code with `repeat` | Every new game contains exactly five values from 1 to 3 |
-| 9 | Acknowledge every accepted contact | Each touch briefly displays the number read, then immediately restores the target |
-| 10 | Add game locking, tones, failure, and success | A cannot overlap games; failure plays one low tone and five correct inputs play two |
-| 11 | Replace numbers with an optional three-symbol code | The complete game still works with learner-designed symbols |
-| 12 | Construct four loose contacts and secure the micro:bit | All fastenings are removable, comfortable, and leave controls accessible |
-| 13 | Connect and test the completed wearable controller | Finger-to-thumb taps control several complete game attempts reliably |
+| 5 | Show a random value, then a blank gap | Each press of A flashes `1`, `2` or `3`, then clears |
+| 6 | Fill a list with `sequenceLength` random values using `repeat`, then play it | Every new code contains exactly five values from 1 to 3, with visible gaps |
+| 7 | Make a function with a parameter that compares bare-lead answers with successive list items | The displayed code completes with a tick; a wrong first value shows a cross |
+| 8 | Acknowledge every touch | Each touch briefly displays the number read, then immediately restores the target |
+| 9 | Add tones, failure, and success | A wrong value plays one low tone and the same code can then be re-entered from its start; five correct inputs play two tones |
+| 10 | Replace numbers with an optional three-symbol code | The complete game still works with learner-designed symbols |
+| 11 | Construct four loose contacts and secure the micro:bit | All fastenings are removable, comfortable, and leave controls accessible |
+| 12 | Connect and test the completed wearable controller | Finger-to-thumb taps control several complete game attempts reliably |
 
 ## Input design
 
@@ -149,8 +129,14 @@ Switch closures are detected with `input.onPinPressed` (`on pin P0 pressed`), no
 `digitalReadPin` in a `forever` loop. The event block does the edge detection and debounce that
 the earlier draft did by hand, which removed three remembered-state Boolean variables, a
 `rememberSwitchStates` function, three `setPull` calls, a `forever` loop and four loop-local
-variables. Step 4 is now a single block. The only remaining input machinery is the
-`acceptingInput` Boolean, which exists solely to ignore taps made while the code is playing back.
+variables. Step 4 is now a single block.
+
+There is no input lock. Earlier drafts used an `acceptingInput` Boolean to ignore taps while the
+code played, and a `gameActive` Boolean to stop button A starting a second game; both were removed
+to shorten the coding steps. Taps made while the code plays still flash their number, and a wrong
+one honks, over the code, but they do not count: button A resets `playerPosition` after the code
+finishes. A mistake resets `playerPosition` too, so the player can re-enter the same code or press
+A for a new one.
 
 There is no separate wire tester. A learner-built one is the same nine blocks as steps 3 and 4,
 so one of the two steps would have had nothing left to teach, and the 36-block version that adds
@@ -173,14 +159,17 @@ only when its `<pre>` has the class `language-microbit`, then sends the code to 
 renderer. A fence marked `blocks` is shown to learners as plain TypeScript.
 
 Every block in the project comes from the standard micro:bit toolbox. There are no extensions and
-no custom blocks. Three of the categories used sit behind **Advanced** in the editor: Functions,
+no custom blocks. Tones use `play tone ... until done` from **Music**, with lengths picked from the
+beat menu. The older `play tone ... for ...` block, with a duration in milliseconds, is marked
+deprecated in MakeCode and no longer appears in the Music menu, so a picture of it sends learners
+looking for a block they cannot find. Three of the categories used sit behind **Advanced** in the editor: Functions,
 Arrays, and Pins. Pins is no longer used anywhere in the project.
 
 MakeCode's renderer falls back to a grey box of literal JavaScript whenever a `microbit` fence
 references something it does not declare. A call to a project function renders as
-`call showSignal (signal)` only if that function is defined in the same fence, and
-`rebootSequence.length` renders as `length of array rebootSequence` only if the array is declared
-in the same fence. An earlier draft had ten of nineteen fences rendering at least one grey block.
+`call checkAnswer (1)` only if that function is defined in the same fence, and
+`rebootSequence.push(...)` renders as `add value to end` only if the array is declared in the
+same fence. An earlier draft had ten of nineteen fences rendering at least one grey block.
 
 The projects site scales every picture down to the width of the step column, so a wide picture
 becomes unreadable. MakeCode lays the top-level blocks of a fence out side by side, which means
@@ -192,12 +181,12 @@ the picture:
   definition from the picture.
 - An array that a fence reads but the task does not change is declared as
   `let rebootSequence: number[] = null`. MakeCode leaves that declaration out of the picture and
-  still knows the variable is an array, so `length of array` renders as a block. Hiding a
+  still knows the variable is an array, so `add value to end` renders as a block. Hiding a
   `set` block with `// @hide` does not work for this: it leaves an empty `on start` behind.
 
 When a task adds two separate top-level blocks, give each its own fence so they stack rather than
-sit side by side (step 5, task 2). The widest picture left is `checkAnswer` on its own, at about
-830 pixels.
+sit side by side. The widest picture left is `checkAnswer` on its own, at about
+810 pixels.
 
 New and edited blocks are marked with a `// @highlight` comment on its own line, directly above
 the block, which MakeCode renders as a yellow outline around that block. Three other placements
@@ -217,7 +206,7 @@ slots and notches look outlined too. Task text therefore names each block the le
 than pointing at "the highlighted block".
 
 Outlining an `if`, loop, event or function outlines everything inside it. When a task wraps
-existing blocks in a new `if` (steps 7 and 10), the wrapper is not outlined: the task text names
+existing blocks in a new `if`, the wrapper is not outlined: the task text names
 it, and only the new blocks inside it are outlined.
 
 Highlights mark the lines a task adds or changes, computed against the last fence that showed the
@@ -229,11 +218,11 @@ Two rules keep this from coming back:
 
 1. Every fence declares each project function it calls and each array it reads, using
    `// @hide` and `= null` for the ones the task does not change.
-2. The project keeps only two functions, `showSignal` and `checkAnswer`. Functions called from
-   exactly one place were folded into their call site, because each one added a fence that either
+2. The project keeps only one function, `checkAnswer`. Functions called from exactly one place
+   were folded into their call site, because each one added a fence that either
    rendered a grey block or had to repeat the definition.
 
-Verified by rendering all seventeen fences through `makecode.microbit.org/--docs?render=1`, the
+Verified by rendering all twenty fences through `makecode.microbit.org/--docs?render=1`, the
 renderer the projects site uses: none produces a grey block, every outline sits on a block the
 task adds or changes, and no picture is wider than `checkAnswer`.
 
@@ -244,15 +233,15 @@ Each `[!TASK]` callout holds one task: one change the learner can tick off. A se
 ## Required assets before publication
 
 - `en/images/banner.png`: finished improvised controller and illuminated micro:bit
-- Finished-project photograph showing all four contacts and the wiring (`en/images/finished-controller.jpg`, step 13)
+- Finished-project photograph showing all four contacts and the wiring (`en/images/finished-controller.jpg`, step 12)
 - Materials photograph (`en/images/materials.jpg`, step 1)
-- Close photograph of a single foil finger contact (`en/images/finger-band-single.jpg`, step 12) and of all four (`en/images/finger-bands-all.jpg`, step 12)
-- Photographs showing how the card backing and elastic bands hold the micro:bit (`en/images/microbit-on-wrist.jpg`) and the battery pack (`en/images/battery-pack-mounted.jpg`), step 12
+- Close photograph of a single foil finger contact (`en/images/finger-band-single.jpg`, step 11) and of all four (`en/images/finger-bands-all.jpg`, step 11)
+- Photographs showing how the card backing and elastic bands hold the micro:bit (`en/images/microbit-on-wrist.jpg`) and the battery pack (`en/images/battery-pack-mounted.jpg`), step 11
 - Wiring photograph of the bare micro:bit, with the ring labels readable (`en/images/leads-connected.jpg`, step 2)
-- Short animation showing a complete five-term code (`en/images/five-signal-code.gif`, step 13), cut from 3.2s to 9.0s of `PXL_20260921_122235907`
+- Short animation showing a complete five-term code (`en/images/five-signal-code.gif`, step 12), cut from 3.2s to 9.0s of `PXL_20260921_122235907`
 - "Micro:bit Reboot Game" YouTube Short (`g3qdMucsHjQ`), step 1. Vertical 9:16, embedded in a portrait box (`max-width: 340px`, `padding-top: 177.78%`) rather than the house 16:9 box, which would letterbox it.
-- `en/images/microbit-game.gif` (step 14), a complete game. Same footage as the Short above, so the two are redundant if a single asset is preferred.
-- `en/images/wires-test.gif` (step 14), each contact tapped in turn. Replaces the "Micro:bit Simon Says - Wire test" Short (`jbZNebFAngA`), which is the same footage; that Short's title also still carries the old working name.
+- `en/images/microbit-game.gif` (step 12), a complete game. Same footage as the Short above, so the two are redundant if a single asset is preferred.
+- `en/images/wires-test.gif` (not used in any step), each contact tapped in turn. Replaces the "Micro:bit Simon Says - Wire test" Short (`jbZNebFAngA`), which is the same footage; that Short's title also still carries the old working name.
 - Both GIFs were re-encoded from the 15-16 MB originals to 200px wide, 32 colours, 5fps: 1.2 MB and 2.2 MB.
 - MakeCode screenshots only where the rendered blocks are insufficient
 - Downloadable MakeCode project or HEX file in `en/solutions/`; the TypeScript reference is already present
@@ -263,11 +252,12 @@ The final hero image should preserve the hacked-together character of the build 
 
 - Run the full build on at least two BBC micro:bit V2 boards.
 - Test all three contacts for at least 30 taps each, recording missed or duplicate inputs.
-- Confirm that touches made during sequence playback do not enter answers.
+- Confirm that touches made during sequence playback do not count as answers.
 - Confirm that every new game generates exactly five values from 1 to 3.
-- Confirm that every accepted touch displays the number detected exactly once.
+- Confirm that every touch displays the number detected exactly once.
 - Confirm that button A restarts cleanly after both failure and success.
-- Confirm that button A is ignored while a game is active, including during sequence playback.
+- Confirm that pressing button A mid-game, including during playback, leads to a playable new code.
+- Confirm that after a mistake, the same code can be entered again from its first term.
 - Confirm that failure produces one warning honk, success produces two short beeps, and no microphone blocks are present.
 - Confirm that the wrist fastening remains secure and comfortable throughout a complete five-term game.
 - Confirm that the game can be completed while powered by the specified battery pack.

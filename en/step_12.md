@@ -1,39 +1,27 @@
-## Build the wearable controls
+## Connect and test the controller
 
-Now that the complete game works with bare leads, make the finger contacts and secure the micro:bit.
-
-> [!TASK]
->
-> Tear off four small pieces of kitchen foil. Wrap one loosely around your thumb and one around each of your index, middle and ring fingers, leaving enough foil near the base of each finger for a crocodile clip to grip.
->
-> Every finger needs its own separate piece of foil, and no piece should touch another. Stop each wrap before the knuckle where your finger joins your hand, because your fingers press together there.
->
-> ![A single foil contact wrapped loosely around the thumb.](images/finger-band-single.jpg)
->
-> ![Foil contacts made for the thumb, index, middle and ring fingers.](images/finger-bands-all.jpg)
+Attach the already-tested leads to the wearable contacts.
 
 > [!TASK]
 >
-> Cut a piece of thin card a little larger than the micro:bit. Snip a small notch into the edge of the card wherever an elastic band will cross it, so the band sits in the notch and cannot slide off.
+> Disconnect all power.
 
 > [!TASK]
 >
-> Hold the micro:bit against the card with elastic bands.
+> Connect `GND` to the thumb contact, `P0` to the index finger, `P1` to the middle finger and `P2` to the ring finger. Clip each lead onto the foil near the base of the finger.
+>
+> ![The finished controller worn on the hand: the foil finger contacts clipped to P0, P1 and P2, the thumb contact clipped to GND, and the micro:bit held on the wrist by a card backing and elastic bands.](images/finished-controller.jpg)
 
 > [!TASK]
 >
-> Hold the battery pack against the other side of the card in the same way.
->
-> ![The battery pack strapped to the back of the same card backing with elastic bands.](images/battery-pack-mounted.jpg)
+> Connect the battery pack and press A.
 
 > [!TASK]
 >
-> Use one more elastic band to keep the whole thing comfortably on your wrist, with the LED display, buttons and edge connector visible and reachable.
+> Watch the five-signal code, then tap each matching finger contact against the thumb contact. Separate the contacts after every tap.
 >
-> ![The micro:bit held against the wrist by a card backing and elastic bands, with the display, buttons and edge connector still reachable.](images/microbit-on-wrist.jpg)
+> ![A complete game: the micro:bit displays the five-signal reboot code, then the player taps it back.](images/microbit-game.gif)
 
-**Test:** Put on and remove every foil contact. Each must come off immediately without pulling. With your hand relaxed, check that no two pieces of foil touch. Hold your arm in a comfortable playing position for 30 seconds; the micro:bit should stay in place without the fastening feeling tight.
+**Test:** Play several new codes until you have used every finger. Check that every tap displays the number detected, a wrong input honks once, and five correct inputs beep twice and complete the reboot. The wrist fastening and foil contacts should remain comfortable throughout.
 
-> [!INFO]
->
-> **Safety:** If a foil contact or the wrist fastening feels tight, take it off and loosen it before playing. Nothing should need pulling to come free.
+> [!SAVE]

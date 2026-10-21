@@ -10,10 +10,9 @@ steps:
       - engaged
   - title: Make the first switch work
   - title: Detect the other switches
-  - title: Play a test code
-  - title: Check the test code
-  - title: Ignore taps while the code plays
+  - title: Show a random signal
   - title: Generate a reboot code
+  - title: Check the player's taps
   - title: Show every recognised touch
   - title: Finish the game
     completion:

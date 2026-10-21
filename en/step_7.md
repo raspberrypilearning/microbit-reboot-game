@@ -1,136 +1,103 @@
-## Ignore taps while the code plays
+## Check the player's taps
 
-Ignore contacts touched while the code is still playing.
-
-> [!TASK]
->
-> Make a variable called `acceptingInput`. It only ever holds `true` or `false`, a kind of value called a **Boolean**.
+Check each tap against the next number in the code.
 
 > [!TASK]
 >
-> At the top of `on button A pressed`, set `acceptingInput` to `false`. This locks input while the code plays. The `true` and `false` blocks are in **Logic**.
+> Make a variable called `playerPosition`. It remembers which item in the list the player must match next.
+
+Next, make a function called `checkAnswer`. A **function** is a named group of blocks you can use from several places.
+
+> [!TASK]
+>
+> Click **Advanced** at the bottom of the list of block menus to see more menus. Click **Functions**, then **Make a Function...**, and name the function `checkAnswer`.
+
+> [!TASK]
+>
+> Click **Number** to give the function a **parameter**: a value you hand to the function each time you use it. Click the new parameter's name, change it to `answer`, then click **Done**.
+
+> [!TASK]
+>
+> Add these blocks to `checkAnswer`. They compare the answer with the item at `playerPosition`, move on to the next item after a correct answer, and show a tick once `playerPosition` reaches `sequenceLength`.
+>
+> `get value at` is in **Advanced** > **Arrays**. To give an `if` block an `else`, click the **+** at its bottom edge.
 >
 > ```microbit
-> // @hide
-> function showSignal (signal: number) {
->     basic.showNumber(signal)
->     basic.pause(500)
->     basic.clearScreen()
->     basic.pause(200)
-> }
 > let rebootSequence: number[] = null
-> let acceptingInput = false
-> input.onButtonPressed(Button.A, function () {
->     // @highlight
->     acceptingInput = false
->     for (let value of rebootSequence) {
->         showSignal(value)
+> let playerPosition = 0
+> function checkAnswer (answer: number) {
+>     if (answer == rebootSequence[playerPosition]) {
+>         playerPosition += 1
+>         if (playerPosition == sequenceLength) {
+>             basic.showIcon(IconNames.Yes)
+>         } else {
+>             basic.showIcon(IconNames.Target)
+>         }
+>     } else {
+>         basic.showIcon(IconNames.No)
 >     }
+> }
+> ```
+
+> [!TASK]
+>
+> After button A plays the code, reset `playerPosition` and show a target.
+>
+> ```microbit
+> let rebootSequence: number[] = null
+> input.onButtonPressed(Button.A, function () {
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let value of rebootSequence) {
+>         basic.showNumber(value)
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
+>     }
+>     // @highlight
 >     playerPosition = 0
+>     // @highlight
 >     basic.showIcon(IconNames.Target)
 > })
 > ```
 
 > [!TASK]
 >
-> At the bottom of `on button A pressed`, set `acceptingInput` to `true`. This unlocks input when the target appears.
+> In each `on pin pressed` block, replace `show number` with a `call checkAnswer` block from **Functions**, and type in the matching number.
 >
 > ```microbit
-> // @hide
-> function showSignal (signal: number) {
->     basic.showNumber(signal)
->     basic.pause(500)
->     basic.clearScreen()
->     basic.pause(200)
-> }
 > let rebootSequence: number[] = null
-> let acceptingInput = false
-> input.onButtonPressed(Button.A, function () {
->     acceptingInput = false
->     for (let value of rebootSequence) {
->         showSignal(value)
+> // @hide
+> function checkAnswer (answer: number) {
+>     if (answer == rebootSequence[playerPosition]) {
+>         playerPosition += 1
+>         if (playerPosition == sequenceLength) {
+>             basic.showIcon(IconNames.Yes)
+>         } else {
+>             basic.showIcon(IconNames.Target)
+>         }
+>     } else {
+>         basic.showIcon(IconNames.No)
 >     }
->     playerPosition = 0
->     basic.showIcon(IconNames.Target)
+> }
+> input.onPinPressed(TouchPin.P0, function () {
 >     // @highlight
->     acceptingInput = true
+>     checkAnswer(1)
+> })
+> input.onPinPressed(TouchPin.P1, function () {
+>     // @highlight
+>     checkAnswer(2)
+> })
+> input.onPinPressed(TouchPin.P2, function () {
+>     // @highlight
+>     checkAnswer(3)
 > })
 > ```
 
-Next, make `checkAnswer` ignore every tap unless input is unlocked.
-
-> [!TASK]
->
-> Drag the big `if` block out of `checkAnswer`. Leave it on the workspace; you will put it back in a moment.
-
-> [!TASK]
->
-> Put a new `if` block from **Logic** into `checkAnswer`. Replace its `true` with `acceptingInput` from **Variables**.
->
-> ```microbit
-> function checkAnswer (answer: number) {
->     // @highlight
->     if (acceptingInput) {
->     }
-> }
-> ```
-
-> [!TASK]
->
-> Put the big `if` block back inside the new one.
-
-> [!TASK]
->
-> Add `set acceptingInput to false` as the first block inside the new `if`. It locks input while one tap is checked.
->
-> ```microbit
-> let rebootSequence: number[] = null
-> function checkAnswer (answer: number) {
->     if (acceptingInput) {
->         // @highlight
->         acceptingInput = false
->         if (answer == rebootSequence[playerPosition]) {
->             playerPosition += 1
->             if (playerPosition == rebootSequence.length) {
->                 basic.showIcon(IconNames.Yes)
->             } else {
->                 basic.showIcon(IconNames.Target)
->                 acceptingInput = true
->             }
->         } else {
->             basic.showIcon(IconNames.No)
->         }
->     }
-> }
-> ```
-
-> [!TASK]
->
-> Add `set acceptingInput to true` under the `show icon` block that shows the target. It unlocks input after a correct answer, so the next tap counts.
->
-> ```microbit
-> let rebootSequence: number[] = null
-> function checkAnswer (answer: number) {
->     if (acceptingInput) {
->         acceptingInput = false
->         if (answer == rebootSequence[playerPosition]) {
->             playerPosition += 1
->             if (playerPosition == rebootSequence.length) {
->                 basic.showIcon(IconNames.Yes)
->             } else {
->                 basic.showIcon(IconNames.Target)
->                 // @highlight
->                 acceptingInput = true
->             }
->         } else {
->             basic.showIcon(IconNames.No)
->         }
->     }
-> }
-> ```
-
-**Test:** Press A and touch contacts while the code is playing; they should be ignored. Then enter `1`, `3`, `2`; the tick should appear, which shows that input unlocks again after each correct answer. Press A again, enter a wrong answer and touch again; the cross should remain.
+**Test:** Press A and watch the code, then enter it with the bare leads. The target should stay on the display after each correct answer, and a tick should appear after the fifth. Nothing changes on the display after a correct answer yet; you will add that in step 8. Press A again and deliberately enter a wrong first answer; a cross should appear.
 
 > [!TIP]
 >
-> `acceptingInput` is a gate. Every `on pin pressed` block still runs on every tap, but `checkAnswer` now decides whether that tap counts.
+> List positions start at `0`, so position `0` selects the first item.

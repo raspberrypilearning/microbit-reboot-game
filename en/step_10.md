@@ -1,146 +1,70 @@
-## Finish the game
+## Challenge: Replace numbers with symbols
 
-Prevent overlapping games and add different feedback for failure and success.
-
-> [!TASK]
->
-> Make another `true` or `false` variable called `gameActive`.
-
-Next, change button A so it starts a game only when no game is already running.
+Make the reboot harder by inventing a visual code.
 
 > [!TASK]
 >
-> Drag the first block out of `on button A pressed`. All the blocks under it come too. Leave them on the workspace; you will put them back in a moment.
+> Design three clearly different 5×5 symbols, and decide which one represents each input.
 
 > [!TASK]
 >
-> Put an `if` block from **Logic** into `on button A pressed`. Replace its `true` with `not` from **Logic**, and drop `gameActive` into the `not`.
+> In `on button A pressed`, replace the `show number` block inside the `for element value of rebootSequence` loop with an `if`, `else if`, `else` choice that shows your symbols.
 >
-> ```microbit
-> input.onButtonPressed(Button.A, function () {
->     // @highlight
->     if (!(gameActive)) {
->     }
-> })
-> ```
-
-> [!TASK]
->
-> Put your blocks back inside the `if`.
-
-> [!TASK]
->
-> Add `set gameActive to true` at the top, inside the `if`.
+> Here is one possible symbol set:
 >
 > ```microbit
 > let rebootSequence: number[] = null
-> // @hide
-> function showSignal (signal: number) {
->     basic.showNumber(signal)
->     basic.pause(500)
->     basic.clearScreen()
->     basic.pause(200)
-> }
-> let gameActive = false
 > input.onButtonPressed(Button.A, function () {
->     if (!(gameActive)) {
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let value of rebootSequence) {
 >         // @highlight
->         gameActive = true
->         acceptingInput = false
->         rebootSequence = []
->         for (let count = 0; count < sequenceLength; count++) {
->             rebootSequence.push(randint(1, 3))
+>         if (value == 1) {
+>             basic.showLeds(`
+>                 . . # . .
+>                 . . # . .
+>                 # # # # #
+>                 . . # . .
+>                 . . # . .
+>             `)
+>         } else if (value == 2) {
+>             basic.showLeds(`
+>                 # . . . #
+>                 . # . # .
+>                 . . # . .
+>                 . # . # .
+>                 # . . . #
+>             `)
+>         } else {
+>             basic.showLeds(`
+>                 . # # # .
+>                 . # . # .
+>                 . # . # .
+>                 . # # # .
+>                 . . . . .
+>             `)
 >         }
->         for (let value of rebootSequence) {
->             showSignal(value)
->         }
->         playerPosition = 0
->         basic.showIcon(IconNames.Target)
->         acceptingInput = true
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
 >     }
+>     playerPosition = 0
+>     basic.showIcon(IconNames.Target)
 > })
 > ```
 
-Next, finish the two ways a game can end in `checkAnswer`.
+> [!TASK]
+>
+> Write down your three-symbol key.
 
 > [!TASK]
 >
-> In the branch that runs after the fifth correct answer, play two short high tones before the tick. After the tick, show `ON` and a happy face, then set `gameActive` to `false` so that a new game can start.
->
-> ```microbit
-> let rebootSequence: number[] = null
-> function checkAnswer (answer: number) {
->     if (acceptingInput) {
->         acceptingInput = false
->         basic.showNumber(answer)
->         basic.pause(150)
->         basic.clearScreen()
->         if (answer == rebootSequence[playerPosition]) {
->             playerPosition += 1
->             if (playerPosition == rebootSequence.length) {
->                 // @highlight
->                 music.playTone(Note.C5, 100)
->                 // @highlight
->                 basic.pause(80)
->                 // @highlight
->                 music.playTone(Note.E5, 100)
->                 basic.showIcon(IconNames.Yes)
->                 // @highlight
->                 basic.showString("ON")
->                 // @highlight
->                 basic.showIcon(IconNames.Happy)
->                 // @highlight
->                 gameActive = false
->             } else {
->                 basic.showIcon(IconNames.Target)
->                 acceptingInput = true
->             }
->         } else {
->             basic.showIcon(IconNames.No)
->         }
->     }
-> }
-> ```
+> Download the game and complete one reboot using the key.
 
 > [!TASK]
 >
-> In the branch that runs after a wrong answer, play one long low tone before the cross. After the cross, pause, show `A` to offer a restart, then set `gameActive` to `false`.
->
-> ```microbit
-> let rebootSequence: number[] = null
-> function checkAnswer (answer: number) {
->     if (acceptingInput) {
->         acceptingInput = false
->         basic.showNumber(answer)
->         basic.pause(150)
->         basic.clearScreen()
->         if (answer == rebootSequence[playerPosition]) {
->             playerPosition += 1
->             if (playerPosition == rebootSequence.length) {
->                 music.playTone(Note.C5, 100)
->                 basic.pause(80)
->                 music.playTone(Note.E5, 100)
->                 basic.showIcon(IconNames.Yes)
->                 basic.showString("ON")
->                 basic.showIcon(IconNames.Happy)
->                 gameActive = false
->             } else {
->                 basic.showIcon(IconNames.Target)
->                 acceptingInput = true
->             }
->         } else {
->             // @highlight
->             music.playTone(Note.C3, 500)
->             basic.showIcon(IconNames.No)
->             // @highlight
->             basic.pause(700)
->             // @highlight
->             basic.showString("A")
->             // @highlight
->             gameActive = false
->         }
->     }
-> }
-> ```
+> Hide the key and challenge someone else to learn the symbols.
 
-**Test:** Press A again during playback; the code should continue without restarting. Enter a wrong value and listen for one low tone. Start again and repeat all five values correctly; the micro:bit should play two tones, display `ON`, and show a happy face.
+**Test:** Every symbol should always correspond to the same input. Each tap should still show its number, and a mistake, a restart and a five-signal win should work as before.

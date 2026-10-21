@@ -1,97 +1,87 @@
-## Check the test code
+## Generate a reboot code
 
-Check each tap against the next number in the code.
-
-> [!TASK]
->
-> Make a variable called `playerPosition`. It remembers which item in the list the player must match next.
+Store five random signals in a list, then play them one after another.
 
 > [!TASK]
 >
-> Make a function called `checkAnswer` the same way you made `showSignal`, with a number parameter called `answer`.
-
-> [!TASK]
+> Make a **list** called `rebootSequence`. MakeCode calls lists **arrays**.
 >
-> Add these blocks to `checkAnswer`. They compare the answer with the item at `playerPosition`, and move on to the next item after a correct answer.
->
-> `get value at` and `length of array` are in **Advanced** > **Arrays**. To give an `if` block an `else`, click the **+** at its bottom edge.
+> Open **Advanced** > **Arrays** and drag `set list to array of` into `on start`. Click `list`, choose **Rename variable...** and call it `rebootSequence`. Click the **–** until it says `empty array`.
 >
 > ```microbit
-> let rebootSequence: number[] = null
-> let playerPosition = 0
-> function checkAnswer (answer: number) {
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == rebootSequence.length) {
->             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.Target)
->         }
->     } else {
->         basic.showIcon(IconNames.No)
->     }
-> }
+> let rebootSequence: number[] = []
 > ```
 
 > [!TASK]
 >
-> After button A displays the code, reset `playerPosition` and show a target.
+> Make a variable called `sequenceLength` and set it to `5` in `on start`. It decides how many signals are in each code.
 >
 > ```microbit
-> // @hide
-> function showSignal (signal: number) {
->     basic.showNumber(signal)
+> let rebootSequence: number[] = []
+> // @highlight
+> let sequenceLength = 5
+> ```
+
+Next, make button A fill the list with five new random values, then play them.
+
+> [!TASK]
+>
+> Right-click `set rebootSequence to empty array` in `on start` and choose **Duplicate**. Put the copy at the top of `on button A pressed`. This empties the old list.
+>
+> ```microbit
+> let rebootSequence: number[] = null
+> input.onButtonPressed(Button.A, function () {
+>     // @highlight
+>     rebootSequence = []
+>     basic.showNumber(randint(1, 3))
 >     basic.pause(500)
 >     basic.clearScreen()
 >     basic.pause(200)
-> }
-> let rebootSequence: number[] = null
-> input.onButtonPressed(Button.A, function () {
->     for (let value of rebootSequence) {
->         showSignal(value)
->     }
->     // @highlight
->     playerPosition = 0
->     // @highlight
->     basic.showIcon(IconNames.Target)
 > })
 > ```
 
 > [!TASK]
 >
-> In each `on pin pressed` block, replace `show number` with a `call checkAnswer` block from **Functions**, and type in the matching number.
+> Under it, add a `repeat` loop that adds a random value to the end of the list. `repeat` is in **Loops**: drop `sequenceLength` into it in place of the number. `add value to end` is in **Advanced** > **Arrays**: choose `rebootSequence` instead of `list`, then drag `pick random 1 to 3` out of `show number` and into `add value to end`.
 >
 > ```microbit
 > let rebootSequence: number[] = null
-> // @hide
-> function checkAnswer (answer: number) {
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == rebootSequence.length) {
->             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.Target)
->         }
->     } else {
->         basic.showIcon(IconNames.No)
+> input.onButtonPressed(Button.A, function () {
+>     rebootSequence = []
+>     // @highlight
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
 >     }
-> }
-> input.onPinPressed(TouchPin.P0, function () {
->     // @highlight
->     checkAnswer(1)
-> })
-> input.onPinPressed(TouchPin.P1, function () {
->     // @highlight
->     checkAnswer(2)
-> })
-> input.onPinPressed(TouchPin.P2, function () {
->     // @highlight
->     checkAnswer(3)
+>     basic.showNumber(0)
+>     basic.pause(500)
+>     basic.clearScreen()
+>     basic.pause(200)
 > })
 > ```
 
-**Test:** Press A, then enter `1`, `3`, `2` with the bare leads. The target should stay on the display after the first two answers, and a tick should appear after the third. Nothing changes on the display after a correct answer yet; you will add that in step 9. Restart and deliberately enter a wrong first answer; a cross should appear.
+> [!TASK]
+>
+> From **Loops**, add a `for element value of list` block under the `repeat` loop and choose `rebootSequence` instead of `list`. Drag `show number` into it; the three blocks under it come too. Then drag the loop's `value` bubble into `show number`.
+>
+> ```microbit
+> let rebootSequence: number[] = null
+> input.onButtonPressed(Button.A, function () {
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     // @highlight
+>     for (let value of rebootSequence) {
+>         basic.showNumber(value)
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
+>     }
+> })
+> ```
+
+**Test:** Press A several times. Every code should have exactly five values, and every value should be `1`, `2` or `3`. Repeated values are allowed; the blank gap shows where one ends and the next begins.
 
 > [!TIP]
 >
-> List positions start at `0`, so position `0` selects the first item.
+> A **list** keeps several values in order. `repeat` runs the blocks inside it a set number of times: here, once for each signal. To make the code longer or shorter, change `sequenceLength` in `on start`.

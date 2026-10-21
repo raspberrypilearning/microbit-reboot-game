@@ -1,61 +1,45 @@
 let sequenceLength = 5
-let gameActive = false
-let acceptingInput = false
 let playerPosition = 0
 let rebootSequence: number[] = []
 
-function showSignal (signal: number) {
-    basic.showNumber(signal)
-    basic.pause(500)
-    basic.clearScreen()
-    basic.pause(200)
-}
-
 function checkAnswer (answer: number) {
-    if (acceptingInput) {
-        acceptingInput = false
-        basic.showNumber(answer)
-        basic.pause(150)
-        basic.clearScreen()
-        if (answer == rebootSequence[playerPosition]) {
-            playerPosition += 1
-            if (playerPosition == rebootSequence.length) {
-                music.playTone(Note.C5, 100)
-                basic.pause(80)
-                music.playTone(Note.E5, 100)
-                basic.showIcon(IconNames.Yes)
-                basic.showString("ON")
-                basic.showIcon(IconNames.Happy)
-                gameActive = false
-            } else {
-                basic.showIcon(IconNames.Target)
-                acceptingInput = true
-            }
+    basic.showNumber(answer)
+    basic.pause(150)
+    basic.clearScreen()
+    if (answer == rebootSequence[playerPosition]) {
+        playerPosition += 1
+        if (playerPosition == sequenceLength) {
+            music.play(music.tonePlayable(Note.C5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
+            basic.pause(80)
+            music.play(music.tonePlayable(Note.E5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
+            basic.showIcon(IconNames.Yes)
+            basic.showString("ON")
+            basic.showIcon(IconNames.Happy)
         } else {
-            music.playTone(Note.C3, 500)
-            basic.showIcon(IconNames.No)
-            basic.pause(700)
-            basic.showString("A")
-            gameActive = false
+            basic.showIcon(IconNames.Target)
         }
+    } else {
+        music.play(music.tonePlayable(Note.C3, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
+        basic.showIcon(IconNames.No)
+        basic.pause(700)
+        basic.showString("A")
+        playerPosition = 0
     }
 }
 
 input.onButtonPressed(Button.A, function () {
-    if (!(gameActive)) {
-        gameActive = true
-        acceptingInput = false
-        rebootSequence = []
-        for (let count = 0; count < sequenceLength; count++) {
-            rebootSequence.push(randint(1, 3))
-        }
-        for (let value of rebootSequence) {
-            showSignal(value)
-        }
-        playerPosition = 0
-        basic.showIcon(IconNames.Target)
-        acceptingInput = true
+    rebootSequence = []
+    for (let count = 0; count < sequenceLength; count++) {
+        rebootSequence.push(randint(1, 3))
     }
+    for (let value of rebootSequence) {
+        basic.showNumber(value)
+        basic.pause(500)
+        basic.clearScreen()
+        basic.pause(200)
+    }
+    playerPosition = 0
+    basic.showIcon(IconNames.Target)
 })
 
 input.onPinPressed(TouchPin.P0, function () {
