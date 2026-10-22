@@ -4,29 +4,17 @@ Store five random signals in a list, then play them one after another.
 
 > [!TASK]
 >
-> Make a **list** called `rebootSequence`. MakeCode calls lists **arrays**.
->
-> Open **Advanced** > **Arrays** and drag `set list to array of` into `on start`. Click `list`, choose **Rename variable...** and call it `rebootSequence`. Click the **–** until it says `empty array`.
->
-> ```microbit
-> let rebootSequence: number[] = []
-> ```
-
-> [!TASK]
->
 > Make a variable called `sequenceLength` and set it to `5` in `on start`. It decides how many signals are in each code.
 >
 > ```microbit
-> let rebootSequence: number[] = []
-> // @highlight
 > let sequenceLength = 5
 > ```
 
-Next, make button A fill the list with five new random values, then play them.
-
 > [!TASK]
 >
-> Right-click `set rebootSequence to empty array` in `on start` and choose **Duplicate**. Put the copy at the top of `on button A pressed`. This empties the old list.
+> Make a **list** called `rebootSequence`. MakeCode calls lists **arrays**.
+>
+> Open **Advanced** > **Arrays** and drag `set list to array of` to the top of `on button A pressed`. Click `list`, choose **Rename variable...** and call it `rebootSequence`. Click the **–** until it says `empty array`. This empties the old list at the start of every game.
 >
 > ```microbit
 > let rebootSequence: number[] = null

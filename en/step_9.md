@@ -1,168 +1,141 @@
-## Finish the game
+## Ignore taps between games
 
-Add different feedback for failure and success in `checkAnswer`.
-
-Start with the branch that runs after the fifth correct answer.
+Make the micro:bit ignore taps while it is busy: while the code plays, while it answers a tap, and after a win.
 
 > [!TASK]
 >
-> Before the tick, add two `play tone` blocks from **Music**, with a `pause (ms)` of `80` between them. Set the first tone to `High C` and the second to `High E`, each for `1/4` beat.
+> Make a variable called `acceptingInput`. It only ever holds `true` or `false`, a kind of value called a **Boolean**.
+
+> [!TASK]
+>
+> At the top of `on button A pressed`, set `acceptingInput` to `false`. This locks input while the code plays. The `true` and `false` blocks are in **Logic**.
 >
 > ```microbit
 > let rebootSequence: number[] = null
+> let acceptingInput = false
+> input.onButtonPressed(Button.A, function () {
+>     // @highlight
+>     acceptingInput = false
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let value of rebootSequence) {
+>         basic.showNumber(value)
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
+>     }
+>     playerPosition = 0
+>     basic.showIcon(IconNames.Target)
+> })
+> ```
+
+> [!TASK]
+>
+> At the bottom of `on button A pressed`, set `acceptingInput` to `true`. This unlocks input when the target appears.
+>
+> ```microbit
+> let rebootSequence: number[] = null
+> let acceptingInput = false
+> input.onButtonPressed(Button.A, function () {
+>     acceptingInput = false
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let value of rebootSequence) {
+>         basic.showNumber(value)
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
+>     }
+>     playerPosition = 0
+>     basic.showIcon(IconNames.Target)
+>     // @highlight
+>     acceptingInput = true
+> })
+> ```
+
+Next, make `checkAnswer` ignore every tap unless input is unlocked.
+
+> [!TASK]
+>
+> Drag `show number` out of `checkAnswer`. All the blocks under it come too. Leave them on the workspace; you will put them back in a moment.
+
+> [!TASK]
+>
+> Put a new `if` block from **Logic** into `checkAnswer`. Replace its `true` with `acceptingInput` from **Variables**.
+>
+> ```microbit
 > function checkAnswer (answer: number) {
->     basic.showNumber(answer)
->     basic.pause(150)
->     basic.clearScreen()
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == sequenceLength) {
->             // @highlight
->             music.play(music.tonePlayable(Note.C5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             // @highlight
->             basic.pause(80)
->             // @highlight
->             music.play(music.tonePlayable(Note.E5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.Target)
->         }
->     } else {
->         basic.showIcon(IconNames.No)
+>     // @highlight
+>     if (acceptingInput) {
 >     }
 > }
 > ```
 
 > [!TASK]
 >
-> After the tick, show the string `ON`, then the happy face icon.
->
-> ```microbit
-> let rebootSequence: number[] = null
-> function checkAnswer (answer: number) {
->     basic.showNumber(answer)
->     basic.pause(150)
->     basic.clearScreen()
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == sequenceLength) {
->             music.play(music.tonePlayable(Note.C5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.pause(80)
->             music.play(music.tonePlayable(Note.E5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.showIcon(IconNames.Yes)
->             // @highlight
->             basic.showString("ON")
->             // @highlight
->             basic.showIcon(IconNames.Happy)
->         } else {
->             basic.showIcon(IconNames.Target)
->         }
->     } else {
->         basic.showIcon(IconNames.No)
->     }
-> }
-> ```
-
-Next, finish the branch that runs after a wrong answer.
+> Put your blocks back inside the new `if`.
 
 > [!TASK]
 >
-> Before the cross, add a `play tone` block. Set it to `Low C` and leave it at `1` beat.
+> Add `set acceptingInput to false` as the first block inside the new `if`. It locks input while one tap is checked.
 >
 > ```microbit
 > let rebootSequence: number[] = null
 > function checkAnswer (answer: number) {
->     basic.showNumber(answer)
->     basic.pause(150)
->     basic.clearScreen()
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == sequenceLength) {
->             music.play(music.tonePlayable(Note.C5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.pause(80)
->             music.play(music.tonePlayable(Note.E5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.showIcon(IconNames.Yes)
->             basic.showString("ON")
->             basic.showIcon(IconNames.Happy)
->         } else {
->             basic.showIcon(IconNames.Target)
->         }
->     } else {
+>     if (acceptingInput) {
 >         // @highlight
->         music.play(music.tonePlayable(Note.C3, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
->         basic.showIcon(IconNames.No)
+>         acceptingInput = false
+>         basic.showNumber(answer)
+>         basic.pause(150)
+>         basic.clearScreen()
+>         if (answer == rebootSequence[playerPosition]) {
+>             playerPosition += 1
+>             if (playerPosition == sequenceLength) {
+>                 basic.showIcon(IconNames.Yes)
+>             } else {
+>                 basic.showIcon(IconNames.Target)
+>             }
+>         } else {
+>             basic.showIcon(IconNames.No)
+>         }
 >     }
 > }
 > ```
 
 > [!TASK]
 >
-> After the cross, pause for `700` milliseconds, then show the string `A` to offer a new code.
+> Above the `show icon` block that shows the target, add `set acceptingInput to true`. It unlocks input after a correct answer, so the next tap counts.
 >
 > ```microbit
 > let rebootSequence: number[] = null
 > function checkAnswer (answer: number) {
->     basic.showNumber(answer)
->     basic.pause(150)
->     basic.clearScreen()
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == sequenceLength) {
->             music.play(music.tonePlayable(Note.C5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.pause(80)
->             music.play(music.tonePlayable(Note.E5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.showIcon(IconNames.Yes)
->             basic.showString("ON")
->             basic.showIcon(IconNames.Happy)
+>     if (acceptingInput) {
+>         acceptingInput = false
+>         basic.showNumber(answer)
+>         basic.pause(150)
+>         basic.clearScreen()
+>         if (answer == rebootSequence[playerPosition]) {
+>             playerPosition += 1
+>             if (playerPosition == sequenceLength) {
+>                 basic.showIcon(IconNames.Yes)
+>             } else {
+>                 // @highlight
+>                 acceptingInput = true
+>                 basic.showIcon(IconNames.Target)
+>             }
 >         } else {
->             basic.showIcon(IconNames.Target)
+>             basic.showIcon(IconNames.No)
 >         }
->     } else {
->         music.play(music.tonePlayable(Note.C3, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
->         basic.showIcon(IconNames.No)
->         // @highlight
->         basic.pause(700)
->         // @highlight
->         basic.showString("A")
 >     }
 > }
 > ```
 
-> [!TASK]
->
-> Under `show string "A"`, set `playerPosition` to `0`. After a mistake, the next tap starts the code again from the first number.
->
-> ```microbit
-> let rebootSequence: number[] = null
-> function checkAnswer (answer: number) {
->     basic.showNumber(answer)
->     basic.pause(150)
->     basic.clearScreen()
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == sequenceLength) {
->             music.play(music.tonePlayable(Note.C5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.pause(80)
->             music.play(music.tonePlayable(Note.E5, music.beat(BeatFraction.Quarter)), music.PlaybackMode.UntilDone)
->             basic.showIcon(IconNames.Yes)
->             basic.showString("ON")
->             basic.showIcon(IconNames.Happy)
->         } else {
->             basic.showIcon(IconNames.Target)
->         }
->     } else {
->         music.play(music.tonePlayable(Note.C3, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
->         basic.showIcon(IconNames.No)
->         basic.pause(700)
->         basic.showString("A")
->         // @highlight
->         playerPosition = 0
->     }
-> }
-> ```
-
-**Test:** Press A and enter a wrong value; you should hear one low tone. Now enter the same code from its first number; the micro:bit should play two tones, display `ON`, and show a happy face. Press A again; a new code should play.
+**Test:** Press A and tap the contacts while the code plays; no numbers should appear. Enter the code, waiting for the target before each tap; a tick should appear. Tap a contact again; nothing should happen until you press A. Start a new game and enter a wrong value; the cross should stay, whatever you tap, until you press A.
 
 > [!TIP]
 >
-> After a mistake, the player can try the same code again from the start, or press A for a new one.
+> `acceptingInput` is a gate. It is `true` only while the target is showing and the micro:bit is waiting for your next tap. Every `on pin pressed` block still runs on every tap, but `checkAnswer` now decides whether that tap counts.

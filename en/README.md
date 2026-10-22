@@ -1,6 +1,6 @@
 # Reboot Sequence project content
 
-The learner project is split into 12 testable milestones. Each task callout holds one task, and each step ends with an observable test.
+The learner project is split into 13 testable milestones. Each task callout holds one task, and each step ends with an observable test.
 
 ```plaintext
 en/
@@ -15,7 +15,7 @@ en/
 ├── meta.yml
 ├── step_1.md
 ├── ...
-└── step_12.md
+└── step_13.md
 ```
 
 The project uses Microsoft MakeCode for micro:bit. Fenced `microbit` snippets contain MakeCode TypeScript, which Raspberry-flavoured Markdown renders as MakeCode blocks.

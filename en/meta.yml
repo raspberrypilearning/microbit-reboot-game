@@ -14,6 +14,7 @@ steps:
   - title: Generate a reboot code
   - title: Check the player's taps
   - title: Show every recognised touch
+  - title: Ignore taps between games
   - title: Finish the game
     completion:
       - internal
