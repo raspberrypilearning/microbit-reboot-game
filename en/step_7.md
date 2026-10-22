@@ -30,8 +30,6 @@ Next, make a function called `checkAnswer`. A **function** is a named group of b
 >         playerPosition += 1
 >         if (playerPosition == sequenceLength) {
 >             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.Target)
 >         }
 >     } else {
 >         basic.showIcon(IconNames.No)
@@ -75,8 +73,6 @@ Next, make a function called `checkAnswer`. A **function** is a named group of b
 >         playerPosition += 1
 >         if (playerPosition == sequenceLength) {
 >             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.Target)
 >         }
 >     } else {
 >         basic.showIcon(IconNames.No)
@@ -96,7 +92,7 @@ Next, make a function called `checkAnswer`. A **function** is a named group of b
 > })
 > ```
 
-**Test:** Press A and watch the code, then enter it with the bare leads. The target should stay on the display after each correct answer, and a tick should appear after the fifth. Nothing changes on the display after a correct answer yet; you will add that in step 8. Press A again and deliberately enter a wrong first answer; a cross should appear.
+**Test:** Press A and watch the code, then enter it with the bare leads. Nothing changes on the display after a correct answer yet; you will add that in step 8. A tick should appear after the fifth. Press A again and deliberately enter a wrong first answer; a cross should appear.
 
 > [!TIP]
 >

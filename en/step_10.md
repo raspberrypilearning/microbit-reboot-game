@@ -28,7 +28,6 @@ Start with the branch that runs after the fifth correct answer.
 >                 basic.showIcon(IconNames.Yes)
 >             } else {
 >                 acceptingInput = true
->                 basic.showIcon(IconNames.Target)
 >             }
 >         } else {
 >             basic.showIcon(IconNames.No)
@@ -62,7 +61,6 @@ Start with the branch that runs after the fifth correct answer.
 >                 basic.showIcon(IconNames.Happy)
 >             } else {
 >                 acceptingInput = true
->                 basic.showIcon(IconNames.Target)
 >             }
 >         } else {
 >             basic.showIcon(IconNames.No)
@@ -96,7 +94,6 @@ Next, finish the branch that runs after a wrong answer.
 >                 basic.showIcon(IconNames.Happy)
 >             } else {
 >                 acceptingInput = true
->                 basic.showIcon(IconNames.Target)
 >             }
 >         } else {
 >             // @highlight
@@ -130,7 +127,6 @@ Next, finish the branch that runs after a wrong answer.
 >                 basic.showIcon(IconNames.Happy)
 >             } else {
 >                 acceptingInput = true
->                 basic.showIcon(IconNames.Target)
 >             }
 >         } else {
 >             music.play(music.tonePlayable(Note.C3, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
@@ -167,7 +163,6 @@ Next, finish the branch that runs after a wrong answer.
 >                 basic.showIcon(IconNames.Happy)
 >             } else {
 >                 acceptingInput = true
->                 basic.showIcon(IconNames.Target)
 >             }
 >         } else {
 >             music.play(music.tonePlayable(Note.C3, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
@@ -204,7 +199,6 @@ Next, finish the branch that runs after a wrong answer.
 >                 basic.showIcon(IconNames.Happy)
 >             } else {
 >                 acceptingInput = true
->                 basic.showIcon(IconNames.Target)
 >             }
 >         } else {
 >             music.play(music.tonePlayable(Note.C3, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)

@@ -105,7 +105,7 @@ it was called from one place only, so it cost four blocks and saved none.
 Ignores the touch unless `acceptingInput` is true. Otherwise it locks input, briefly displays the number recognised, compares `answer` with the list item at `playerPosition`, and then follows one of three paths:
 
 - wrong answer: play one low warning honk, show a cross, show `A`, reset `playerPosition` to `0`, and unlock input;
-- correct partial answer: advance `playerPosition`, unlock input, and show the target;
+- correct partial answer: advance `playerPosition` and unlock input, leaving the display blank;
 - final correct answer: play two short higher beeps and show the reboot-complete sequence, leaving input locked until button A starts a new game.
 
 ## Step architecture
@@ -119,8 +119,8 @@ Ignores the touch unless `acceptingInput` is true. Otherwise it locks input, bri
 | 5 | Show a random value, then a blank gap | Each press of A flashes `1`, `2` or `3`, then clears |
 | 6 | Fill a list with `sequenceLength` random values using `repeat`, then play it | Every new code contains exactly five values from 1 to 3, with visible gaps |
 | 7 | Make a function with a parameter that compares bare-lead answers with successive list items | The displayed code completes with a tick; a wrong first value shows a cross |
-| 8 | Acknowledge every touch | Each touch briefly displays the number read, then immediately restores the target |
-| 9 | Gate input with a Boolean while the code plays, while each tap is answered, and after a win | Contacts touched during playback, before the target returns, or after the tick, do nothing |
+| 8 | Acknowledge every touch | Each touch briefly displays the number read, then clears the display |
+| 9 | Gate input with a Boolean while the code plays, while each tap is answered, and after a win | Contacts touched during playback, while the previous number shows, or after the tick, do nothing |
 | 10 | Add tones, failure, and success | A wrong value plays one low tone and the same code can then be re-entered from its start; five correct inputs play two tones |
 | 11 | Replace numbers with an optional three-symbol code | The complete game still works with learner-designed symbols |
 | 12 | Construct four loose contacts and secure the micro:bit | All fastenings are removable, comfortable, and leave controls accessible |
@@ -137,14 +137,17 @@ variables. Step 4 is now a single block.
 The `acceptingInput` Boolean is the only input lock. It is `true` only while the micro:bit is
 waiting for the next touch: button A sets it to `false` before playing the code and to `true` once
 the target appears; `checkAnswer` sets it to `false` as soon as it accepts a touch, and back to
-`true` just before the target returns or once `A` has been shown after a mistake. After the final
+`true` once that touch's number has cleared or once `A` has been shown after a mistake. After the final
 correct answer nothing unlocks it, so input stays locked until button A starts a new game.
 
 The lock has to cover each touch's own feedback, not only playback. `checkAnswer` displays the
 number before comparing it, and each display waits for the last to finish, so overlapping touches
 were compared out of order. In the MakeCode simulator a correct retry started while the cross and
-`A` were still showing was marked wrong. The cost is pace: a touch made before the target or `A`
-returns shows nothing, so players tap about once a second. Button A is never locked: pressing it
+`A` were still showing was marked wrong. The cost is pace: a touch made while the
+previous number is still showing is ignored, and the touch after it is then checked against the
+ignored one's place. The target therefore appears only once, after the code plays; when it also
+followed every correct touch, each touch kept the display busy for about 1.5 seconds and touches
+1.2 seconds apart were dropped in the simulator. Button A is never locked: pressing it
 mid-game starts a new code.
 
 There is no separate wire tester. A learner-built one is the same nine blocks as steps 3 and 4,
@@ -261,7 +264,8 @@ The final hero image should preserve the hacked-together character of the build 
 
 - Run the full build on at least two BBC micro:bit V2 boards.
 - Test all three contacts for at least 30 taps each, recording missed or duplicate inputs.
-- Confirm that touches made during sequence playback, before the target or `A` returns, and after a win, are ignored.
+- Confirm that touches made during sequence playback, while the previous number or the mistake feedback is showing, and after a win, are ignored.
+- Confirm that a correct code tapped at a steady one-second pace is accepted.
 - Confirm that every new game generates exactly five values from 1 to 3.
 - Confirm that every touch displays the number detected exactly once.
 - Confirm that button A restarts cleanly after both failure and success.

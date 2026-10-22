@@ -33,7 +33,7 @@ Make the micro:bit ignore taps while it is busy: while the code plays, while it 
 
 > [!TASK]
 >
-> At the bottom of `on button A pressed`, set `acceptingInput` to `true`. This unlocks input when the target appears.
+> At the bottom of `on button A pressed`, set `acceptingInput` to `true`. This unlocks input when the target appears after the code.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -96,8 +96,6 @@ Next, make `checkAnswer` ignore every tap unless input is unlocked.
 >             playerPosition += 1
 >             if (playerPosition == sequenceLength) {
 >                 basic.showIcon(IconNames.Yes)
->             } else {
->                 basic.showIcon(IconNames.Target)
 >             }
 >         } else {
 >             basic.showIcon(IconNames.No)
@@ -108,7 +106,7 @@ Next, make `checkAnswer` ignore every tap unless input is unlocked.
 
 > [!TASK]
 >
-> Above the `show icon` block that shows the target, add `set acceptingInput to true`. It unlocks input after a correct answer, so the next tap counts.
+> Click the **+** at the bottom of the `if playerPosition = sequenceLength` block to give it an `else`. Put `set acceptingInput to true` in the `else`. It unlocks input after a correct answer that does not finish the code, so the next tap counts.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -125,7 +123,6 @@ Next, make `checkAnswer` ignore every tap unless input is unlocked.
 >             } else {
 >                 // @highlight
 >                 acceptingInput = true
->                 basic.showIcon(IconNames.Target)
 >             }
 >         } else {
 >             basic.showIcon(IconNames.No)
@@ -134,8 +131,8 @@ Next, make `checkAnswer` ignore every tap unless input is unlocked.
 > }
 > ```
 
-**Test:** Press A and tap the contacts while the code plays; no numbers should appear. Enter the code, waiting for the target before each tap; a tick should appear. Tap a contact again; nothing should happen until you press A. Start a new game and enter a wrong value; the cross should stay, whatever you tap, until you press A.
+**Test:** Press A and tap the contacts while the code plays; no numbers should appear. Enter the code, waiting for each number to disappear before the next tap; a tick should appear. Tap a contact again; nothing should happen until you press A. Start a new game and enter a wrong value; the cross should stay, whatever you tap, until you press A.
 
 > [!TIP]
 >
-> `acceptingInput` is a gate. It is `true` only while the target is showing and the micro:bit is waiting for your next tap. Every `on pin pressed` block still runs on every tap, but `checkAnswer` now decides whether that tap counts.
+> `acceptingInput` is a gate. It is `true` only while the micro:bit is waiting for your next tap. Every `on pin pressed` block still runs on every tap, but `checkAnswer` now decides whether that tap counts.

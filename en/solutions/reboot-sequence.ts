@@ -20,7 +20,6 @@ function checkAnswer (answer: number) {
                 basic.showIcon(IconNames.Happy)
             } else {
                 acceptingInput = true
-                basic.showIcon(IconNames.Target)
             }
         } else {
             music.play(music.tonePlayable(Note.C3, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)

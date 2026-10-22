@@ -18,7 +18,7 @@ The micro:bit generates a five-number reboot code using the numbers `1` to `3` a
 - Ring finger: `P2`, which enters `3`
 - Thumb: `GND`, the common contact
 
-Wait for the target before each tap; the micro:bit briefly shows the number it detected. A mistake produces a warning honk, and you start the code again from its first number. Repeating all five signals correctly produces two beeps and completes the reboot.
+Each tap briefly shows the number detected; wait for it to disappear before the next tap. A mistake produces a warning honk, and you start the code again from its first number. Repeating all five signals correctly produces two beeps and completes the reboot.
 
 ### You will need
 

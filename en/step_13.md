@@ -18,7 +18,7 @@ Attach the already-tested leads to the wearable contacts.
 
 > [!TASK]
 >
-> Watch the five-signal code, then tap each matching finger contact against the thumb contact. Separate the contacts after every tap, and wait for the target before the next one.
+> Watch the five-signal code, then tap each matching finger contact against the thumb contact. Separate the contacts after every tap, and wait for the number to disappear before the next one.
 >
 > ![A complete game: the micro:bit displays the five-signal reboot code, then the player taps it back.](images/microbit-game.gif)
 

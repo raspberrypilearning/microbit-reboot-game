@@ -19,8 +19,6 @@ Give immediate feedback so the player knows which switch the micro:bit detected.
 >         playerPosition += 1
 >         if (playerPosition == sequenceLength) {
 >             basic.showIcon(IconNames.Yes)
->         } else {
->             basic.showIcon(IconNames.Target)
 >         }
 >     } else {
 >         basic.showIcon(IconNames.No)
@@ -28,4 +26,4 @@ Give immediate feedback so the player knows which switch the micro:bit detected.
 > }
 > ```
 
-**Test:** Start a game and enter one correct contact and one deliberately wrong contact. Each touch should briefly display the number detected. After a correct tap, the target should come back straight away.
+**Test:** Start a game and enter one correct contact and one deliberately wrong contact. Each touch should briefly display the number detected. After a correct tap, the number should flash, then the display should go blank, ready for the next tap.
