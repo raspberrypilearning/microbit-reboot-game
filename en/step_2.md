@@ -4,11 +4,11 @@ Create the MakeCode project, then connect the four clip leads.
 
 > [!TASK]
 >
-> Open [Microsoft MakeCode for micro:bit](https://makecode.microbit.org/){:target="_blank"} and create a project called `Reboot Sequence`.
+> Open [Microsoft MakeCode for micro:bit](https://makecode.microbit.org/){:target="_blank"} and create a project called **Reboot Sequence**.
 
 > [!TASK]
 >
-> In `on start`, show the string `A`.
+> Add the following block to show A when the micro:bit starts, ready for the player to begin.
 >
 > ```microbit
 > basic.showString("A")
@@ -24,7 +24,7 @@ Create the MakeCode project, then connect the four clip leads.
 
 > [!TASK]
 >
-> Connect one crocodile lead to `GND`, one to `P0`, one to `P1` and one to `P2`.
+> Connect one crocodile lead to GND, one to P0, one to P1 and one to P2.
 >
 > ![The micro:bit showing A, with a red lead on 0, a yellow lead on 1, a green lead on 2 and a black lead on GND. Nothing is connected to 3V, and the free jaws are spread apart so they cannot touch.](images/leads-connected.jpg)
 

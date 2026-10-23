@@ -4,23 +4,23 @@ Check each tap against the next number in the code.
 
 > [!TASK]
 >
-> Make a variable called `playerPosition`. It remembers which item in the list the player must match next.
+> Create a variable called **playerPosition** to remember which signal the player must match next.
 
-Next, make a function called `checkAnswer`. A **function** is a named group of blocks you can use from several places.
-
-> [!TASK]
->
-> Click **Advanced** at the bottom of the list of block menus to see more menus. Click **Functions**, then **Make a Function...**, and name the function `checkAnswer`.
+Next, make a function to check the player's answer. A **function** is a named group of blocks you can use from several places.
 
 > [!TASK]
 >
-> Click **Number** to give the function a **parameter**: a value you hand to the function each time you use it. Click the new parameter's name, change it to `answer`, then click **Done**.
+> Create a function called **checkAnswer** to check the number from any of the three switches. Open **Advanced** > **Functions** > **Make a Function...**.
 
 > [!TASK]
 >
-> Add these blocks to `checkAnswer`. They compare the answer with the item at `playerPosition`, move on to the next item after a correct answer, and show a tick once `playerPosition` reaches `sequenceLength`.
+> Give your function a number **parameter** called **answer**, so each switch can pass in its number. Click **Number**, name the parameter, then click **Done**.
+
+> [!TASK]
 >
-> `get value at` is in **Advanced** > **Arrays**. To give an `if` block an `else`, click the **+** at its bottom edge.
+> Add the following blocks to your function to check each tap against the next signal. A correct tap moves the player on, a wrong tap shows a cross, and completing the code shows a tick.
+>
+> Find the list blocks in **Advanced** > **Arrays**. Click **+** at the bottom of a condition to add an alternative branch.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -39,7 +39,7 @@ Next, make a function called `checkAnswer`. A **function** is a named group of b
 
 > [!TASK]
 >
-> After button A plays the code, reset `playerPosition` and show a target.
+> Add the highlighted blocks after the code plays to return the player to the first signal and show that the game is ready for their taps.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -63,7 +63,7 @@ Next, make a function called `checkAnswer`. A **function** is a named group of b
 
 > [!TASK]
 >
-> In each `on pin pressed` block, replace `show number` with a `call checkAnswer` block from **Functions**, and type in the matching number.
+> Change the three pin events as shown so each switch sends its number to your answer-checking function. Find the function call in **Functions**.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -92,7 +92,7 @@ Next, make a function called `checkAnswer`. A **function** is a named group of b
 > })
 > ```
 
-**Test:** Press A and watch the code, then enter it with the bare leads. Nothing changes on the display after a correct answer yet; you will add that in step 8. A tick should appear after the fifth. Press A again and deliberately enter a wrong first answer; a cross should appear.
+**Test:** Press A and watch the code, then enter it with the bare leads. Nothing changes on the display after a correct answer yet; you will add that in step 8. A tick should appear after the last correct answer. Press A again and deliberately enter a wrong first answer; a cross should appear.
 
 > [!TIP]
 >

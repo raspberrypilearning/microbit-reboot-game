@@ -4,7 +4,7 @@ Make button A flash a random signal, then leave a short blank gap.
 
 > [!TASK]
 >
-> Add an `on button A pressed` block. Put a `show number` block inside it. From **Math**, drop `pick random 0 to 10` into `show number`, and change the numbers to `1` and `3`.
+> Add the following blocks so pressing button A displays a random number from 1 to 3. Find the random number block in **Math**.
 >
 > ```microbit
 > input.onButtonPressed(Button.A, function () {
@@ -14,7 +14,7 @@ Make button A flash a random signal, then leave a short blank gap.
 
 > [!TASK]
 >
-> Under `show number`, add a `pause (ms)` of `500`, a `clear screen` block, and a `pause (ms)` of `200`. `clear screen` is in **Basic**.
+> Add the highlighted blocks to pause after the signal, then clear the display and leave a short blank gap. Find these blocks in **Basic**.
 >
 > ```microbit
 > input.onButtonPressed(Button.A, function () {

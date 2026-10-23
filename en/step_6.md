@@ -1,10 +1,12 @@
 ## Generate a reboot code
 
-Store five random signals in a list, then play them one after another.
+Store random signals in a list, then play them one after another. You choose how long the code will be.
 
 > [!TASK]
 >
-> Make a variable called `sequenceLength` and set it to `5` in `on start`. It decides how many signals are in each code.
+> Create a variable called **sequenceLength**. Add the following block to choose how many signals are in each code.
+>
+> You can use any whole number greater than 0 instead of 5. Try 3 for a shorter code or 8 for a longer challenge. Choose a length you want to try!
 >
 > ```microbit
 > let sequenceLength = 5
@@ -12,9 +14,9 @@ Store five random signals in a list, then play them one after another.
 
 > [!TASK]
 >
-> Make a **list** called `rebootSequence`. MakeCode calls lists **arrays**.
+> Add the highlighted block to start each game with an empty list for the reboot code. Name the list **rebootSequence**.
 >
-> Open **Advanced** > **Arrays** and drag `set list to array of` to the top of `on button A pressed`. Click `list`, choose **Rename variable...** and call it `rebootSequence`. Click the **–** until it says `empty array`. This empties the old list at the start of every game.
+> MakeCode calls lists **arrays**. Find the blocks in **Advanced** > **Arrays**. Use **Rename variable...** to name your list, and click **–** to remove its starting items.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -30,7 +32,7 @@ Store five random signals in a list, then play them one after another.
 
 > [!TASK]
 >
-> Under it, add a `repeat` loop that adds a random value to the end of the list. `repeat` is in **Loops**: drop `sequenceLength` into it in place of the number. `add value to end` is in **Advanced** > **Arrays**: choose `rebootSequence` instead of `list`, then drag `pick random 1 to 3` out of `show number` and into `add value to end`.
+> Add the highlighted blocks to fill the list with random signals. The loop repeats for your chosen code length. Move the random number block from the display into the list-building loop, as shown.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -49,7 +51,7 @@ Store five random signals in a list, then play them one after another.
 
 > [!TASK]
 >
-> From **Loops**, add a `for element value of list` block under the `repeat` loop and choose `rebootSequence` instead of `list`. Drag `show number` into it; the three blocks under it come too. Then drag the loop's `value` bubble into `show number`.
+> Add the highlighted loop to play every signal in the list, in order. Move your display and pause blocks inside it, as shown. Find the loop in **Loops**.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -68,7 +70,7 @@ Store five random signals in a list, then play them one after another.
 > })
 > ```
 
-**Test:** Press A several times. Every code should have exactly five values, and every value should be `1`, `2` or `3`. Repeated values are allowed; the blank gap shows where one ends and the next begins.
+**Test:** Press A several times. Every code should have the number of values you chose for `sequenceLength`, and every value should be `1`, `2` or `3`. Repeated values are allowed; the blank gap shows where one ends and the next begins.
 
 > [!TIP]
 >

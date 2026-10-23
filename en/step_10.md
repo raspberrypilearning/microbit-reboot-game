@@ -1,12 +1,12 @@
 ## Finish the game
 
-Add different feedback for failure and success in `checkAnswer`.
+Add different feedback for failure and success to your answer-checking function.
 
-Start with the branch that runs after the fifth correct answer.
+Start with the branch that runs after the last correct answer.
 
 > [!TASK]
 >
-> Before the tick, add two `play tone` blocks from **Music**, with a `pause (ms)` of `80` between them. Set the first tone to `High C` and the second to `High E`, each for `1/4` beat.
+> Add the highlighted blocks before the tick to play two short high tones when the player completes the code. Find the sound blocks in **Music**.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -38,7 +38,7 @@ Start with the branch that runs after the fifth correct answer.
 
 > [!TASK]
 >
-> After the tick, show the string `ON`, then the happy face icon.
+> Add the highlighted blocks after the tick to display ON and a happy face, showing that the reboot worked.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -73,7 +73,7 @@ Next, finish the branch that runs after a wrong answer.
 
 > [!TASK]
 >
-> Before the cross, add a `play tone` block. Set it to `Low C` and leave it at `1` beat.
+> Add the highlighted sound block before the cross to play a low warning tone after a wrong answer.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -106,7 +106,7 @@ Next, finish the branch that runs after a wrong answer.
 
 > [!TASK]
 >
-> After the cross, pause for `700` milliseconds, then show the string `A` to offer a new code.
+> Add the highlighted blocks to pause after the cross, then display A as a reminder that the player can press button A for a new code.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -142,7 +142,7 @@ Next, finish the branch that runs after a wrong answer.
 
 > [!TASK]
 >
-> Under `show string "A"`, set `playerPosition` to `0`. After a mistake, the next tap starts the code again from the first number.
+> Add the highlighted block to return the player to the first signal after a mistake, ready to try the same code again.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -178,7 +178,7 @@ Next, finish the branch that runs after a wrong answer.
 
 > [!TASK]
 >
-> Under it, set `acceptingInput` to `true`. This unlocks input so the player can try again.
+> Add the highlighted block to accept taps again after a mistake, so the player can retry the code.
 >
 > ```microbit
 > let rebootSequence: number[] = null

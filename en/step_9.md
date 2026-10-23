@@ -4,11 +4,11 @@ Make the micro:bit ignore taps while it is busy: while the code plays, while it 
 
 > [!TASK]
 >
-> Make a variable called `acceptingInput`. It only ever holds `true` or `false`, a kind of value called a **Boolean**.
+> Create a variable called **acceptingInput** to remember whether taps should count. It holds true or false, a kind of value called a **Boolean**.
 
 > [!TASK]
 >
-> At the top of `on button A pressed`, set `acceptingInput` to `false`. This locks input while the code plays. The `true` and `false` blocks are in **Logic**.
+> Add the highlighted block at the start of the button A event to stop taps counting while the code plays. Find true and false in **Logic**.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -33,7 +33,7 @@ Make the micro:bit ignore taps while it is busy: while the code plays, while it 
 
 > [!TASK]
 >
-> At the bottom of `on button A pressed`, set `acceptingInput` to `true`. This unlocks input when the target appears after the code.
+> Add the highlighted block at the end of the button A event to accept taps once the code has finished playing and the target appears.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -57,31 +57,39 @@ Make the micro:bit ignore taps while it is busy: while the code plays, while it 
 > })
 > ```
 
-Next, make `checkAnswer` ignore every tap unless input is unlocked.
+Next, make the answer-checking function ignore taps when input is disabled.
 
 > [!TASK]
 >
-> Drag `show number` out of `checkAnswer`. All the blocks under it come too. Leave them on the workspace; you will put them back in a moment.
+> Move all the blocks out of your answer-checking function to make room for a new condition. Drag the first block out; the rest come with it. Keep them on the workspace.
 
 > [!TASK]
 >
-> Put a new `if` block from **Logic** into `checkAnswer`. Replace its `true` with `acceptingInput` from **Variables**.
+> Add the following condition from **Logic** around all your function's blocks so taps are checked only when input is enabled. Put the blocks you moved inside it, as shown.
 >
 > ```microbit
+> let rebootSequence: number[] = null
 > function checkAnswer (answer: number) {
 >     // @highlight
 >     if (acceptingInput) {
+>         basic.showNumber(answer)
+>         basic.pause(150)
+>         basic.clearScreen()
+>         if (answer == rebootSequence[playerPosition]) {
+>             playerPosition += 1
+>             if (playerPosition == sequenceLength) {
+>                 basic.showIcon(IconNames.Yes)
+>             }
+>         } else {
+>             basic.showIcon(IconNames.No)
+>         }
 >     }
 > }
 > ```
 
 > [!TASK]
 >
-> Put your blocks back inside the new `if`.
-
-> [!TASK]
->
-> Add `set acceptingInput to false` as the first block inside the new `if`. It locks input while one tap is checked.
+> Add the highlighted block to ignore further taps while the micro:bit responds to the current one.
 >
 > ```microbit
 > let rebootSequence: number[] = null
@@ -106,7 +114,7 @@ Next, make `checkAnswer` ignore every tap unless input is unlocked.
 
 > [!TASK]
 >
-> Click the **+** at the bottom of the `if playerPosition = sequenceLength` block to give it an `else`. Put `set acceptingInput to true` in the `else`. It unlocks input after a correct answer that does not finish the code, so the next tap counts.
+> Add the highlighted block in an alternative branch so the next tap can count after a correct answer, unless the code is complete. Click **+** on the condition that checks whether the player has finished.
 >
 > ```microbit
 > let rebootSequence: number[] = null

@@ -4,7 +4,7 @@ Give immediate feedback so the player knows which switch the micro:bit detected.
 
 > [!TASK]
 >
-> At the top of `checkAnswer`, show the answer for `150` milliseconds and clear the display.
+> Add the highlighted blocks at the start of your function to briefly display the number detected before checking the answer.
 >
 > ```microbit
 > let rebootSequence: number[] = null

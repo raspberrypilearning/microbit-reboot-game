@@ -8,7 +8,7 @@ Make the reboot harder by inventing a visual code.
 
 > [!TASK]
 >
-> In `on button A pressed`, replace the `show number` block inside the `for element value of rebootSequence` loop with an `if`, `else if`, `else` choice that shows your symbols.
+> Replace the number display in your playback loop with the following blocks so each signal shows a different symbol.
 >
 > Here is one possible symbol set:
 >
@@ -70,4 +70,4 @@ Make the reboot harder by inventing a visual code.
 >
 > Hide the key and challenge someone else to learn the symbols.
 
-**Test:** Every symbol should always correspond to the same input. Each tap should still show its number, and a mistake, a restart and a five-signal win should work as before.
+**Test:** Every symbol should always correspond to the same input. Each tap should still show its number, and a mistake, a restart and completing the code should work as before.

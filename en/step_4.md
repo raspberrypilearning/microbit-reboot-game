@@ -4,7 +4,7 @@ Add the inputs for `2` and `3`.
 
 > [!TASK]
 >
-> Add an `on pin pressed` block for `P1` and another for `P2`. Change the pin in each one, and show `2` and `3`.
+> Add the highlighted blocks so a tap on P1 displays 2 and a tap on P2 displays 3.
 >
 > ```microbit
 > input.onPinPressed(TouchPin.P0, function () {

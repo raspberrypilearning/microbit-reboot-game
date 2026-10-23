@@ -4,7 +4,7 @@ Show `1` when the `P0` lead taps the `GND` lead. This also checks your wiring.
 
 > [!TASK]
 >
-> From the `Input` menu, add an `on pin P0 pressed` block. Inside it, show the number `1`.
+> Add the following blocks to display 1 when the P0 lead taps the GND lead. Find the pin event in **Input**.
 >
 > ```microbit
 > input.onPinPressed(TouchPin.P0, function () {
