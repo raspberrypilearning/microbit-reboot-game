@@ -1,6 +1,6 @@
 ## Start the controller
 
-Create the MakeCode project, then connect the four clip leads.
+Make a start screen and send it to your micro:bit.
 
 > [!TASK]
 >
@@ -8,7 +8,7 @@ Create the MakeCode project, then connect the four clip leads.
 
 > [!TASK]
 >
-> Add the following block to show A when the micro:bit starts, ready for the player to begin.
+> Add the following block from `Basic`{:class='microbitbasic'} inside `on start`{:class='microbitbasic'} to show A when the micro:bit starts. This will help you check that your program transferred successfully. Later, A will remind you which button starts a game.
 >
 > ```microbit
 > basic.showString("A")
@@ -16,20 +16,46 @@ Create the MakeCode project, then connect the four clip leads.
 
 > [!TASK]
 >
-> Download the program to your micro:bit.
+> Connect your micro:bit to your computer with a USB data cable.
+>
+> ![A USB cable connecting a micro:bit to a computer.](images/connect-usb.jpg){:width="450px"}
 
 > [!TASK]
 >
-> Disconnect the USB cable and battery pack.
+> Click **Download** to send your program to the micro:bit.
+>
+> ![The Download button in MakeCode.](images/download-button.png){:width="300px"}
+
+If this is your first download, follow the connection prompts below. If A already appears on your micro:bit, move to the test.
 
 > [!TASK]
 >
-> Connect one crocodile lead to GND, one to P0, one to P1 and one to P2.
+> Choose **Connect to computer**, then **Next**.
 >
-> ![The micro:bit showing A, with a red lead on 0, a yellow lead on 1, a green lead on 2 and a black lead on GND. Nothing is connected to 3V, and the free jaws are spread apart so they cannot touch.](images/leads-connected.jpg)
+> ![MakeCode asks you to connect the micro:bit to your computer.](images/connect1.png){:width="450px"}
 
 > [!TASK]
 >
-> Arrange the four free metal jaws so they cannot touch each other accidentally.
+> Choose **Pair**.
+>
+> ![The Pair button in the connection guide.](images/connect2.png){:width="450px"}
 
-**Test:** Reconnect USB and reset the micro:bit. `A` should appear and stay on the display. Gently move each lead; they should remain attached to the correct rings without touching `3V` or a neighbouring ring.
+> [!TASK]
+>
+> Select your micro:bit in the device list, then choose **Connect**.
+>
+> ![A micro:bit selected in the browser device list.](images/connect3.png){:width="450px"}
+
+> [!TASK]
+>
+> Choose **Download** to finish transferring the program.
+>
+> ![The final Download button after pairing.](images/connect4.png){:width="450px"}
+
+> [!TIP]
+>
+> Pairing works in Chrome and Edge. If your browser saves a HEX file instead, copy it onto the **MICROBIT** drive. See the [micro:bit transfer guide](https://microbit.org/get-started/user-guide/transfer-code-to-the-microbit/){:target="_blank"} for help.
+
+**Test**
+
+Press the reset button on the back of the micro:bit. A should appear on its display.

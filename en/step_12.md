@@ -1,39 +1,111 @@
-## Build the wearable controls
+## Ignore taps while busy
 
-Now that the complete game works with bare leads, make the finger contacts and secure the micro:bit.
-
-> [!TASK]
->
-> Tear off four small pieces of kitchen foil. Wrap one loosely around your thumb and one around each of your index, middle and ring fingers, leaving enough foil near the base of each finger for a crocodile clip to grip.
->
-> Every finger needs its own separate piece of foil, and no piece should touch another. Stop each wrap before the knuckle where your finger joins your hand, because your fingers press together there.
->
-> ![A single foil contact wrapped loosely around the thumb.](images/finger-band-single.jpg)
->
-> ![Foil contacts made for the thumb, index, middle and ring fingers.](images/finger-bands-all.jpg)
+Allow taps only when the micro:bit is ready for your answers.
 
 > [!TASK]
 >
-> Cut a piece of thin card a little larger than the micro:bit. Snip a small notch into the edge of the card wherever an elastic band will cross it, so the band sits in the notch and cannot slide off.
+> Create a variable called **acceptingInput**. It will remember whether taps should count.
 
 > [!TASK]
 >
-> Hold the micro:bit against the card with elastic bands.
+> Add a set-variable block at the top of the button A event and select **acceptingInput**. You will set its value in the next task.
+>
+> ```microbit
+> input.onButtonPressed(Button.A, function () {
+>     acceptingInput = 0
+> })
+> ```
+>
+> Keep your existing button A blocks underneath it.
 
 > [!TASK]
 >
-> Hold the battery pack against the other side of the card in the same way.
+> Replace its number with `false`{:class='microbitlogic'} from `Logic`{:class='microbitlogic'} to stop taps counting while the code plays. True and false are **Boolean** values.
 >
-> ![The battery pack strapped to the back of the same card backing with elastic bands.](images/battery-pack-mounted.jpg)
+> ```microbit
+> let rebootSequence: number[] = null
+> input.onButtonPressed(Button.A, function () {
+>     // @highlight
+>     acceptingInput = false
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let value of rebootSequence) {
+>         basic.showNumber(value)
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
+>     }
+>     playerPosition = 0
+>     basic.showIcon(IconNames.Target)
+> })
+> ```
 
 > [!TASK]
 >
-> Use one more elastic band to keep the whole thing comfortably on your wrist, with the LED display, buttons and edge connector visible and reachable.
+> Add the following block at the end of the button A event. Choose `true`{:class='microbitlogic'} to allow taps once the target appears.
 >
-> ![The micro:bit held against the wrist by a card backing and elastic bands, with the display, buttons and edge connector still reachable.](images/microbit-on-wrist.jpg)
+> ```microbit
+> let rebootSequence: number[] = null
+> input.onButtonPressed(Button.A, function () {
+>     acceptingInput = false
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let value of rebootSequence) {
+>         basic.showNumber(value)
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
+>     }
+>     playerPosition = 0
+>     basic.showIcon(IconNames.Target)
+>     // @highlight
+>     acceptingInput = true
+> })
+> ```
 
-**Test:** Put on and remove every foil contact. Each must come off immediately without pulling. With your hand relaxed, check that no two pieces of foil touch. Hold your arm in a comfortable playing position for 30 seconds; the micro:bit should stay in place without the fastening feeling tight.
-
-> [!INFO]
+> [!TASK]
 >
-> **Safety:** If a foil contact or the wrist fastening feels tight, take it off and loosen it before playing. Nothing should need pulling to come free.
+> Add an `if`{:class='microbitlogic'} block from `Logic`{:class='microbitlogic'} to your function. Put `acceptingInput`{:class='microbitvariables'} in its condition, then move all your existing function blocks inside it. Now taps are checked only when input is allowed.
+>
+> The empty condition looks like this.
+>
+> ```microbit
+> function checkAnswer (answer: number) {
+>     if (acceptingInput) {
+>     }
+> }
+> ```
+>
+> Your whole function should then look like this.
+>
+> ```microbit
+> let rebootSequence: number[] = null
+> function checkAnswer (answer: number) {
+>     if (acceptingInput) {
+>         basic.showNumber(answer)
+>         basic.pause(150)
+>         basic.clearScreen()
+>         if (answer == rebootSequence[playerPosition]) {
+>             playerPosition += 1
+>             if (playerPosition == sequenceLength) {
+>                 basic.showIcon(IconNames.Yes)
+>             }
+>         } else {
+>             basic.showIcon(IconNames.No)
+>         }
+>     }
+> }
+> ```
+
+**Test**
+
+Download your program.
+
+- Press A and tap while the code plays. Your taps should not interrupt its numbers.
+- Wait for the target, then tap a pin lead. Its number should appear.
+
+Next you will also ignore taps while answering a tap and after a win.

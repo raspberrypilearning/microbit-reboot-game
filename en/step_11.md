@@ -1,73 +1,31 @@
-## Challenge: Replace numbers with symbols
+## Show each tap
 
-Make the reboot harder by inventing a visual code.
-
-> [!TASK]
->
-> Design three clearly different 5×5 symbols, and decide which one represents each input.
+Show the number for each tap so you know which pin lead was detected.
 
 > [!TASK]
 >
-> Replace the number display in your playback loop with the following blocks so each signal shows a different symbol.
->
-> Here is one possible symbol set:
+> Add the following blocks at the start of your function to briefly display each tap’s number before checking it.
 >
 > ```microbit
 > let rebootSequence: number[] = null
-> let acceptingInput = false
-> input.onButtonPressed(Button.A, function () {
->     acceptingInput = false
->     rebootSequence = []
->     for (let count = 0; count < sequenceLength; count++) {
->         rebootSequence.push(randint(1, 3))
->     }
->     for (let value of rebootSequence) {
->         // @highlight
->         if (value == 1) {
->             basic.showLeds(`
->                 . . # . .
->                 . . # . .
->                 # # # # #
->                 . . # . .
->                 . . # . .
->             `)
->         } else if (value == 2) {
->             basic.showLeds(`
->                 # . . . #
->                 . # . # .
->                 . . # . .
->                 . # . # .
->                 # . . . #
->             `)
->         } else {
->             basic.showLeds(`
->                 . # # # .
->                 . # . # .
->                 . # . # .
->                 . # # # .
->                 . . . . .
->             `)
+> function checkAnswer (answer: number) {
+>     // @highlight
+>     basic.showNumber(answer)
+>     // @highlight
+>     basic.pause(150)
+>     // @highlight
+>     basic.clearScreen()
+>     if (answer == rebootSequence[playerPosition]) {
+>         playerPosition += 1
+>         if (playerPosition == sequenceLength) {
+>             basic.showIcon(IconNames.Yes)
 >         }
->         basic.pause(500)
->         basic.clearScreen()
->         basic.pause(200)
+>     } else {
+>         basic.showIcon(IconNames.No)
 >     }
->     playerPosition = 0
->     basic.showIcon(IconNames.Target)
->     acceptingInput = true
-> })
+> }
 > ```
 
-> [!TASK]
->
-> Write down your three-symbol key.
+**Test**
 
-> [!TASK]
->
-> Download the game and complete one reboot using the key.
-
-> [!TASK]
->
-> Hide the key and challenge someone else to learn the symbols.
-
-**Test:** Every symbol should always correspond to the same input. Each tap should still show its number, and a mistake, a restart and completing the code should work as before.
+Start a game and enter a correct number, then a wrong number. Each tap should briefly show its number. A correct tap clears the display for the next one. A wrong tap ends with a cross.

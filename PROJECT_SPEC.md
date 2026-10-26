@@ -2,13 +2,13 @@
 
 ## Status
 
-Working specification for a Code Club physical-computing project. The learner copy is drafted in `en/step_1.md` to `en/step_13.md`, and `en/solutions/reboot-sequence.ts` records the completed logic, tested in the MakeCode simulator but not yet on a board. One-board physical testing is in progress; photography, a downloadable MakeCode project, multi-board validation, and publication assets remain outstanding.
+Working specification for a Code Club physical-computing project. The learner copy is in `en/step_1.md` to `en/step_19.md`. The October 2026 feedback revision splits long tasks, adds MakeCode and pairing screenshots, and keeps the completed game logic unchanged. Photos and gameplay media are present. The completed default program is in `en/solutions/reboot-sequence.ts`. Fresh physical-board and multi-board validation remain outstanding.
 
 ## Product statement
 
 Learners build four loose finger contacts by wrapping kitchen foil around the thumb, index, middle, and ring fingers. The thumb contact connects to `GND`; the index, middle, and ring finger contacts connect to `P0`, `P1`, and `P2`. Touching a finger contact to the thumb contact closes one circuit and enters the number `1`, `2`, or `3`.
 
-The BBC micro:bit generates and displays one five-number reboot code. The player repeats that code using the finger contacts. A mistake sends the player back to the first term of the same code; entering all five terms correctly completes the reboot.
+The BBC micro:bit generates and displays one reboot code of the learner’s chosen length (five by default). The player repeats that code using the finger contacts. A mistake sends the player back to the first term of the same code; entering all its terms correctly completes the reboot.
 
 ## Audience and level
 
@@ -22,7 +22,7 @@ The BBC micro:bit generates and displays one five-number reboot code. The player
 Learners will:
 
 - complete and test low-voltage input circuits using `GND` and pins `P0`, `P1`, and `P2`;
-- respond to a physical switch closure with an event block, so a held contact counts once;
+- respond to a physical switch closure with an event block, using quick taps released within one second;
 - use a function with a parameter to avoid repeating the same blocks in three event handlers;
 - store an ordered sequence in a list;
 - traverse a list and retrieve an item by its position;
@@ -76,12 +76,12 @@ The thumb contact is the common ground. The index, middle, and ring finger conta
 ## Game rules
 
 1. Press button A to begin.
-2. The micro:bit generates five random values from 1 to 3 and displays them once, with a gap between values.
+2. The micro:bit generates the chosen number of random values from 1 to 3 and displays them once, with a gap between values.
 3. Tap the matching finger contacts against the thumb contact in the same order.
 4. Every registered touch briefly displays the number detected. Touches are ignored while the code plays, while the micro:bit is still answering the previous touch, and after a win.
 5. A wrong answer produces a low warning honk, displays a cross, and sends the player back to the first term of the same code.
-6. Five correct answers produce two short beeps and display the completed reboot.
-7. Press button A at any time to generate a new five-value code.
+6. A complete set of correct answers produce two short beeps and display the completed reboot.
+7. Press button A at any time to generate a new code of the chosen length.
 
 ## Program state
 
@@ -110,21 +110,27 @@ Ignores the touch unless `acceptingInput` is true. Otherwise it locks input, bri
 
 ## Step architecture
 
-| Step | Outcome | Acceptance test |
+| Step | Outcome | Acceptance check |
 |---:|---|---|
-| 1 | Understand the finished project and collect materials | Learner can identify the four contacts and explain the game loop |
-| 2 | Create and transfer the start prompt, then connect all four leads | `A` appears and all four bare leads remain securely connected |
-| 3 | Respond to the first switch with `on pin P0 pressed`, and prove the wiring | A quick `P0`-to-`GND` tap displays `1` as the jaws separate; a touch held for longer than a second displays nothing |
-| 4 | Add `on pin pressed` for `P1` and `P2` | The three bare signal leads reliably enter `1`, `2`, and `3` |
-| 5 | Show a random value, then a blank gap | Each press of A flashes `1`, `2` or `3`, then clears |
-| 6 | Fill a list with `sequenceLength` random values using `repeat`, then play it | Every new code contains exactly five values from 1 to 3, with visible gaps |
-| 7 | Make a function with a parameter that compares bare-lead answers with successive list items | The displayed code completes with a tick; a wrong first value shows a cross |
-| 8 | Acknowledge every touch | Each touch briefly displays the number read, then clears the display |
-| 9 | Gate input with a Boolean while the code plays, while each tap is answered, and after a win | Contacts touched during playback, while the previous number shows, or after the tick, do nothing |
-| 10 | Add tones, failure, and success | A wrong value plays one low tone and the same code can then be re-entered from its start; five correct inputs play two tones |
-| 11 | Replace numbers with an optional three-symbol code | The complete game still works with learner-designed symbols |
-| 12 | Construct four loose contacts and secure the micro:bit | All fastenings are removable, comfortable, and leave controls accessible |
-| 13 | Connect and test the completed wearable controller | Finger-to-thumb taps control several complete game attempts reliably |
+| 1 | What you will make | Identify materials and watch the demonstration |
+| 2 | Start the controller | A appears after transferring the program |
+| 3 | Make the first switch work | A quick tap displays 1; a two-second hold leaves A unchanged |
+| 4 | Detect the other switches | Each pin lead displays its matching number |
+| 5 | Show a random number | Each A press shows a random number and blank gap |
+| 6 | Choose your code length | The start blocks contain the chosen positive length |
+| 7 | Generate a reboot code | The list starts empty and is filled by the repeat loop |
+| 8 | Play the reboot code | The played code matches the chosen length |
+| 9 | Make an answer-checking function | An empty function has its answer parameter |
+| 10 | Check your taps | The final correct tap shows a tick; a wrong tap shows a cross |
+| 11 | Show each tap | Each tap briefly shows its number |
+| 12 | Ignore taps while busy | Playback ignores taps; the target enables them |
+| 13 | Check one tap at a time | The next tap waits for feedback; win and failure lock input |
+| 14 | Try the same code again | A wrong answer permits a retry of the same code |
+| 15 | Add winning and losing sounds | Win and failure produce different sounds |
+| 16 | Finish the game display | ON marks success; A offers a new code after a mistake |
+| 17 | Build the wearable controls | Contacts stay separate and the controller stays secure |
+| 18 | Connect and play | Finger taps control complete games |
+| 19 | Challenge: Replace numbers with symbols | The optional symbol code still plays correctly |
 
 ## Input design
 
@@ -153,7 +159,7 @@ mid-game starts a new code.
 There is no separate wire tester. A learner-built one is the same nine blocks as steps 3 and 4,
 so one of the two steps would have had nothing left to teach, and the 36-block version that adds
 a dash for an open circuit needs `setPull` and `digitalReadPin` — the polling concept this project
-deliberately removed. Step 3 doubles as the wiring check instead: it is the first code step, it is
+deliberately removed. Step 3 doubles as the wiring check instead: it is the first input step, it is
 three blocks, and a contact that does not register its number is the diagnosis. Steps 3 and 4
 carry `[!DEBUG]` callouts naming the three ways the wiring goes wrong.
 
@@ -234,9 +240,12 @@ Two rules keep this from coming back:
    were folded into their call site, because each one added a fence that either
    rendered a grey block or had to repeat the definition.
 
-Verified by rendering all twenty-five fences through `makecode.microbit.org/--docs?render=1`, the
-renderer the projects site uses: none produces a grey block, every outline sits on a block the
-task adds or changes, and no picture is wider than `checkAnswer`.
+The 26 October 2026 revision was checked by rendering all 41 code examples through
+`makecode.microbit.org/--docs?render=1`. All rendered successfully with native blocks.
+The final taught function matches the existing solution. Headings, metadata order, local
+image paths and image widths were checked. The new MakeCode screenshots were visually
+checked, and category styles were confirmed against the live projects site. These checks
+do not substitute for physical-board testing.
 
 ## Step-size rule
 
@@ -245,14 +254,13 @@ Each `[!TASK]` callout holds one task: one change the learner can tick off. A se
 ## Required assets before publication
 
 - `en/images/banner.png`: finished improvised controller and illuminated micro:bit
-- Finished-project photograph showing all four contacts and the wiring (`en/images/finished-controller.jpg`, step 13)
+- Finished-project photograph showing all four contacts and the wiring (`en/images/finished-controller.jpg`, step 18)
 - Materials photograph (`en/images/materials.jpg`, step 1)
-- Close photograph of a single foil finger contact (`en/images/finger-band-single.jpg`, step 12) and of all four (`en/images/finger-bands-all.jpg`, step 12)
-- Photographs showing how the card backing and elastic bands hold the micro:bit (`en/images/microbit-on-wrist.jpg`) and the battery pack (`en/images/battery-pack-mounted.jpg`), step 12
-- Wiring photograph of the bare micro:bit, with the ring labels readable (`en/images/leads-connected.jpg`, step 2)
-- Short animation showing a complete five-term code (`en/images/five-signal-code.gif`, step 13), cut from 3.2s to 9.0s of `PXL_20260921_122235907`
+- Close photograph of a single foil finger contact (`en/images/finger-band-single.jpg`, step 17) and of all four (`en/images/finger-bands-all.jpg`, step 17)
+- Photographs showing how the card backing and elastic bands hold the micro:bit (`en/images/microbit-on-wrist.jpg`) and the battery pack (`en/images/battery-pack-mounted.jpg`), step 17
+- Wiring photograph of the bare micro:bit, with the ring labels readable (`en/images/leads-connected.jpg`, step 3)
 - "Micro:bit Reboot Game" YouTube Short (`g3qdMucsHjQ`), step 1. Vertical 9:16, embedded in a portrait box (`max-width: 340px`, `padding-top: 177.78%`) rather than the house 16:9 box, which would letterbox it.
-- `en/images/microbit-game.gif` (step 13), a complete game. Same footage as the Short above, so the two are redundant if a single asset is preferred.
+- `en/images/microbit-game.gif` (step 18), a complete game. Same footage as the Short above, so the two are redundant if a single asset is preferred.
 - `en/images/wires-test.gif` (not used in any step), each contact tapped in turn. Replaces the "Micro:bit Simon Says - Wire test" Short (`jbZNebFAngA`), which is the same footage; that Short's title also still carries the old working name.
 - Both GIFs were re-encoded from the 15-16 MB originals to 200px wide, 32 colours, 5fps: 1.2 MB and 2.2 MB.
 - MakeCode screenshots only where the rendered blocks are insufficient
@@ -260,13 +268,13 @@ Each `[!TASK]` callout holds one task: one change the learner can tick off. A se
 
 The final hero image should preserve the hacked-together character of the build rather than presenting a fabricated glove or polished enclosure. The current banner is an illustration of a hand mid-tap, with the index finger on the thumb and the micro:bit showing `1`.
 
-## Validation required before publication
+## Hardware validation still required
 
 - Run the full build on at least two BBC micro:bit V2 boards.
 - Test all three contacts for at least 30 taps each, recording missed or duplicate inputs.
 - Confirm that touches made during sequence playback, while the previous number or the mistake feedback is showing, and after a win, are ignored.
 - Confirm that a correct code tapped at a steady one-second pace is accepted.
-- Confirm that every new game generates exactly five values from 1 to 3.
+- Confirm that every new game generates the chosen number of values from 1 to 3 (test lengths 1, 3, 5 and 8).
 - Confirm that every touch displays the number detected exactly once.
 - Confirm that button A restarts cleanly after both failure and success.
 - Confirm that pressing button A mid-game, including during playback, leads to a playable new code.

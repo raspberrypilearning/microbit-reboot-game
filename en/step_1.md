@@ -1,6 +1,6 @@
 ## What you will make
 
-Build a finger-controlled memory game with a BBC micro:bit and switches made from everyday materials.
+Can you remember the reboot code? Build a finger-controlled memory game, watch the micro:bit, then tap the code back to bring it to life.
 
 > [!NOPRINT]
 >
@@ -10,15 +10,6 @@ Build a finger-controlled memory game with a BBC micro:bit and switches made fro
 > </iframe>
 > </div><br>
 > </html>
-
-The micro:bit generates a five-number reboot code using the numbers `1` to `3` and displays it once. Repeat the code by tapping the matching finger contacts against a thumb contact:
-
-- Index finger: `P0`, which enters `1`
-- Middle finger: `P1`, which enters `2`
-- Ring finger: `P2`, which enters `3`
-- Thumb: `GND`, the common contact
-
-Each tap briefly shows the number detected; wait for it to disappear before the next tap. A mistake produces a warning honk, and you start the code again from its first number. Repeating all five signals correctly produces two beeps and completes the reboot.
 
 ### You will need
 
@@ -31,10 +22,4 @@ Each tap briefly shows the number detected; wait for it to disappear before the 
 - Three or four elastic bands or hair bands
 - Scissors
 
-![Everything you need, laid out separately: a micro:bit, a USB cable, a battery pack with two AAA batteries, red, yellow, green and black clip leads, a roll of kitchen foil, a piece of card, four hair bands, tape and scissors.](images/materials.jpg)
-
-You will connect, code and test the loose leads before making anything for your fingers. This keeps your hands free while you work at the computer.
-
-> [!INFO]
->
-> **Safety:** Never connect the `3V` and `GND` rings together. Later, wrap every foil contact loosely enough to pull off straight away, and keep the wrist fastening loose enough to stay comfortable.
+![Everything you need, laid out separately: a micro:bit, a USB cable, a battery pack with two AAA batteries, red, yellow, green and black clip leads, a roll of kitchen foil, a piece of card, four hair bands, tape and scissors.](images/materials.jpg){:width="450px"}

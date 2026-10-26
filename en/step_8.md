@@ -1,29 +1,75 @@
-## Show every recognised touch
+## Play the reboot code
 
-Give immediate feedback so the player knows which switch the micro:bit detected.
+Show every number in your list, one after another.
 
 > [!TASK]
 >
-> Add the highlighted blocks at the start of your function to briefly display the number detected before checking the answer.
+> Add `for element value of list`{:class='microbitloops'} from `Loops`{:class='microbitloops'} underneath the repeat loop. It will work through the saved numbers in order.
+
+> [!TASK]
+>
+> Choose **rebootSequence** in the new loop’s list menu.
 >
 > ```microbit
 > let rebootSequence: number[] = null
-> function checkAnswer (answer: number) {
->     // @highlight
->     basic.showNumber(answer)
->     // @highlight
->     basic.pause(150)
->     // @highlight
->     basic.clearScreen()
->     if (answer == rebootSequence[playerPosition]) {
->         playerPosition += 1
->         if (playerPosition == sequenceLength) {
->             basic.showIcon(IconNames.Yes)
->         }
->     } else {
->         basic.showIcon(IconNames.No)
+> input.onButtonPressed(Button.A, function () {
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
 >     }
-> }
+>     for (let value of rebootSequence) {
+>     }
+>     basic.showNumber(0)
+>     basic.pause(500)
+>     basic.clearScreen()
+>     basic.pause(200)
+> })
 > ```
 
-**Test:** Start a game and enter one correct contact and one deliberately wrong contact. Each touch should briefly display the number detected. After a correct tap, the number should flash, then the display should go blank, ready for the next tap.
+> [!TASK]
+>
+> Move your four display and pause blocks inside the new loop so they run for each number.
+>
+> ```microbit
+> let rebootSequence: number[] = null
+> input.onButtonPressed(Button.A, function () {
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let value of rebootSequence) {
+>         basic.showNumber(0)
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
+>     }
+> })
+> ```
+
+> [!TASK]
+>
+> Drag the loop’s `value`{:class='microbitvariables'} bubble into `show number`{:class='microbitbasic'}. The display will now show each saved number.
+>
+> ```microbit
+> let rebootSequence: number[] = null
+> input.onButtonPressed(Button.A, function () {
+>     rebootSequence = []
+>     for (let count = 0; count < sequenceLength; count++) {
+>         rebootSequence.push(randint(1, 3))
+>     }
+>     for (let value of rebootSequence) {
+>         basic.showNumber(value)
+>         basic.pause(500)
+>         basic.clearScreen()
+>         basic.pause(200)
+>     }
+> })
+> ```
+
+**Test**
+
+Download your program and press A several times.
+
+- Count the numbers. Each code should match your chosen length.
+- Each number should be 1, 2 or 3.
+- Repeated numbers should have a blank gap between them.

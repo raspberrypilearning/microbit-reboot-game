@@ -1,6 +1,6 @@
 title: Reboot Sequence
 hero_image: images/banner.png
-description: Build finger switches from everyday materials and repeat the micro:bit's five-signal reboot code.
+description: Can you crack the reboot code? Build finger controls, remember the numbers, and tap your micro:bit back to life.
 listed: false
 pdf: false
 steps:
@@ -10,17 +10,23 @@ steps:
       - engaged
   - title: Make the first switch work
   - title: Detect the other switches
-  - title: Show a random signal
+  - title: Show a random number
+  - title: Choose your code length
   - title: Generate a reboot code
-  - title: Check the player's taps
-  - title: Show every recognised touch
-  - title: Ignore taps between games
-  - title: Finish the game
+  - title: Play the reboot code
+  - title: Make an answer-checking function
+  - title: Check your taps
+  - title: Show each tap
+  - title: Ignore taps while busy
+  - title: Check one tap at a time
+  - title: Try the same code again
+  - title: Add winning and losing sounds
+  - title: Finish the game display
     completion:
       - internal
-  - title: "Challenge: Replace numbers with symbols"
-    challenge: true
   - title: Build the wearable controls
-  - title: Connect and test the controller
+  - title: Connect and play
     completion:
       - external
+  - title: "Challenge: Replace numbers with symbols"
+    challenge: true
